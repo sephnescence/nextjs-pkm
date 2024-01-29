@@ -1,3 +1,5 @@
+[![GitHub Actions Demo](https://github.com/sephnescence/nextjs-pkm/actions/workflows/github-actions-demo.yml/badge.svg)](https://github.com/sephnescence/nextjs-pkm/actions/workflows/github-actions-demo.yml)
+
 # nextjs-pkm
 
 A project to explore personal knowledge management in an all in one
