@@ -22,3 +22,9 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - run: npx prettier ${{ github.workspace }} --check
+  ESLint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - run: cd ${{ github.workspace }} && npm install && npm run lint
