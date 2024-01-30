@@ -27,4 +27,4 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - run: npm run lint
+      - run: cd ${{ github.workspace }} && npm run lint
