@@ -19,4 +19,6 @@ jobs:
   Prettier:
     runs-on: ubuntu-latest
     steps:
-      - run: npx prettier . --check
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - run: npx prettier ${{ github.workspace }} --check
