@@ -28,3 +28,9 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - run: cd ${{ github.workspace }} && npm install && npm run lint
+  Jest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - run: cd ${{ github.workspace }} && npm install && npm t
