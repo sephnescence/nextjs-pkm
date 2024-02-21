@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  nextjs-pkn:
+  nextjs-pkm:
     # Override these ports to avoid conflicting with other containers
     command: 'npm run dev -- -p 3004'
     ports:
