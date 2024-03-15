@@ -74,6 +74,15 @@ await prisma.user.create({
             },
           },
         },
+        {
+          model_type: 'PkmTrash',
+          trash_item: {
+            create: {
+              content: 'Trash!',
+              user_id: userId,
+            },
+          },
+        },
       ],
     },
   },

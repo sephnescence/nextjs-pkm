@@ -1,6 +1,18 @@
 version: '3.8'
 
 services:
+  nextjs-pkm:
+    build:
+      context: .
+    command: 'npm run dev -- -p 3000'
+    container_name: nextjs-pkm
+    env_file:
+      - .env
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app
+
   pkm-next-postgres:
     image: postgres:16-alpine
     restart: always
