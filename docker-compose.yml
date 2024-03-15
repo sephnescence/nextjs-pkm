@@ -13,7 +13,7 @@ services:
     volumes:
       - .:/app
 
-  pkm-postgres:
+  pkm-next-postgres:
     image: postgres:16-alpine
     restart: always
     ports:
@@ -23,8 +23,8 @@ services:
       POSTGRES_USER: '${DB_USERNAME}'
       POSTGRES_DB: '${DB_DATABASE}'
     volumes:
-      - 'pkm-pgsql:/var/lib/postgresql/data'
+      - 'pkm-next-pgsql:/var/lib/postgresql/data'
 
 volumes:
-  pkm-pgsql:
+  pkm-next-pgsql:
     driver: local

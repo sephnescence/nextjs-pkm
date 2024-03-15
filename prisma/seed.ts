@@ -34,6 +34,7 @@ await prisma.user.create({
           },
         },
         {
+          is_current: true,
           model_type: 'PkmInbox',
           inbox_item: {
             create: {
@@ -43,6 +44,7 @@ await prisma.user.create({
           },
         },
         {
+          is_current: true,
           model_type: 'PkmPassingThought',
           passing_thought_item: {
             create: {
@@ -53,6 +55,7 @@ await prisma.user.create({
           },
         },
         {
+          is_current: true,
           model_type: 'PkmTodo',
           todo_item: {
             create: {
@@ -62,6 +65,7 @@ await prisma.user.create({
           },
         },
         {
+          is_current: true,
           model_type: 'PkmVoid',
           void_item: {
             create: {

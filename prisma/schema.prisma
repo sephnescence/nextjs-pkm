@@ -25,7 +25,7 @@ model User {
   inbox_items PkmInbox[]
   passing_thought_items PkmPassingThought[]
   todo_items PkmTodo[]
-  void_items PkmVoid[]
+  voided_passing_thought_items PkmVoid[]
   trash_items PkmTrash[]
 }
 
