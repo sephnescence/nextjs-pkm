@@ -1,10 +1,10 @@
 'use client'
 
-import IndexForm from '@/components/pkm/forms/IndexForm'
+import ItemForm from '@/components/pkm/forms/ItemForm'
 
 export default function TrashCreateRoute() {
   return (
-    <IndexForm
+    <ItemForm
       apiEndpoint="/api/trash"
       apiMethod="POST"
       pageTitle="New Trash Item"

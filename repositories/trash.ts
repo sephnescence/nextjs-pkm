@@ -2,6 +2,8 @@ import { prisma } from '@/utils/db'
 
 type CreateTrashArgs = {
   content: string
+  name: string
+  summary: string
   userId: string
 }
 
@@ -28,6 +30,8 @@ export const getCurrentTrashItemForUser = async (
       trash_item: {
         select: {
           content: true,
+          name: true,
+          summary: true,
           model_id: true,
           history_id: true,
         },
@@ -44,6 +48,8 @@ export const getCurrentTrashItemForUser = async (
 
 export const updateTrashItem = async ({
   content,
+  name,
+  summary,
   historyItemId,
   trashItemId,
   userId,
@@ -68,6 +74,8 @@ export const updateTrashItem = async ({
           trash_item: {
             create: {
               content,
+              name,
+              summary,
               model_id: trashItemId,
               user_id: userId,
             },

@@ -1,24 +1,32 @@
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-type IndexFormProps = {
+type ItemFormProps = {
   pageTitle: string
   apiEndpoint: string
   apiMethod: string
   defaultContent?: string
+  defaultName?: string
+  defaultSummary?: string
 }
 
-export default function IndexForm({
+export default function ItemForm({
   pageTitle,
   apiEndpoint,
   apiMethod,
   defaultContent,
-}: IndexFormProps) {
+  defaultName,
+  defaultSummary,
+}: ItemFormProps) {
   const router = useRouter()
   const [actionData, setActionData] = useState({
-    errors: { fieldErrors: { general: '', content: '' } },
+    errors: {
+      fieldErrors: { general: '', content: '', name: '', summary: '' },
+    },
   })
   const [content, setContent] = useState(() => defaultContent || '')
+  const [name, setName] = useState(() => defaultName || '')
+  const [summary, setSummary] = useState(() => defaultSummary || '')
   const [idle, setIdle] = useState(() => false)
   // Prevent form interaction while submitting and while the page is rendering
   useEffect(() => {
@@ -31,7 +39,7 @@ export default function IndexForm({
     const res = await fetch(
       new Request(apiEndpoint, {
         method: apiMethod,
-        body: JSON.stringify({ content }),
+        body: JSON.stringify({ content, name, summary }),
       }),
     )
 
@@ -41,8 +49,10 @@ export default function IndexForm({
       setActionData({
         errors: {
           fieldErrors: {
-            general: resJson.errors.fieldErrors.general || '',
-            content: resJson.errors.fieldErrors.content || '',
+            general: resJson?.errors.fieldErrors.general || '',
+            content: resJson?.errors.fieldErrors.content || '',
+            name: resJson?.errors.fieldErrors.name || '',
+            summary: resJson?.errors.fieldErrors.summary || '',
           },
         },
       })
@@ -72,9 +82,47 @@ export default function IndexForm({
           <div className="w-full">
             <div className="mb-4">
               <label>
+                <div className="mb-4">Name</div>
+                <input
+                  type="text"
+                  className="min-w-full bg-slate-700 p-4"
+                  name="name"
+                  defaultValue={name}
+                  disabled={!idle}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </label>
+              <br />
+              {actionData?.errors.fieldErrors.name && (
+                <div className="text-red-500">
+                  {actionData.errors.fieldErrors?.name}
+                </div>
+              )}
+            </div>
+            <div className="mb-4">
+              <label>
+                <div className="mb-4">Summary</div>
+                <input
+                  type="text"
+                  className="min-w-full bg-slate-700 p-4"
+                  name="summary"
+                  defaultValue={summary}
+                  disabled={!idle}
+                  onChange={(e) => setSummary(e.target.value)}
+                />
+              </label>
+              <br />
+              {actionData?.errors.fieldErrors.summary && (
+                <div className="text-red-500">
+                  {actionData.errors.fieldErrors?.summary}
+                </div>
+              )}
+            </div>
+            <div className="mb-4">
+              <label>
                 <div className="mb-4">Content</div>
                 <textarea
-                  className="min-w-full min-h-96 bg-white/20 p-4"
+                  className="min-w-full min-h-96 bg-slate-700 p-4"
                   name="content"
                   defaultValue={content}
                   disabled={!idle}

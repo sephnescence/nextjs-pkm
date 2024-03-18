@@ -1,10 +1,10 @@
 'use client'
 
-import IndexForm from '@/components/pkm/forms/IndexForm'
+import ItemForm from '@/components/pkm/forms/ItemForm'
 
 export default function TodoCreateRoute() {
   return (
-    <IndexForm
+    <ItemForm
       apiEndpoint="/api/todo"
       apiMethod="POST"
       pageTitle="New Todo Item"

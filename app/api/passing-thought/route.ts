@@ -17,16 +17,47 @@ export const POST = async (request: Request) => {
 
   const passingThoughtArgs = (await request.json()) || ''
 
+  if (!passingThoughtArgs.name) {
+    return NextResponse.json({
+      success: false,
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          name: 'Name is required',
+        },
+      },
+    })
+  }
+
+  if (!passingThoughtArgs.summary) {
+    return NextResponse.json({
+      success: false,
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          summary: 'Summary is required',
+        },
+      },
+    })
+  }
+
   if (!passingThoughtArgs.content) {
     return NextResponse.json({
       success: false,
-      error: 'Content is required',
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          content: 'Content is required',
+        },
+      },
     })
   }
 
   const newPassingThoughtItem = await storePassingThoughtItem({
     userId: user.id,
     content: passingThoughtArgs.content,
+    name: passingThoughtArgs.name,
+    summary: passingThoughtArgs.summary,
   })
 
   if (!newPassingThoughtItem) {

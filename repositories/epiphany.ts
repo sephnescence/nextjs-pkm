@@ -3,6 +3,8 @@ import { randomUUID } from 'node:crypto'
 
 type CreateEpiphanyArgs = {
   content: string
+  name: string
+  summary: string
   userId: string
 }
 
@@ -29,6 +31,8 @@ export const getCurrentEpiphanyItemForUser = async (
       epiphany_item: {
         select: {
           content: true,
+          name: true,
+          summary: true,
           model_id: true,
           history_id: true,
         },
@@ -46,6 +50,8 @@ export const getCurrentEpiphanyItemForUser = async (
 export const storeEpiphanyItem = async ({
   userId,
   content,
+  name,
+  summary,
 }: CreateEpiphanyArgs) => {
   const modelId = randomUUID()
 
@@ -59,6 +65,8 @@ export const storeEpiphanyItem = async ({
         epiphany_item: {
           create: {
             content,
+            name,
+            summary,
             model_id: modelId,
             user_id: userId,
           },
@@ -81,6 +89,8 @@ export const storeEpiphanyItem = async ({
 
 export const updateEpiphanyItem = async ({
   content,
+  name,
+  summary,
   historyItemId,
   epiphanyItemId,
   userId,
@@ -105,6 +115,8 @@ export const updateEpiphanyItem = async ({
           epiphany_item: {
             create: {
               content,
+              name,
+              summary,
               model_id: epiphanyItemId,
               user_id: userId,
             },

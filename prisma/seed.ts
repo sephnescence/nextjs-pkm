@@ -28,7 +28,9 @@ await prisma.user.create({
           model_type: 'PkmEpiphany',
           epiphany_item: {
             create: {
-              content: 'Epiphany!',
+              content: 'Epiphany content',
+              name: 'Epiphany name',
+              summary: 'Epiphany summary',
               user_id: userId,
             },
           },
@@ -38,7 +40,9 @@ await prisma.user.create({
           model_type: 'PkmInbox',
           inbox_item: {
             create: {
-              content: 'Inbox!',
+              content: 'Inbox content',
+              name: 'Inbox name',
+              summary: 'Inbox summary',
               user_id: userId,
             },
           },
@@ -48,7 +52,9 @@ await prisma.user.create({
           model_type: 'PkmPassingThought',
           passing_thought_item: {
             create: {
-              content: 'Passing Thought!',
+              content: 'Passing thought content',
+              name: 'Passing thought name',
+              summary: 'Passing thought summary',
               void_at: new Date('9000-01-01 00:00:00'),
               user_id: userId,
             },
@@ -59,7 +65,9 @@ await prisma.user.create({
           model_type: 'PkmTodo',
           todo_item: {
             create: {
-              content: 'Todo!',
+              content: 'Todo content',
+              name: 'Todo name',
+              summary: 'Todo summary',
               user_id: userId,
             },
           },
@@ -69,7 +77,9 @@ await prisma.user.create({
           model_type: 'PkmVoid',
           void_item: {
             create: {
-              content: 'Void!',
+              content: 'Void content',
+              name: 'Void name',
+              summary: 'Void summary',
               user_id: userId,
             },
           },
@@ -78,7 +88,11 @@ await prisma.user.create({
           model_type: 'PkmTrash',
           trash_item: {
             create: {
-              content: 'Trash!',
+              content:
+                'Trash content, but the content should have come from the item that was trashed',
+              name: 'Trash name, but the content should have come from the item that was trashed',
+              summary:
+                'Trash summary, but the content should have come from the item that was trashed',
               user_id: userId,
             },
           },

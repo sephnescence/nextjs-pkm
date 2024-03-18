@@ -1,10 +1,10 @@
 'use client'
 
-import IndexForm from '@/components/pkm/forms/IndexForm'
+import ItemForm from '@/components/pkm/forms/ItemForm'
 
 export default function VoidCreateRoute() {
   return (
-    <IndexForm
+    <ItemForm
       apiEndpoint="/api/void"
       apiMethod="POST"
       pageTitle="New Void Item"

@@ -1,10 +1,10 @@
 'use client'
 
-import IndexForm from '@/components/pkm/forms/IndexForm'
+import ItemForm from '@/components/pkm/forms/ItemForm'
 
 export default function InboxCreateRoute() {
   return (
-    <IndexForm
+    <ItemForm
       apiEndpoint="/api/inbox"
       apiMethod="POST"
       pageTitle="New Inbox Item"

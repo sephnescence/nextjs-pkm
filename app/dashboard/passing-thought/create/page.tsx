@@ -1,10 +1,10 @@
 'use client'
 
-import IndexForm from '@/components/pkm/forms/IndexForm'
+import ItemForm from '@/components/pkm/forms/ItemForm'
 
 export default function PassingThoughtCreateRoute() {
   return (
-    <IndexForm
+    <ItemForm
       apiEndpoint="/api/passing-thought"
       apiMethod="POST"
       pageTitle="New Passing Thought Item"

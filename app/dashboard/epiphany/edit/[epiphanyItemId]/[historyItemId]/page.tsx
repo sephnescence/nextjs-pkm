@@ -1,6 +1,6 @@
 'use client'
 
-import IndexForm from '@/components/pkm/forms/IndexForm'
+import ItemForm from '@/components/pkm/forms/ItemForm'
 import MoveTo from '@/components/pkm/forms/MoveTo'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -16,6 +16,8 @@ type EpiphanyViewResponse = {
   success: boolean
   epiphanyItem: {
     content: string
+    name: string
+    summary: string
   }
   errors?: {
     fieldErrors?: {
@@ -60,11 +62,13 @@ export default function EpiphanyEditRoute({
 
   return (
     <>
-      <IndexForm
+      <ItemForm
         pageTitle="Edit Epiphany Item"
         apiEndpoint={`/api/epiphany/${epiphanyItemId}/${historyItemId}`}
         apiMethod="PATCH"
         defaultContent={resJson.epiphanyItem.content}
+        defaultName={resJson.epiphanyItem.name}
+        defaultSummary={resJson.epiphanyItem.summary}
       />
       <MoveTo modelItemId={epiphanyItemId} historyItemId={historyItemId} />
     </>

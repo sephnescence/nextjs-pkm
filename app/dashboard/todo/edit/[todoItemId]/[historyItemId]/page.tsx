@@ -1,6 +1,6 @@
 'use client'
 
-import IndexForm from '@/components/pkm/forms/IndexForm'
+import ItemForm from '@/components/pkm/forms/ItemForm'
 import MoveTo from '@/components/pkm/forms/MoveTo'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -16,6 +16,8 @@ type TodoViewResponse = {
   success: boolean
   todoItem: {
     content: string
+    name: string
+    summary: string
   }
   errors?: {
     fieldErrors?: {
@@ -60,11 +62,13 @@ export default function TodoEditRoute({
 
   return (
     <>
-      <IndexForm
+      <ItemForm
         pageTitle="Edit Todo Item"
         apiEndpoint={`/api/todo/${todoItemId}/${historyItemId}`}
         apiMethod="PATCH"
         defaultContent={resJson.todoItem.content}
+        defaultName={resJson.todoItem.name}
+        defaultSummary={resJson.todoItem.summary}
       />
       <MoveTo modelItemId={todoItemId} historyItemId={historyItemId} />
     </>

@@ -49,6 +49,8 @@ export const GET = async (
     success: true,
     voidItem: {
       content: existingVoid.content,
+      name: existingVoid.name,
+      summary: existingVoid.summary,
     },
   })
 }
@@ -81,15 +83,46 @@ export const PATCH = async (
 
   const voidArgs = (await request.json()) || ''
 
+  if (!voidArgs.name) {
+    return NextResponse.json({
+      success: false,
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          name: 'Name is required',
+        },
+      },
+    })
+  }
+
+  if (!voidArgs.summary) {
+    return NextResponse.json({
+      success: false,
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          summary: 'Summary is required',
+        },
+      },
+    })
+  }
+
   if (!voidArgs.content) {
     return NextResponse.json({
       success: false,
-      error: 'Content is required',
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          content: 'Content is required',
+        },
+      },
     })
   }
 
   const newVoidItem = await updateVoidItem({
     content: voidArgs.content,
+    name: voidArgs.name,
+    summary: voidArgs.summary,
     historyItemId,
     voidItemId,
     userId: user.id,

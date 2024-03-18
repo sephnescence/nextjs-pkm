@@ -3,6 +3,8 @@ import { randomUUID } from 'node:crypto'
 
 type CreatePassingThoughtArgs = {
   content: string
+  name: string
+  summary: string
   userId: string
 }
 
@@ -29,6 +31,8 @@ export const getCurrentPassingThoughtItemForUser = async (
       passing_thought_item: {
         select: {
           content: true,
+          name: true,
+          summary: true,
           model_id: true,
           history_id: true,
         },
@@ -46,6 +50,8 @@ export const getCurrentPassingThoughtItemForUser = async (
 export const storePassingThoughtItem = async ({
   userId,
   content,
+  name,
+  summary,
 }: CreatePassingThoughtArgs) => {
   const modelId = randomUUID()
 
@@ -62,6 +68,8 @@ export const storePassingThoughtItem = async ({
         passing_thought_item: {
           create: {
             content,
+            name,
+            summary,
             model_id: modelId,
             user_id: userId,
             void_at: voidAt,
@@ -85,6 +93,8 @@ export const storePassingThoughtItem = async ({
 
 export const updatePassingThoughtItem = async ({
   content,
+  name,
+  summary,
   historyItemId,
   passingThoughtItemId,
   userId,
@@ -112,6 +122,8 @@ export const updatePassingThoughtItem = async ({
           passing_thought_item: {
             create: {
               content,
+              name,
+              summary,
               model_id: passingThoughtItemId,
               user_id: userId,
               void_at: voidAt,
