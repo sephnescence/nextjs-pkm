@@ -3,6 +3,8 @@ import { randomUUID } from 'node:crypto'
 
 type CreateInboxArgs = {
   content: string
+  name: string
+  summary: string
   userId: string
 }
 
@@ -29,6 +31,8 @@ export const getCurrentInboxItemForUser = async (
       inbox_item: {
         select: {
           content: true,
+          name: true,
+          summary: true,
           model_id: true,
           history_id: true,
         },
@@ -43,7 +47,12 @@ export const getCurrentInboxItemForUser = async (
   return inboxItem.inbox_item
 }
 
-export const storeInboxItem = async ({ userId, content }: CreateInboxArgs) => {
+export const storeInboxItem = async ({
+  userId,
+  content,
+  name,
+  summary,
+}: CreateInboxArgs) => {
   const modelId = randomUUID()
 
   return await prisma.pkmHistory
@@ -56,6 +65,8 @@ export const storeInboxItem = async ({ userId, content }: CreateInboxArgs) => {
         inbox_item: {
           create: {
             content,
+            name,
+            summary,
             model_id: modelId,
             user_id: userId,
           },
@@ -78,6 +89,8 @@ export const storeInboxItem = async ({ userId, content }: CreateInboxArgs) => {
 
 export const updateInboxItem = async ({
   content,
+  name,
+  summary,
   historyItemId,
   inboxItemId,
   userId,
@@ -102,6 +115,8 @@ export const updateInboxItem = async ({
           inbox_item: {
             create: {
               content,
+              name,
+              summary,
               model_id: inboxItemId,
               user_id: userId,
             },

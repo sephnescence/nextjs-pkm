@@ -17,16 +17,47 @@ export const POST = async (request: Request) => {
 
   const todoArgs = (await request.json()) || ''
 
+  if (!todoArgs.name) {
+    return NextResponse.json({
+      success: false,
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          name: 'Name is required',
+        },
+      },
+    })
+  }
+
+  if (!todoArgs.summary) {
+    return NextResponse.json({
+      success: false,
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          summary: 'Summary is required',
+        },
+      },
+    })
+  }
+
   if (!todoArgs.content) {
     return NextResponse.json({
       success: false,
-      error: 'Content is required',
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          content: 'Content is required',
+        },
+      },
     })
   }
 
   const newTodoItem = await storeTodoItem({
     userId: user.id,
     content: todoArgs.content,
+    name: todoArgs.name,
+    summary: todoArgs.summary,
   })
 
   if (!newTodoItem) {

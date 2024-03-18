@@ -52,6 +52,8 @@ export const GET = async (
     success: true,
     passingThoughtItem: {
       content: existingPassingThought.content,
+      name: existingPassingThought.name,
+      summary: existingPassingThought.summary,
     },
   })
 }
@@ -86,15 +88,46 @@ export const PATCH = async (
 
   const passingThoughtArgs = (await request.json()) || ''
 
+  if (!passingThoughtArgs.name) {
+    return NextResponse.json({
+      success: false,
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          name: 'Name is required',
+        },
+      },
+    })
+  }
+
+  if (!passingThoughtArgs.summary) {
+    return NextResponse.json({
+      success: false,
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          summary: 'Summary is required',
+        },
+      },
+    })
+  }
+
   if (!passingThoughtArgs.content) {
     return NextResponse.json({
       success: false,
-      error: 'Content is required',
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          content: 'Content is required',
+        },
+      },
     })
   }
 
   const newPassingThoughtItem = await updatePassingThoughtItem({
     content: passingThoughtArgs.content,
+    name: passingThoughtArgs.name,
+    summary: passingThoughtArgs.summary,
     historyItemId,
     passingThoughtItemId,
     userId: user.id,

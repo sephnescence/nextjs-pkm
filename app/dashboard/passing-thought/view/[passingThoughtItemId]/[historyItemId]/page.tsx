@@ -35,9 +35,33 @@ export default async function PassingThoughtViewRoute({
       <div className="w-full">
         <div className="mb-4">
           <label>
+            <div className="mb-4">Name</div>
+            <input
+              type="text"
+              className="min-w-full bg-slate-800 p-4"
+              name="name"
+              defaultValue={passingThoughtItem.name}
+              readOnly
+            />
+          </label>
+        </div>
+        <div className="mb-4">
+          <label>
+            <div className="mb-4">Summary</div>
+            <input
+              type="text"
+              className="min-w-full bg-slate-800 p-4"
+              name="summary"
+              defaultValue={passingThoughtItem.summary}
+              readOnly
+            />
+          </label>
+        </div>
+        <div className="mb-4">
+          <label>
             <div className="mb-4">Content</div>
             <textarea
-              className="min-w-full min-h-96 bg-white/20 p-4"
+              className="min-w-full min-h-96 bg-slate-800 p-4"
               name="content"
               defaultValue={passingThoughtItem.content}
               readOnly

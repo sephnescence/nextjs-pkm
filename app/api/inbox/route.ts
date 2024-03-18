@@ -17,16 +17,47 @@ export const POST = async (request: Request) => {
 
   const inboxArgs = (await request.json()) || ''
 
+  if (!inboxArgs.name) {
+    return NextResponse.json({
+      success: false,
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          name: 'Name is required',
+        },
+      },
+    })
+  }
+
+  if (!inboxArgs.summary) {
+    return NextResponse.json({
+      success: false,
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          summary: 'Summary is required',
+        },
+      },
+    })
+  }
+
   if (!inboxArgs.content) {
     return NextResponse.json({
       success: false,
-      error: 'Content is required',
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          content: 'Content is required',
+        },
+      },
     })
   }
 
   const newInboxItem = await storeInboxItem({
     userId: user.id,
     content: inboxArgs.content,
+    name: inboxArgs.name,
+    summary: inboxArgs.summary,
   })
 
   if (!newInboxItem) {

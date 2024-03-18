@@ -1,6 +1,6 @@
 'use client'
 
-import IndexForm from '@/components/pkm/forms/IndexForm'
+import ItemForm from '@/components/pkm/forms/ItemForm'
 import MoveTo from '@/components/pkm/forms/MoveTo'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -16,6 +16,8 @@ type VoidViewResponse = {
   success: boolean
   voidItem: {
     content: string
+    name: string
+    summary: string
   }
   errors?: {
     fieldErrors?: {
@@ -60,11 +62,13 @@ export default function VoidEditRoute({
 
   return (
     <>
-      <IndexForm
+      <ItemForm
         pageTitle="Edit Void Item"
         apiEndpoint={`/api/void/${voidItemId}/${historyItemId}`}
         apiMethod="PATCH"
         defaultContent={resJson.voidItem.content}
+        defaultName={resJson.voidItem.name}
+        defaultSummary={resJson.voidItem.summary}
       />
       <MoveTo modelItemId={voidItemId} historyItemId={historyItemId} />
     </>

@@ -122,12 +122,16 @@ const _historyActionMove = async (
     }
 
     const content = item?.content
+    const name = item?.name
+    const summary = item?.summary
 
     let redirectUrl
 
     if (moveTo === 'epiphany') {
       const response = await updateEpiphanyItem({
         content: content!,
+        name: name!,
+        summary: summary!,
         historyItemId: historyId!,
         epiphanyItemId: modelId!,
         userId,
@@ -139,6 +143,8 @@ const _historyActionMove = async (
     } else if (moveTo === 'inbox') {
       const response = await updateInboxItem({
         content: content!,
+        name: name!,
+        summary: summary!,
         historyItemId: historyId!,
         inboxItemId: modelId!,
         userId,
@@ -150,6 +156,8 @@ const _historyActionMove = async (
     } else if (moveTo === 'passing-thought') {
       const response = await updatePassingThoughtItem({
         content: content!,
+        name: name!,
+        summary: summary!,
         historyItemId: historyId!,
         passingThoughtItemId: modelId!,
         userId,
@@ -161,6 +169,8 @@ const _historyActionMove = async (
     } else if (moveTo === 'todo') {
       const response = await updateTodoItem({
         content: content!,
+        name: name!,
+        summary: summary!,
         historyItemId: historyId!,
         todoItemId: modelId!,
         userId,
@@ -172,6 +182,8 @@ const _historyActionMove = async (
     } else if (moveTo === 'trash') {
       const response = await updateTrashItem({
         content: content!,
+        name: name!,
+        summary: summary!,
         historyItemId: historyId!,
         trashItemId: modelId!,
         userId,
@@ -182,6 +194,8 @@ const _historyActionMove = async (
     } else if (moveTo === 'void') {
       const response = await updateVoidItem({
         content: content!,
+        name: name!,
+        summary: summary!,
         historyItemId: historyId!,
         voidItemId: modelId!,
         userId,

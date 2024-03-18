@@ -40,7 +40,7 @@ export default function MoveTo({
     }
   }
   return (
-    <div className="flex">
+    <div className="md:flex">
       <div className="px-4 py-2 rounded-lg mr-4">Move to</div>
       {[
         { display: 'Epiphany', moveTo: 'epiphany' },
@@ -51,9 +51,9 @@ export default function MoveTo({
       ].map(({ display, moveTo }) => {
         return (
           <div key={moveTo}>
-            <form className="flex">
+            <form className="md:flex">
               <button
-                className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg mr-4"
+                className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg mr-4 md:mr-0 ml-4 md:ml-0 mb-4 md:mb-0"
                 type="button"
                 onClick={() => {
                   void onMoveClick(modelItemId, historyItemId, moveTo)
@@ -66,9 +66,9 @@ export default function MoveTo({
         )
       })}
       <div key={'trash'}>
-        <form className="flex">
+        <form className="md:flex">
           <button
-            className="bg-red-600 hover:bg-red-500 px-4 py-2 rounded-lg mr-4"
+            className="bg-red-600 hover:bg-red-500 px-4 py-2 rounded-lg mr-0 md:mr-4 ml-4 md:ml-0 mb-4 md:mb-0"
             type="button"
             onClick={() => {
               void onTrashClick(modelItemId, historyItemId)

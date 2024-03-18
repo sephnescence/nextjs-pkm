@@ -24,11 +24,9 @@ export default function RootLayout({
           <meta charSet="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
         </head>
-        <body className={`${inter.className} bg-black`}>
-          <div className="w-screen min-h-screen h-full bg-white/5 flex text-white">
-            <div className="max-w-[1200px] w-full mx-auto bg-white/5">
-              {children}
-            </div>
+        <body className={`${inter.className} bg-slate-950 text-blue-100`}>
+          <div className="w-screen min-h-screen h-full flex">
+            <div className="w-full mx-auto">{children}</div>
           </div>
         </body>
       </html>

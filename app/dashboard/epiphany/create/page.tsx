@@ -1,10 +1,10 @@
 'use client'
 
-import IndexForm from '@/components/pkm/forms/IndexForm'
+import ItemForm from '@/components/pkm/forms/ItemForm'
 
 export default function EpiphanyCreateRoute() {
   return (
-    <IndexForm
+    <ItemForm
       apiEndpoint="/api/epiphany"
       apiMethod="POST"
       pageTitle="New Epiphany Item"

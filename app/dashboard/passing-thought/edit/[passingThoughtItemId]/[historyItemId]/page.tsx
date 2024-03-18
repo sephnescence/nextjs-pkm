@@ -1,6 +1,6 @@
 'use client'
 
-import IndexForm from '@/components/pkm/forms/IndexForm'
+import ItemForm from '@/components/pkm/forms/ItemForm'
 import MoveTo from '@/components/pkm/forms/MoveTo'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -16,6 +16,8 @@ type PassingThoughtViewResponse = {
   success: boolean
   passingThoughtItem: {
     content: string
+    name: string
+    summary: string
   }
   errors?: {
     fieldErrors?: {
@@ -65,11 +67,13 @@ export default function PassingThoughtEditRoute({
 
   return (
     <>
-      <IndexForm
+      <ItemForm
         pageTitle="Edit Passing Thought Item"
         apiEndpoint={`/api/passing-thought/${passingThoughtItemId}/${historyItemId}`}
         apiMethod="PATCH"
         defaultContent={resJson.passingThoughtItem.content}
+        defaultName={resJson.passingThoughtItem.name}
+        defaultSummary={resJson.passingThoughtItem.summary}
       />
       <MoveTo
         modelItemId={passingThoughtItemId}

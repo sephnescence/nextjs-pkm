@@ -34,7 +34,7 @@ export default function DashboardLayout({
             <UserButton afterSignOutUrl="/" />
           </div>
         </div>
-        <div className="mx-4 my-4">{children}</div>
+        <div className="mx-4 mt-16 md:mt-4 mb-4">{children}</div>
       </SignedIn>
     </>
   )

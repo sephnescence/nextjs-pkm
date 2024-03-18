@@ -52,6 +52,8 @@ export const GET = async (
     success: true,
     epiphanyItem: {
       content: existingEpiphany.content,
+      name: existingEpiphany.name,
+      summary: existingEpiphany.summary,
     },
   })
 }
@@ -84,15 +86,46 @@ export const PATCH = async (
 
   const epiphanyArgs = (await request.json()) || ''
 
+  if (!epiphanyArgs.name) {
+    return NextResponse.json({
+      success: false,
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          name: 'Name is required',
+        },
+      },
+    })
+  }
+
+  if (!epiphanyArgs.summary) {
+    return NextResponse.json({
+      success: false,
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          summary: 'Summary is required',
+        },
+      },
+    })
+  }
+
   if (!epiphanyArgs.content) {
     return NextResponse.json({
       success: false,
-      error: 'Content is required',
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          content: 'Content is required',
+        },
+      },
     })
   }
 
   const newEpiphanyItem = await updateEpiphanyItem({
     content: epiphanyArgs.content,
+    name: epiphanyArgs.name,
+    summary: epiphanyArgs.summary,
     historyItemId,
     epiphanyItemId,
     userId: user.id,

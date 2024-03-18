@@ -35,26 +35,36 @@ export const getUserDashboardByClerkId = async (clerkId: string) => {
           epiphany_item: {
             select: {
               content: true,
+              name: true,
+              summary: true,
             },
           },
           inbox_item: {
             select: {
               content: true,
+              name: true,
+              summary: true,
             },
           },
           passing_thought_item: {
             select: {
               content: true,
+              name: true,
+              summary: true,
             },
           },
           todo_item: {
             select: {
               content: true,
+              name: true,
+              summary: true,
             },
           },
           void_item: {
             select: {
               content: true,
+              name: true,
+              summary: true,
             },
           },
         },

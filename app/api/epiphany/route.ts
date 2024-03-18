@@ -17,16 +17,47 @@ export const POST = async (request: Request) => {
 
   const epiphanyArgs = (await request.json()) || ''
 
+  if (!epiphanyArgs.name) {
+    return NextResponse.json({
+      success: false,
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          name: 'Name is required',
+        },
+      },
+    })
+  }
+
+  if (!epiphanyArgs.summary) {
+    return NextResponse.json({
+      success: false,
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          summary: 'Summary is required',
+        },
+      },
+    })
+  }
+
   if (!epiphanyArgs.content) {
     return NextResponse.json({
       success: false,
-      error: 'Content is required',
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          content: 'Content is required',
+        },
+      },
     })
   }
 
   const newEpiphanyItem = await storeEpiphanyItem({
     userId: user.id,
     content: epiphanyArgs.content,
+    name: epiphanyArgs.name,
+    summary: epiphanyArgs.summary,
   })
 
   if (!newEpiphanyItem) {

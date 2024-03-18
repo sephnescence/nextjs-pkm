@@ -1,6 +1,6 @@
 'use client'
 
-import IndexForm from '@/components/pkm/forms/IndexForm'
+import ItemForm from '@/components/pkm/forms/ItemForm'
 import MoveTo from '@/components/pkm/forms/MoveTo'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -16,6 +16,8 @@ type InboxViewResponse = {
   success: boolean
   inboxItem: {
     content: string
+    name: string
+    summary: string
   }
   errors?: {
     fieldErrors?: {
@@ -60,11 +62,13 @@ export default function InboxEditRoute({
 
   return (
     <>
-      <IndexForm
+      <ItemForm
         pageTitle="Edit Inbox Item"
         apiEndpoint={`/api/inbox/${inboxItemId}/${historyItemId}`}
         apiMethod="PATCH"
         defaultContent={resJson.inboxItem.content}
+        defaultName={resJson.inboxItem.name}
+        defaultSummary={resJson.inboxItem.summary}
       />
       <MoveTo modelItemId={inboxItemId} historyItemId={historyItemId} />
     </>

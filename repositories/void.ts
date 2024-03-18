@@ -3,6 +3,8 @@ import { randomUUID } from 'node:crypto'
 
 type CreateVoidArgs = {
   content: string
+  name: string
+  summary: string
   userId: string
 }
 
@@ -29,6 +31,8 @@ export const getCurrentVoidItemForUser = async (
       void_item: {
         select: {
           content: true,
+          name: true,
+          summary: true,
           model_id: true,
           history_id: true,
         },
@@ -43,7 +47,12 @@ export const getCurrentVoidItemForUser = async (
   return voidItem.void_item
 }
 
-export const storeVoidItem = async ({ userId, content }: CreateVoidArgs) => {
+export const storeVoidItem = async ({
+  userId,
+  content,
+  name,
+  summary,
+}: CreateVoidArgs) => {
   const modelId = randomUUID()
 
   return await prisma.pkmHistory
@@ -56,6 +65,8 @@ export const storeVoidItem = async ({ userId, content }: CreateVoidArgs) => {
         void_item: {
           create: {
             content,
+            name,
+            summary,
             model_id: modelId,
             user_id: userId,
           },
@@ -78,6 +89,8 @@ export const storeVoidItem = async ({ userId, content }: CreateVoidArgs) => {
 
 export const updateVoidItem = async ({
   content,
+  name,
+  summary,
   historyItemId,
   voidItemId,
   userId,
@@ -102,6 +115,8 @@ export const updateVoidItem = async ({
           void_item: {
             create: {
               content,
+              name,
+              summary,
               model_id: voidItemId,
               user_id: userId,
             },

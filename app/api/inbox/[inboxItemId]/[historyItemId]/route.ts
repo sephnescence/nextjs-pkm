@@ -52,6 +52,8 @@ export const GET = async (
     success: true,
     inboxItem: {
       content: existingInbox.content,
+      name: existingInbox.name,
+      summary: existingInbox.summary,
     },
   })
 }
@@ -84,15 +86,46 @@ export const PATCH = async (
 
   const inboxArgs = (await request.json()) || ''
 
+  if (!inboxArgs.name) {
+    return NextResponse.json({
+      success: false,
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          name: 'Name is required',
+        },
+      },
+    })
+  }
+
+  if (!inboxArgs.summary) {
+    return NextResponse.json({
+      success: false,
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          summary: 'Summary is required',
+        },
+      },
+    })
+  }
+
   if (!inboxArgs.content) {
     return NextResponse.json({
       success: false,
-      error: 'Content is required',
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          content: 'Content is required',
+        },
+      },
     })
   }
 
   const newInboxItem = await updateInboxItem({
     content: inboxArgs.content,
+    name: inboxArgs.name,
+    summary: inboxArgs.summary,
     historyItemId,
     inboxItemId,
     userId: user.id,

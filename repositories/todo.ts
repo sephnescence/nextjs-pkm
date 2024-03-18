@@ -3,6 +3,8 @@ import { randomUUID } from 'node:crypto'
 
 type CreateTodoArgs = {
   content: string
+  name: string
+  summary: string
   userId: string
 }
 
@@ -29,6 +31,8 @@ export const getCurrentTodoItemForUser = async (
       todo_item: {
         select: {
           content: true,
+          name: true,
+          summary: true,
           model_id: true,
           history_id: true,
         },
@@ -43,7 +47,12 @@ export const getCurrentTodoItemForUser = async (
   return todoItem.todo_item
 }
 
-export const storeTodoItem = async ({ userId, content }: CreateTodoArgs) => {
+export const storeTodoItem = async ({
+  userId,
+  content,
+  name,
+  summary,
+}: CreateTodoArgs) => {
   const modelId = randomUUID()
 
   return await prisma.pkmHistory
@@ -56,6 +65,8 @@ export const storeTodoItem = async ({ userId, content }: CreateTodoArgs) => {
         todo_item: {
           create: {
             content,
+            name,
+            summary,
             model_id: modelId,
             user_id: userId,
           },
@@ -78,6 +89,8 @@ export const storeTodoItem = async ({ userId, content }: CreateTodoArgs) => {
 
 export const updateTodoItem = async ({
   content,
+  name,
+  summary,
   historyItemId,
   todoItemId,
   userId,
@@ -102,6 +115,8 @@ export const updateTodoItem = async ({
           todo_item: {
             create: {
               content,
+              name,
+              summary,
               model_id: todoItemId,
               user_id: userId,
             },

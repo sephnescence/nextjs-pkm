@@ -81,15 +81,46 @@ export const PATCH = async (
 
   const todoArgs = (await request.json()) || ''
 
+  if (!todoArgs.name) {
+    return NextResponse.json({
+      success: false,
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          name: 'Name is required',
+        },
+      },
+    })
+  }
+
+  if (!todoArgs.summary) {
+    return NextResponse.json({
+      success: false,
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          summary: 'Summary is required',
+        },
+      },
+    })
+  }
+
   if (!todoArgs.content) {
     return NextResponse.json({
       success: false,
-      error: 'Content is required',
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          content: 'Content is required',
+        },
+      },
     })
   }
 
   const newTodoItem = await updateTodoItem({
     content: todoArgs.content,
+    name: todoArgs.name,
+    summary: todoArgs.summary,
     historyItemId,
     todoItemId,
     userId: user.id,

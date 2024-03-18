@@ -5,10 +5,10 @@ export default function Home() {
   const { userId } = auth()
 
   return (
-    <div className="w-full h-full bg-black/50 flex justify-center items-center">
-      <div className="">
+    <div className="w-full h-full flex justify-center items-center">
+      <div className="text-center">
         <h1 className="text-5xl mb-4">Personal Knowledge Management</h1>
-        <p className="text-2xl text-white/60 mb-4">Your journey starts here</p>
+        <p className="text-2xl text-blue-400 mb-4">Your journey starts here</p>
         <div>
           <Link href={userId ? '/dashboard' : '/sign-in'}>
             <button

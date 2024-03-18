@@ -52,6 +52,8 @@ export const GET = async (
     success: true,
     trashItem: {
       content: existingTrash.content,
+      name: existingTrash.name,
+      summary: existingTrash.summary,
     },
   })
 }
@@ -93,6 +95,8 @@ export const PATCH = async (
 
   const newTrashItem = await updateTrashItem({
     content: trashArgs.content,
+    name: trashArgs.name,
+    summary: trashArgs.summary,
     historyItemId,
     trashItemId,
     userId: user.id,

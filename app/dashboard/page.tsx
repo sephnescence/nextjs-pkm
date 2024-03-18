@@ -32,7 +32,7 @@ export default async function DashboardIndex() {
         <div className="mt-4 text-xl text-white/60 mb-4">
           Monitor your Inbox and quickly assign them to the correct areas
         </div>
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-1 md:grid-cols-2">
           <div className="p-2">
             <div className="h-8 mb-2">
               <Link
@@ -40,7 +40,7 @@ export default async function DashboardIndex() {
                 href="/dashboard/inbox/create"
               >
                 <div className="relative">
-                  <div className="absolute top-0 right-0 flex bg-zinc-800 h-8 py-1 px-3 rounded-lg hover:ring-1 hover:ring-yellow-500 hover:bg-violet-800">
+                  <div className="absolute top-0 right-0 flex bg-indigo-950 h-8 py-1 px-3 rounded-lg hover:ring-1 hover:ring-yellow-500 hover:bg-violet-900">
                     <InboxStackIcon />
                     <PlusIcon viewBox="6 -3 12 48" className="w-2 h-6" />
                   </div>
@@ -73,7 +73,7 @@ export default async function DashboardIndex() {
               <div className="h-8 mb-2">
                 <div className="relative">
                   <div className="absolute top-0 right-0 flex">
-                    <div className="bg-zinc-800 h-8 ml-2 py-1 px-3 rounded-lg hover:ring-1 hover:ring-lime-500 hover:bg-violet-800">
+                    <div className="bg-indigo-950 h-8 ml-2 py-1 px-3 rounded-lg hover:ring-1 hover:ring-lime-500 hover:bg-violet-900">
                       <Link
                         className="flex rounded-lg focus:outline-offset-1 focus:outline-lime-600"
                         href="/dashboard/epiphany"
@@ -85,7 +85,7 @@ export default async function DashboardIndex() {
                         />
                       </Link>
                     </div>
-                    <div className="bg-zinc-800 h-8 ml-2 py-1 px-3 rounded-lg hover:ring-1 hover:ring-lime-500 hover:bg-violet-800">
+                    <div className="bg-indigo-950 h-8 ml-2 py-1 px-3 rounded-lg hover:ring-1 hover:ring-lime-500 hover:bg-violet-900">
                       <Link
                         className="flex rounded-lg focus:outline-offset-1 focus:outline-lime-600"
                         href="/dashboard/epiphany/create"
@@ -121,7 +121,7 @@ export default async function DashboardIndex() {
               <div className="h-8 mb-2">
                 <div className="relative">
                   <div className="absolute top-0 right-0 flex">
-                    <div className="bg-zinc-800 h-8 ml-2 py-1 px-3 rounded-lg hover:ring-1 hover:ring-lime-500 hover:bg-violet-800">
+                    <div className="bg-indigo-950 h-8 ml-2 py-1 px-3 rounded-lg hover:ring-1 hover:ring-lime-500 hover:bg-violet-900">
                       <Link
                         className="flex rounded-lg focus:outline-offset-1 focus:outline-lime-600"
                         href="/dashboard/passing-thought"
@@ -133,7 +133,7 @@ export default async function DashboardIndex() {
                         />
                       </Link>
                     </div>
-                    <div className="bg-zinc-800 h-8 ml-2 py-1 px-3 rounded-lg hover:ring-1 hover:ring-lime-500 hover:bg-violet-800">
+                    <div className="bg-indigo-950 h-8 ml-2 py-1 px-3 rounded-lg hover:ring-1 hover:ring-lime-500 hover:bg-violet-900">
                       <Link
                         className="flex rounded-lg focus:outline-offset-1 focus:outline-rose-600"
                         href="/dashboard/passing-thought/create"
@@ -171,7 +171,7 @@ export default async function DashboardIndex() {
               <div className="h-8 mb-2">
                 <div className="relative">
                   <div className="absolute top-0 right-0 flex">
-                    <div className="bg-zinc-800 h-8 ml-2 py-1 px-3 rounded-lg hover:ring-1 hover:ring-lime-500 hover:bg-violet-800">
+                    <div className="bg-indigo-950 h-8 ml-2 py-1 px-3 rounded-lg hover:ring-1 hover:ring-lime-500 hover:bg-violet-900">
                       <Link
                         className="flex rounded-lg focus:outline-offset-1 focus:outline-lime-600"
                         href="/dashboard/todo"
@@ -183,7 +183,7 @@ export default async function DashboardIndex() {
                         />
                       </Link>
                     </div>
-                    <div className="bg-zinc-800 h-8 ml-2 py-1 px-3 rounded-lg hover:ring-1 hover:ring-lime-500 hover:bg-violet-800">
+                    <div className="bg-indigo-950 h-8 ml-2 py-1 px-3 rounded-lg hover:ring-1 hover:ring-lime-500 hover:bg-violet-900">
                       <Link
                         className="flex rounded-lg focus:outline-offset-1 focus:outline-cyan-600"
                         href="/dashboard/todo/create"
@@ -219,7 +219,7 @@ export default async function DashboardIndex() {
               <div className="h-8 mb-2">
                 <div className="relative">
                   <div className="absolute top-0 right-0 flex">
-                    <div className="bg-zinc-800 h-8 ml-2 py-1 px-3 rounded-lg hover:ring-1 hover:ring-lime-500 hover:bg-violet-800">
+                    <div className="bg-indigo-950 h-8 ml-2 py-1 px-3 rounded-lg hover:ring-1 hover:ring-lime-500 hover:bg-violet-900">
                       <Link
                         className="flex rounded-lg focus:outline-offset-1 focus:outline-lime-600"
                         href="/dashboard/void"
@@ -231,7 +231,7 @@ export default async function DashboardIndex() {
                         />
                       </Link>
                     </div>
-                    <div className="bg-zinc-800 h-8 ml-2 py-1 px-3 rounded-lg hover:ring-1 hover:ring-lime-500 hover:bg-violet-800">
+                    <div className="bg-indigo-950 h-8 ml-2 py-1 px-3 rounded-lg hover:ring-1 hover:ring-lime-500 hover:bg-violet-900">
                       <Link
                         className="flex rounded-lg focus:outline-offset-1 focus:outline-orange-600"
                         href="/dashboard/void/create"
