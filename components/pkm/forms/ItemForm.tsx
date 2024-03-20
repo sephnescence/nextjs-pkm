@@ -27,14 +27,16 @@ export default function ItemForm({
   const [content, setContent] = useState(() => defaultContent || '')
   const [name, setName] = useState(() => defaultName || '')
   const [summary, setSummary] = useState(() => defaultSummary || '')
-  const [idle, setIdle] = useState(() => false)
+  const [interactive, setInteractive] = useState(() => false)
+  const [submitting, setSubmitting] = useState(() => false)
+
   // Prevent form interaction while submitting and while the page is rendering
   useEffect(() => {
-    setIdle(true)
-  }, [idle])
+    setInteractive(true)
+  }, [interactive])
 
   const handleSubmit = async () => {
-    setIdle(false)
+    setSubmitting(true)
 
     const res = await fetch(
       new Request(apiEndpoint, {
@@ -58,7 +60,9 @@ export default function ItemForm({
       })
     }
 
-    setIdle(true)
+    if (!resJson.redirect) {
+      setSubmitting(false)
+    }
 
     if (resJson.success === false && resJson.redirect) {
       router.replace(resJson.redirect)
@@ -87,7 +91,7 @@ export default function ItemForm({
                 className="min-w-full bg-slate-700 p-4"
                 name="name"
                 defaultValue={name}
-                disabled={!idle}
+                disabled={!interactive || submitting}
                 onChange={(e) => setName(e.target.value)}
               />
             </label>
@@ -106,7 +110,7 @@ export default function ItemForm({
                 className="min-w-full bg-slate-700 p-4"
                 name="summary"
                 defaultValue={summary}
-                disabled={!idle}
+                disabled={!interactive || submitting}
                 onChange={(e) => setSummary(e.target.value)}
               />
             </label>
@@ -124,7 +128,7 @@ export default function ItemForm({
                 className="min-w-full min-h-96 bg-slate-700 p-4"
                 name="content"
                 defaultValue={content}
-                disabled={!idle}
+                disabled={!interactive || submitting}
                 onChange={(e) => setContent(e.target.value)}
               />
             </label>
@@ -136,12 +140,12 @@ export default function ItemForm({
             )}
           </div>
           <button
-            className={`px-4 py-2 rounded-lg bg-blue-600  ${(!idle && 'bg-gray-400') || 'hover:bg-blue-500'}`}
+            className={`px-4 py-2 rounded-lg bg-blue-600 ${(!interactive || submitting ? 'bg-gray-400' : '') || 'hover:bg-blue-500'}`}
             type="button"
             onClick={() => {
               void handleSubmit()
             }}
-            disabled={!idle}
+            disabled={!interactive || submitting}
           >
             Submit
           </button>

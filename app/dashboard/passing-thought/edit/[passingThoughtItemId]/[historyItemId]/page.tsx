@@ -1,7 +1,6 @@
 'use client'
 
 import ItemForm from '@/components/pkm/forms/ItemForm'
-import MoveTo from '@/components/pkm/forms/MoveTo'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
@@ -74,10 +73,6 @@ export default function PassingThoughtEditRoute({
         defaultContent={resJson.passingThoughtItem.content}
         defaultName={resJson.passingThoughtItem.name}
         defaultSummary={resJson.passingThoughtItem.summary}
-      />
-      <MoveTo
-        modelItemId={passingThoughtItemId}
-        historyItemId={historyItemId}
       />
     </>
   )

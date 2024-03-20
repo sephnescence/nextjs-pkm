@@ -1,4 +1,5 @@
 import { prisma } from '@/utils/db'
+import { revalidatePath } from 'next/cache'
 import { randomUUID } from 'node:crypto'
 
 type CreateEpiphanyArgs = {
@@ -74,6 +75,7 @@ export const storeEpiphanyItem = async ({
       },
     })
     .then((epiphanyItem) => {
+      revalidatePath('/dashboard')
       return {
         success: true,
         epiphanyItem,
@@ -125,6 +127,7 @@ export const updateEpiphanyItem = async ({
       }),
     ])
     .then((epiphanyItem) => {
+      revalidatePath('/dashboard')
       return {
         success: true,
         epiphanyItem: epiphanyItem[1],

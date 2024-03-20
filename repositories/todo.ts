@@ -1,4 +1,5 @@
 import { prisma } from '@/utils/db'
+import { revalidatePath } from 'next/cache'
 import { randomUUID } from 'node:crypto'
 
 type CreateTodoArgs = {
@@ -74,6 +75,7 @@ export const storeTodoItem = async ({
       },
     })
     .then((todoItem) => {
+      revalidatePath('/dashboard')
       return {
         success: true,
         todoItem,
@@ -125,6 +127,7 @@ export const updateTodoItem = async ({
       }),
     ])
     .then((todoItem) => {
+      revalidatePath('/dashboard')
       return {
         success: true,
         todoItem: todoItem[1],

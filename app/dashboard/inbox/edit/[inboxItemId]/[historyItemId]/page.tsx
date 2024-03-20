@@ -1,7 +1,6 @@
 'use client'
 
 import ItemForm from '@/components/pkm/forms/ItemForm'
-import MoveTo from '@/components/pkm/forms/MoveTo'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
@@ -70,7 +69,6 @@ export default function InboxEditRoute({
         defaultName={resJson.inboxItem.name}
         defaultSummary={resJson.inboxItem.summary}
       />
-      <MoveTo modelItemId={inboxItemId} historyItemId={historyItemId} />
     </>
   )
 }
