@@ -6,7 +6,7 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Personal Knowledge Management',
+  title: 'Innsight',
   icons: {
     icon: '/pkm.svg',
   },
