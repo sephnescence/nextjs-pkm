@@ -1,7 +1,6 @@
 import { getSuiteDashboard } from '@/repositories/suite'
 import { getUserAuth } from '@/utils/auth'
 import { redirect } from 'next/navigation'
-import SuiteTile from './forms/SuiteTile'
 import Link from 'next/link'
 
 const SuitesSidenav = async () => {

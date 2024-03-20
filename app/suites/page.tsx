@@ -1,7 +1,6 @@
 'use server'
 
 import SuiteDashboard from '@/components/pkm/Suites/SuiteDashboard'
-import { getSuiteDashboard } from '@/repositories/suite'
 import { getUserAuth } from '@/utils/auth'
 import { redirect } from 'next/navigation'
 
@@ -11,8 +10,6 @@ export default async function SuitesIndex() {
   if (!user) {
     return redirect('/')
   }
-
-  const suiteDashboard = await getSuiteDashboard(user.id)
 
   return (
     <>
