@@ -34,7 +34,15 @@ export default function DashboardLayout({
             <UserButton afterSignOutUrl="/" />
           </div>
         </div>
-        <div className="mx-4 mt-16 md:mt-4 mb-4">{children}</div>
+        <div className="mx-4 md:mx-0 mt-16 md:mt-0 mb-4 md:mb-0">
+          <div className="grid grid-cols-1 xl:grid-cols-6 xl:min-h-screen">
+            <div className="xl:grid-cols-1 hidden xl:block pl-4 pr-2 py-4">
+              {/* Suites will go here */}
+            </div>
+            <div className="xl:col-span-4 px-2 py-4">{children}</div>
+            <div className="hidden xl:block grid-cols-1 pl-2 pr-4 py-4"></div>
+          </div>
+        </div>
       </SignedIn>
     </>
   )

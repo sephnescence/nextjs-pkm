@@ -53,7 +53,7 @@ export default function MoveTo({
           <div key={moveTo}>
             <form className="md:flex">
               <button
-                className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg mr-4 md:mr-0 ml-4 md:ml-0 mb-4 md:mb-0"
+                className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg mr-0 md:mr-4 ml-4 md:ml-0 mb-4 md:mb-0"
                 type="button"
                 onClick={() => {
                   void onMoveClick(modelItemId, historyItemId, moveTo)
