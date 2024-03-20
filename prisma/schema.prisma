@@ -27,6 +27,8 @@ model User {
   todo_items PkmTodo[]
   voided_passing_thought_items PkmVoid[]
   trash_items PkmTrash[]
+
+  suites Suite[]
 }
 
 model PkmHistory {
@@ -37,6 +39,10 @@ model PkmHistory {
 
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id String @db.Uuid
+
+  // We'll treat a null suite id as a message waiting for you at the front desk. I don't know what the term for this is though
+  suite Suite? @relation(fields: [suite_id], references: [id], onDelete: Cascade)
+  suite_id String? @db.Uuid
 
   epiphany_item PkmEpiphany?
   inbox_item PkmInbox?
@@ -49,6 +55,7 @@ model PkmHistory {
 
   // Add an index for non unique foreign keys
   @@index([user_id])
+  @@index([suite_id])
 }
 
 model PkmEpiphany {
@@ -165,4 +172,25 @@ model PkmTrash {
 
   // Add an index for non unique foreign keys
   @@index([user_id])
+}
+
+model Suite {
+  id String @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id String @db.Uuid
+
+  parent_suite Suite? @relation("Suiteception", fields: [parent_suite_id], references: [id], onDelete: Cascade)
+  parent_suite_id String? @db.Uuid
+  sub_suites Suite[] @relation("Suiteception")
+
+  name String @default("Please give your suite a name")
+  description String @default("Please describe the suite")
+
+  // Add an index for non unique foreign keys
+  @@index([user_id])
+
+  pkm_history PkmHistory[]
 }

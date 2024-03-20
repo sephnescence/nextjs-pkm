@@ -70,92 +70,90 @@ export default function ItemForm({
   }
 
   return (
-    <>
-      <div className="mx-4 my-4">
-        {actionData?.errors.fieldErrors.general && (
-          <div className="text-red-500">
-            {actionData.errors.fieldErrors.general}
+    <div className="">
+      {actionData?.errors.fieldErrors.general && (
+        <div className="text-red-500">
+          {actionData.errors.fieldErrors.general}
+        </div>
+      )}
+      <div className="text-5xl mb-4">{pageTitle}</div>
+      <form className="flex" onSubmit={() => false}>
+        <div className="w-full">
+          <div className="mb-4">
+            <label>
+              <div className="mb-4">Name</div>
+              <input
+                type="text"
+                className="min-w-full bg-slate-700 p-4"
+                name="name"
+                defaultValue={name}
+                disabled={!idle}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </label>
+            <br />
+            {actionData?.errors.fieldErrors.name && (
+              <div className="text-red-500">
+                {actionData.errors.fieldErrors?.name}
+              </div>
+            )}
           </div>
-        )}
-        <div className="text-5xl mb-4">{pageTitle}</div>
-        <form className="flex" onSubmit={() => false}>
-          <div className="w-full">
-            <div className="mb-4">
-              <label>
-                <div className="mb-4">Name</div>
-                <input
-                  type="text"
-                  className="min-w-full bg-slate-700 p-4"
-                  name="name"
-                  defaultValue={name}
-                  disabled={!idle}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </label>
-              <br />
-              {actionData?.errors.fieldErrors.name && (
-                <div className="text-red-500">
-                  {actionData.errors.fieldErrors?.name}
-                </div>
-              )}
-            </div>
-            <div className="mb-4">
-              <label>
-                <div className="mb-4">Summary</div>
-                <input
-                  type="text"
-                  className="min-w-full bg-slate-700 p-4"
-                  name="summary"
-                  defaultValue={summary}
-                  disabled={!idle}
-                  onChange={(e) => setSummary(e.target.value)}
-                />
-              </label>
-              <br />
-              {actionData?.errors.fieldErrors.summary && (
-                <div className="text-red-500">
-                  {actionData.errors.fieldErrors?.summary}
-                </div>
-              )}
-            </div>
-            <div className="mb-4">
-              <label>
-                <div className="mb-4">Content</div>
-                <textarea
-                  className="min-w-full min-h-96 bg-slate-700 p-4"
-                  name="content"
-                  defaultValue={content}
-                  disabled={!idle}
-                  onChange={(e) => setContent(e.target.value)}
-                />
-              </label>
-              <br />
-              {actionData?.errors.fieldErrors.content && (
-                <div className="text-red-500">
-                  {actionData.errors.fieldErrors?.content}
-                </div>
-              )}
-            </div>
-            <button
-              className={`px-4 py-2 rounded-lg bg-blue-600  ${(!idle && 'bg-gray-400') || 'hover:bg-blue-500'}`}
-              type="button"
-              onClick={() => {
-                void handleSubmit()
-              }}
-              disabled={!idle}
-            >
-              Submit
-            </button>
-            <button
-              className="bg-red-600 hover:bg-red-500 px-4 py-2 rounded-lg ml-4"
-              type="button"
-              onClick={() => router.push('/dashboard')}
-            >
-              Cancel
-            </button>
+          <div className="mb-4">
+            <label>
+              <div className="mb-4">Summary</div>
+              <input
+                type="text"
+                className="min-w-full bg-slate-700 p-4"
+                name="summary"
+                defaultValue={summary}
+                disabled={!idle}
+                onChange={(e) => setSummary(e.target.value)}
+              />
+            </label>
+            <br />
+            {actionData?.errors.fieldErrors.summary && (
+              <div className="text-red-500">
+                {actionData.errors.fieldErrors?.summary}
+              </div>
+            )}
           </div>
-        </form>
-      </div>
-    </>
+          <div className="mb-4">
+            <label>
+              <div className="mb-4">Content</div>
+              <textarea
+                className="min-w-full min-h-96 bg-slate-700 p-4"
+                name="content"
+                defaultValue={content}
+                disabled={!idle}
+                onChange={(e) => setContent(e.target.value)}
+              />
+            </label>
+            <br />
+            {actionData?.errors.fieldErrors.content && (
+              <div className="text-red-500">
+                {actionData.errors.fieldErrors?.content}
+              </div>
+            )}
+          </div>
+          <button
+            className={`px-4 py-2 rounded-lg bg-blue-600  ${(!idle && 'bg-gray-400') || 'hover:bg-blue-500'}`}
+            type="button"
+            onClick={() => {
+              void handleSubmit()
+            }}
+            disabled={!idle}
+          >
+            Submit
+          </button>
+          <button
+            className="bg-red-600 hover:bg-red-500 px-4 py-2 rounded-lg ml-4"
+            type="button"
+            onClick={() => router.push('/dashboard')}
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
   )
 }
