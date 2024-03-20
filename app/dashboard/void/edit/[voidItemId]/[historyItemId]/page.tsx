@@ -1,7 +1,6 @@
 'use client'
 
 import ItemForm from '@/components/pkm/forms/ItemForm'
-import MoveTo from '@/components/pkm/forms/MoveTo'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
@@ -70,7 +69,6 @@ export default function VoidEditRoute({
         defaultName={resJson.voidItem.name}
         defaultSummary={resJson.voidItem.summary}
       />
-      <MoveTo modelItemId={voidItemId} historyItemId={historyItemId} />
     </>
   )
 }

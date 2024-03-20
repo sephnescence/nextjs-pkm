@@ -1,4 +1,5 @@
 import { prisma } from '@/utils/db'
+import { revalidatePath } from 'next/cache'
 import { randomUUID } from 'node:crypto'
 
 type CreatePassingThoughtArgs = {
@@ -78,6 +79,7 @@ export const storePassingThoughtItem = async ({
       },
     })
     .then((passingThoughtItem) => {
+      revalidatePath('/dashboard')
       return {
         success: true,
         passingThoughtItem,
@@ -133,6 +135,7 @@ export const updatePassingThoughtItem = async ({
       }),
     ])
     .then((passingThoughtItem) => {
+      revalidatePath('/dashboard')
       return {
         success: true,
         passingThoughtItem: passingThoughtItem[1],

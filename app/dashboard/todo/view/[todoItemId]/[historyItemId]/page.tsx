@@ -1,3 +1,4 @@
+import MoveTo from '@/components/pkm/forms/MoveTo'
 import { getCurrentTodoItemForUser } from '@/repositories/todo'
 import { getUserAuth } from '@/utils/auth'
 import Link from 'next/link'
@@ -30,9 +31,9 @@ export default async function TodoViewRoute({
   }
 
   return (
-    <div className="mx-4 my-4">
+    <div className="">
       <div className="text-5xl mb-4">View Todo Item</div>
-      <div className="w-full">
+      <div className="w-full mb-4">
         <div className="mb-4">
           <label>
             <div className="mb-4">Name</div>
@@ -77,6 +78,7 @@ export default async function TodoViewRoute({
           </button>
         </Link>
       </div>
+      <MoveTo modelItemId={todoItemId} historyItemId={historyItemId} />
     </div>
   )
 }

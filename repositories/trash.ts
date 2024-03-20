@@ -1,4 +1,5 @@
 import { prisma } from '@/utils/db'
+import { revalidatePath } from 'next/cache'
 
 type CreateTrashArgs = {
   content: string
@@ -84,6 +85,7 @@ export const updateTrashItem = async ({
       }),
     ])
     .then((trashItem) => {
+      revalidatePath('/dashboard')
       return {
         success: true,
         trashItem: trashItem[1],
