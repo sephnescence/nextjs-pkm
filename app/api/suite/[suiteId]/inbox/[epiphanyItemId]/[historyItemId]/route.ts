@@ -140,6 +140,7 @@ export const PATCH = async (
     name: inboxArgs.name,
     summary: inboxArgs.summary,
     historyItemId,
+    suiteId,
     inboxItemId,
     userId: user.id,
   })
