@@ -1,16 +1,35 @@
 'use server'
 
 import { storeInboxItem } from '@/repositories/inbox'
+import { getSuiteForUser } from '@/repositories/suite'
 import { getUserAuth } from '@/utils/auth'
 import { revalidatePath } from 'next/cache'
 import { NextResponse } from 'next/server'
 
-export const POST = async (request: Request) => {
+type SuiteInboxCreateArgs = {
+  params: {
+    suiteId: string
+  }
+}
+
+export const POST = async (
+  request: Request,
+  { params: { suiteId } }: SuiteInboxCreateArgs,
+) => {
   const user = await getUserAuth()
 
   if (!user) {
     return NextResponse.json({
       success: true,
+      redirect: '/',
+    })
+  }
+
+  const existingSuite = await getSuiteForUser(suiteId, user.id)
+
+  if (!existingSuite) {
+    return NextResponse.json({
+      success: false,
       redirect: '/',
     })
   }
@@ -58,6 +77,7 @@ export const POST = async (request: Request) => {
     content: inboxArgs.content,
     name: inboxArgs.name,
     summary: inboxArgs.summary,
+    suiteId,
   })
 
   if (!newInboxItem) {
@@ -75,6 +95,6 @@ export const POST = async (request: Request) => {
 
   return NextResponse.json({
     success: true,
-    redirect: `/dashboard/inbox/view/${newInboxItem.inboxItem?.model_id}/${newInboxItem.inboxItem?.history_id}`,
+    redirect: `/suite/${suiteId}/inbox/view/${newInboxItem.inboxItem?.model_id}/${newInboxItem.inboxItem?.history_id}`,
   })
 }

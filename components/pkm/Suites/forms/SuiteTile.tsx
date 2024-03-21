@@ -17,7 +17,7 @@ const SuiteTile = ({ id, name, description }: SuiteTileProps) => {
       key={id}
       className="bg-indigo-900 rounded-xl p-4 m-1 hover:ring-1 hover:ring-indigo-500 min-h-48"
     >
-      <Link href={`/suites/view/${id}`}>
+      <Link href={`/suite/${id}`}>
         <div className="h-28">
           <div className="text-lg mb-2 line-clamp-1">{name}</div>
           <div className="text-sm line-clamp-4">{description}</div>

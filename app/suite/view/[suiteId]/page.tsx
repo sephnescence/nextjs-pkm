@@ -52,7 +52,7 @@ export default async function SuiteViewRoute({
             />
           </label>
         </div>
-        <Link href={`/suites/edit/${suiteId}`}>
+        <Link href={`/suite/edit/${suiteId}`}>
           <button
             className="border-solid border-2 border-blue-600 hover:bg-blue-600 px-4 py-2 rounded-lg mr-4"
             type="button"

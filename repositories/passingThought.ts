@@ -7,6 +7,7 @@ type CreatePassingThoughtArgs = {
   name: string
   summary: string
   userId: string
+  suiteId?: string
 }
 
 export type UpdatePassingThoughtArgs = CreatePassingThoughtArgs & {
@@ -17,6 +18,7 @@ export type UpdatePassingThoughtArgs = CreatePassingThoughtArgs & {
 // Get the current passingThought item for the user
 // Can add another method later if we ever need to grab the non-current one
 export const getCurrentPassingThoughtItemForUser = async (
+  suiteId: string,
   passingThoughtItemId: string,
   historyItemId: string,
   userId: string,
@@ -27,6 +29,7 @@ export const getCurrentPassingThoughtItemForUser = async (
       is_current: true,
       history_id: historyItemId,
       model_id: passingThoughtItemId,
+      suite_id: suiteId,
     },
     select: {
       passing_thought_item: {
@@ -53,6 +56,7 @@ export const storePassingThoughtItem = async ({
   content,
   name,
   summary,
+  suiteId,
 }: CreatePassingThoughtArgs) => {
   const modelId = randomUUID()
 
@@ -66,6 +70,7 @@ export const storePassingThoughtItem = async ({
         is_current: true,
         model_type: 'PkmPassingThought',
         model_id: modelId,
+        suite_id: suiteId,
         passing_thought_item: {
           create: {
             content,
@@ -100,6 +105,7 @@ export const updatePassingThoughtItem = async ({
   historyItemId,
   passingThoughtItemId,
   userId,
+  suiteId,
 }: UpdatePassingThoughtArgs) => {
   const now = new Date()
   const voidAt = new Date(now.setMonth(now.getMonth() + 1))
@@ -121,6 +127,7 @@ export const updatePassingThoughtItem = async ({
           is_current: true,
           model_type: 'PkmPassingThought',
           model_id: passingThoughtItemId,
+          suite_id: suiteId,
           passing_thought_item: {
             create: {
               content,

@@ -1,16 +1,35 @@
 'use server'
 
 import { storeEpiphanyItem } from '@/repositories/epiphany'
+import { getSuiteForUser } from '@/repositories/suite'
 import { getUserAuth } from '@/utils/auth'
 import { revalidatePath } from 'next/cache'
 import { NextResponse } from 'next/server'
 
-export const POST = async (request: Request) => {
+type SuiteEpiphanyCreateArgs = {
+  params: {
+    suiteId: string
+  }
+}
+
+export const POST = async (
+  request: Request,
+  { params: { suiteId } }: SuiteEpiphanyCreateArgs,
+) => {
   const user = await getUserAuth()
 
   if (!user) {
     return NextResponse.json({
       success: true,
+      redirect: '/',
+    })
+  }
+
+  const existingSuite = await getSuiteForUser(suiteId, user.id)
+
+  if (!existingSuite) {
+    return NextResponse.json({
+      success: false,
       redirect: '/',
     })
   }
@@ -58,6 +77,7 @@ export const POST = async (request: Request) => {
     content: epiphanyArgs.content,
     name: epiphanyArgs.name,
     summary: epiphanyArgs.summary,
+    suiteId,
   })
 
   if (!newEpiphanyItem) {
@@ -75,6 +95,6 @@ export const POST = async (request: Request) => {
 
   return NextResponse.json({
     success: true,
-    redirect: `/dashboard/epiphany/view/${newEpiphanyItem.epiphanyItem?.model_id}/${newEpiphanyItem.epiphanyItem?.history_id}`,
+    redirect: `/suite/${suiteId}/epiphany/view/${newEpiphanyItem.epiphanyItem?.model_id}/${newEpiphanyItem.epiphanyItem?.history_id}`,
   })
 }

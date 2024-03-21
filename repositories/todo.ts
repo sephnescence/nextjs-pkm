@@ -7,6 +7,7 @@ type CreateTodoArgs = {
   name: string
   summary: string
   userId: string
+  suiteId?: string
 }
 
 export type UpdateTodoArgs = CreateTodoArgs & {
@@ -17,6 +18,7 @@ export type UpdateTodoArgs = CreateTodoArgs & {
 // Get the current todo item for the user
 // Can add another method later if we ever need to grab the non-current one
 export const getCurrentTodoItemForUser = async (
+  suiteId: string,
   todoItemId: string,
   historyItemId: string,
   userId: string,
@@ -27,6 +29,7 @@ export const getCurrentTodoItemForUser = async (
       is_current: true,
       history_id: historyItemId,
       model_id: todoItemId,
+      suite_id: suiteId,
     },
     select: {
       todo_item: {
@@ -53,6 +56,7 @@ export const storeTodoItem = async ({
   content,
   name,
   summary,
+  suiteId,
 }: CreateTodoArgs) => {
   const modelId = randomUUID()
 
@@ -63,6 +67,7 @@ export const storeTodoItem = async ({
         is_current: true,
         model_type: 'PkmTodo',
         model_id: modelId,
+        suite_id: suiteId,
         todo_item: {
           create: {
             content,
@@ -96,6 +101,7 @@ export const updateTodoItem = async ({
   historyItemId,
   todoItemId,
   userId,
+  suiteId,
 }: UpdateTodoArgs) => {
   return await prisma
     .$transaction([
@@ -114,6 +120,7 @@ export const updateTodoItem = async ({
           is_current: true,
           model_type: 'PkmTodo',
           model_id: todoItemId,
+          suite_id: suiteId,
           todo_item: {
             create: {
               content,

@@ -13,7 +13,7 @@ export default function Home() {
           system!
         </p>
         <div>
-          <Link href={userId ? '/dashboard' : '/sign-in'}>
+          <Link href={userId ? '/foyer' : '/sign-in'}>
             <button
               className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg"
               type="button"
