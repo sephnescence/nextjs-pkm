@@ -1,4 +1,4 @@
-import { getSuiteDashboard } from '@/repositories/suite'
+import { getSuitesForUser } from '@/repositories/suite'
 import { getUserAuth } from '@/utils/auth'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
@@ -10,7 +10,7 @@ const SuitesSidenav = async () => {
     return redirect('/')
   }
 
-  const suiteDashboard = await getSuiteDashboard(user.id)
+  const suiteDashboard = await getSuitesForUser(user.id)
 
   return (
     <>

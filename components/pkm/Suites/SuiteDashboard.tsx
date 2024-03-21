@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import SuiteTile from './forms/SuiteTile'
-import { getSuiteDashboard } from '@/repositories/suite'
+import { getSuitesForUser } from '@/repositories/suite'
 import { getUserAuth } from '@/utils/auth'
 import { redirect } from 'next/navigation'
 
@@ -11,12 +11,12 @@ const SuiteDashboard = async () => {
     return redirect('/')
   }
 
-  const suiteDashboard = await getSuiteDashboard(user.id)
+  const suiteDashboard = await getSuitesForUser(user.id)
 
   return (
     <>
       <div className="ml-1 mb-2">
-        <Link href="/suites/create">
+        <Link href="/suite/create">
           <button
             className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg mr-4"
             type="button"

@@ -6,6 +6,7 @@ type CreateTrashArgs = {
   name: string
   summary: string
   userId: string
+  suiteId?: string
 }
 
 export type UpdateTrashArgs = CreateTrashArgs & {
@@ -16,6 +17,7 @@ export type UpdateTrashArgs = CreateTrashArgs & {
 // Get the current trash item for the user
 // Can add another method later if we ever need to grab the non-current one
 export const getCurrentTrashItemForUser = async (
+  suiteId: string,
   trashItemId: string,
   historyItemId: string,
   userId: string,
@@ -26,6 +28,7 @@ export const getCurrentTrashItemForUser = async (
       is_current: true,
       history_id: historyItemId,
       model_id: trashItemId,
+      suite_id: suiteId,
     },
     select: {
       trash_item: {
@@ -54,6 +57,7 @@ export const updateTrashItem = async ({
   historyItemId,
   trashItemId,
   userId,
+  suiteId,
 }: UpdateTrashArgs) => {
   return await prisma
     .$transaction([
@@ -72,6 +76,7 @@ export const updateTrashItem = async ({
           is_current: true,
           model_type: 'PkmTrash',
           model_id: trashItemId,
+          suite_id: suiteId,
           trash_item: {
             create: {
               content,

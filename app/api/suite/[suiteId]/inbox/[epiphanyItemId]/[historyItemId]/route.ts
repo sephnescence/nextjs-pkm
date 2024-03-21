@@ -8,8 +8,9 @@ import { getUserAuth } from '@/utils/auth'
 import { revalidatePath } from 'next/cache'
 import { NextResponse } from 'next/server'
 
-type InputGetParams = {
+type InboxGetParams = {
   params: {
+    suiteId: string
     historyItemId: string
     inboxItemId: string
   }
@@ -17,6 +18,7 @@ type InputGetParams = {
 
 type InboxPatchParams = {
   params: {
+    suiteId: string
     inboxItemId: string
     historyItemId: string
   }
@@ -24,7 +26,7 @@ type InboxPatchParams = {
 
 export const GET = async (
   request: Request,
-  { params: { inboxItemId, historyItemId } }: InputGetParams,
+  { params: { suiteId, inboxItemId, historyItemId } }: InboxGetParams,
 ) => {
   const user = await getUserAuth()
 
@@ -35,13 +37,18 @@ export const GET = async (
     })
   }
 
-  const existingInbox = await getCurrentInboxItemForUser(
+  const existingInboxHistoryItem = await getCurrentInboxItemForUser(
+    suiteId,
     inboxItemId,
     historyItemId,
     user.id,
   )
 
-  if (!existingInbox) {
+  if (
+    !existingInboxHistoryItem ||
+    !existingInboxHistoryItem.suite ||
+    !existingInboxHistoryItem.inbox_item
+  ) {
     return NextResponse.json({
       success: false,
       redirect: '/',
@@ -50,17 +57,22 @@ export const GET = async (
 
   return NextResponse.json({
     success: true,
+    suite: {
+      id: existingInboxHistoryItem.suite.id,
+      name: existingInboxHistoryItem.suite.name,
+      description: existingInboxHistoryItem.suite.description,
+    },
     inboxItem: {
-      content: existingInbox.content,
-      name: existingInbox.name,
-      summary: existingInbox.summary,
+      content: existingInboxHistoryItem.inbox_item.content,
+      name: existingInboxHistoryItem.inbox_item.name,
+      summary: existingInboxHistoryItem.inbox_item.summary,
     },
   })
 }
 
 export const PATCH = async (
   request: Request,
-  { params: { inboxItemId, historyItemId } }: InboxPatchParams,
+  { params: { suiteId, inboxItemId, historyItemId } }: InboxPatchParams,
 ) => {
   const user = await getUserAuth()
 
@@ -72,6 +84,7 @@ export const PATCH = async (
   }
 
   const existingInbox = await getCurrentInboxItemForUser(
+    suiteId,
     inboxItemId,
     historyItemId,
     user.id,
@@ -146,6 +159,6 @@ export const PATCH = async (
 
   return NextResponse.json({
     success: true,
-    redirect: `/dashboard/inbox/view/${newInboxItem.inboxItem?.model_id}/${newInboxItem.inboxItem?.history_id}`,
+    redirect: `/suite/${suiteId}/inbox/view/${newInboxItem.inboxItem?.model_id}/${newInboxItem.inboxItem?.history_id}`,
   })
 }

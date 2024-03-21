@@ -10,6 +10,7 @@ import { NextResponse } from 'next/server'
 
 type EpiphanyGetParams = {
   params: {
+    suiteId: string
     historyItemId: string
     epiphanyItemId: string
   }
@@ -17,6 +18,7 @@ type EpiphanyGetParams = {
 
 type EpiphanyPatchParams = {
   params: {
+    suiteId: string
     epiphanyItemId: string
     historyItemId: string
   }
@@ -24,7 +26,7 @@ type EpiphanyPatchParams = {
 
 export const GET = async (
   request: Request,
-  { params: { epiphanyItemId, historyItemId } }: EpiphanyGetParams,
+  { params: { suiteId, epiphanyItemId, historyItemId } }: EpiphanyGetParams,
 ) => {
   const user = await getUserAuth()
 
@@ -35,13 +37,18 @@ export const GET = async (
     })
   }
 
-  const existingEpiphany = await getCurrentEpiphanyItemForUser(
+  const existingEpiphanyHistoryItem = await getCurrentEpiphanyItemForUser(
+    suiteId,
     epiphanyItemId,
     historyItemId,
     user.id,
   )
 
-  if (!existingEpiphany) {
+  if (
+    !existingEpiphanyHistoryItem ||
+    !existingEpiphanyHistoryItem.suite ||
+    !existingEpiphanyHistoryItem.epiphany_item
+  ) {
     return NextResponse.json({
       success: false,
       redirect: '/',
@@ -50,17 +57,22 @@ export const GET = async (
 
   return NextResponse.json({
     success: true,
+    suite: {
+      id: existingEpiphanyHistoryItem.suite.id,
+      name: existingEpiphanyHistoryItem.suite.name,
+      description: existingEpiphanyHistoryItem.suite.description,
+    },
     epiphanyItem: {
-      content: existingEpiphany.content,
-      name: existingEpiphany.name,
-      summary: existingEpiphany.summary,
+      content: existingEpiphanyHistoryItem.epiphany_item.content,
+      name: existingEpiphanyHistoryItem.epiphany_item.name,
+      summary: existingEpiphanyHistoryItem.epiphany_item.summary,
     },
   })
 }
 
 export const PATCH = async (
   request: Request,
-  { params: { epiphanyItemId, historyItemId } }: EpiphanyPatchParams,
+  { params: { suiteId, epiphanyItemId, historyItemId } }: EpiphanyPatchParams,
 ) => {
   const user = await getUserAuth()
 
@@ -72,6 +84,7 @@ export const PATCH = async (
   }
 
   const existingEpiphany = await getCurrentEpiphanyItemForUser(
+    suiteId,
     epiphanyItemId,
     historyItemId,
     user.id,
@@ -146,6 +159,6 @@ export const PATCH = async (
 
   return NextResponse.json({
     success: true,
-    redirect: `/dashboard/epiphany/view/${newEpiphanyItem.epiphanyItem?.model_id}/${newEpiphanyItem.epiphanyItem?.history_id}`,
+    redirect: `/suite/${suiteId}/epiphany/view/${newEpiphanyItem.epiphanyItem?.model_id}/${newEpiphanyItem.epiphanyItem?.history_id}`,
   })
 }

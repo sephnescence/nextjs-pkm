@@ -7,6 +7,7 @@ type CreateVoidArgs = {
   name: string
   summary: string
   userId: string
+  suiteId?: string
 }
 
 export type UpdateVoidArgs = CreateVoidArgs & {
@@ -17,6 +18,7 @@ export type UpdateVoidArgs = CreateVoidArgs & {
 // Get the current void item for the user
 // Can add another method later if we ever need to grab the non-current one
 export const getCurrentVoidItemForUser = async (
+  suiteId: string,
   voidItemId: string,
   historyItemId: string,
   userId: string,
@@ -27,6 +29,7 @@ export const getCurrentVoidItemForUser = async (
       is_current: true,
       history_id: historyItemId,
       model_id: voidItemId,
+      suite_id: suiteId,
     },
     select: {
       void_item: {
@@ -53,6 +56,7 @@ export const storeVoidItem = async ({
   content,
   name,
   summary,
+  suiteId,
 }: CreateVoidArgs) => {
   const modelId = randomUUID()
 
@@ -63,6 +67,7 @@ export const storeVoidItem = async ({
         is_current: true,
         model_type: 'PkmVoid',
         model_id: modelId,
+        suite_id: suiteId,
         void_item: {
           create: {
             content,
@@ -96,6 +101,7 @@ export const updateVoidItem = async ({
   historyItemId,
   voidItemId,
   userId,
+  suiteId,
 }: UpdateVoidArgs) => {
   return await prisma
     .$transaction([
@@ -114,6 +120,7 @@ export const updateVoidItem = async ({
           is_current: true,
           model_type: 'PkmVoid',
           model_id: voidItemId,
+          suite_id: suiteId,
           void_item: {
             create: {
               content,

@@ -1,8 +1,11 @@
+'use client'
+
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 type ItemFormProps = {
   pageTitle: string
+  cancelUrl?: string
   apiEndpoint: string
   apiMethod: string
   defaultContent?: string
@@ -12,6 +15,7 @@ type ItemFormProps = {
 
 export default function ItemForm({
   pageTitle,
+  cancelUrl,
   apiEndpoint,
   apiMethod,
   defaultContent,
@@ -152,7 +156,7 @@ export default function ItemForm({
           <button
             className="bg-red-600 hover:bg-red-500 px-4 py-2 rounded-lg ml-4"
             type="button"
-            onClick={() => router.push('/dashboard')}
+            onClick={() => router.push(cancelUrl || '/dashboard')}
           >
             Cancel
           </button>

@@ -7,6 +7,7 @@ type CreateInboxArgs = {
   name: string
   summary: string
   userId: string
+  suiteId?: string
 }
 
 export type UpdateInboxArgs = CreateInboxArgs & {
@@ -17,6 +18,7 @@ export type UpdateInboxArgs = CreateInboxArgs & {
 // Get the current inbox item for the user
 // Can add another method later if we ever need to grab the non-current one
 export const getCurrentInboxItemForUser = async (
+  suiteId: string,
   inboxItemId: string,
   historyItemId: string,
   userId: string,
@@ -27,6 +29,7 @@ export const getCurrentInboxItemForUser = async (
       is_current: true,
       history_id: historyItemId,
       model_id: inboxItemId,
+      suite_id: suiteId,
     },
     select: {
       inbox_item: {
@@ -38,14 +41,21 @@ export const getCurrentInboxItemForUser = async (
           history_id: true,
         },
       },
+      suite: {
+        select: {
+          id: true,
+          name: true,
+          description: true,
+        },
+      },
     },
   })
 
-  if (!inboxItem || !inboxItem.inbox_item) {
+  if (!inboxItem || !inboxItem.inbox_item || !inboxItem.suite) {
     return null
   }
 
-  return inboxItem.inbox_item
+  return inboxItem
 }
 
 export const storeInboxItem = async ({
@@ -53,6 +63,7 @@ export const storeInboxItem = async ({
   content,
   name,
   summary,
+  suiteId,
 }: CreateInboxArgs) => {
   const modelId = randomUUID()
 
@@ -63,6 +74,7 @@ export const storeInboxItem = async ({
         is_current: true,
         model_type: 'PkmInbox',
         model_id: modelId,
+        suite_id: suiteId,
         inbox_item: {
           create: {
             content,
@@ -96,6 +108,7 @@ export const updateInboxItem = async ({
   historyItemId,
   inboxItemId,
   userId,
+  suiteId,
 }: UpdateInboxArgs) => {
   return await prisma
     .$transaction([
@@ -114,6 +127,7 @@ export const updateInboxItem = async ({
           is_current: true,
           model_type: 'PkmInbox',
           model_id: inboxItemId,
+          suite_id: suiteId,
           inbox_item: {
             create: {
               content,

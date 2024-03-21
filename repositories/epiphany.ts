@@ -7,6 +7,7 @@ type CreateEpiphanyArgs = {
   name: string
   summary: string
   userId: string
+  suiteId?: string
 }
 
 export type UpdateEpiphanyArgs = CreateEpiphanyArgs & {
@@ -17,6 +18,7 @@ export type UpdateEpiphanyArgs = CreateEpiphanyArgs & {
 // Get the current epiphany item for the user
 // Can add another method later if we ever need to grab the non-current one
 export const getCurrentEpiphanyItemForUser = async (
+  suiteId: string,
   epiphanyItemId: string,
   historyItemId: string,
   userId: string,
@@ -27,6 +29,7 @@ export const getCurrentEpiphanyItemForUser = async (
       is_current: true,
       history_id: historyItemId,
       model_id: epiphanyItemId,
+      suite_id: suiteId,
     },
     select: {
       epiphany_item: {
@@ -38,14 +41,21 @@ export const getCurrentEpiphanyItemForUser = async (
           history_id: true,
         },
       },
+      suite: {
+        select: {
+          id: true,
+          name: true,
+          description: true,
+        },
+      },
     },
   })
 
-  if (!epiphanyItem || !epiphanyItem.epiphany_item) {
+  if (!epiphanyItem || !epiphanyItem.epiphany_item || !epiphanyItem.suite) {
     return null
   }
 
-  return epiphanyItem.epiphany_item
+  return epiphanyItem
 }
 
 export const storeEpiphanyItem = async ({
@@ -53,6 +63,7 @@ export const storeEpiphanyItem = async ({
   content,
   name,
   summary,
+  suiteId,
 }: CreateEpiphanyArgs) => {
   const modelId = randomUUID()
 
@@ -63,6 +74,7 @@ export const storeEpiphanyItem = async ({
         is_current: true,
         model_type: 'PkmEpiphany',
         model_id: modelId,
+        suite_id: suiteId,
         epiphany_item: {
           create: {
             content,
@@ -96,6 +108,7 @@ export const updateEpiphanyItem = async ({
   historyItemId,
   epiphanyItemId,
   userId,
+  suiteId,
 }: UpdateEpiphanyArgs) => {
   return await prisma
     .$transaction([
@@ -114,6 +127,7 @@ export const updateEpiphanyItem = async ({
           is_current: true,
           model_type: 'PkmEpiphany',
           model_id: epiphanyItemId,
+          suite_id: suiteId,
           epiphany_item: {
             create: {
               content,
