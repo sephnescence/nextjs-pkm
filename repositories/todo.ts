@@ -41,14 +41,21 @@ export const getCurrentTodoItemForUser = async (
           history_id: true,
         },
       },
+      suite: {
+        select: {
+          id: true,
+          name: true,
+          description: true,
+        },
+      },
     },
   })
 
-  if (!todoItem || !todoItem.todo_item) {
+  if (!todoItem || !todoItem.todo_item || !todoItem.suite) {
     return null
   }
 
-  return todoItem.todo_item
+  return todoItem
 }
 
 export const storeTodoItem = async ({
