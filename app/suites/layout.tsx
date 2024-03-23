@@ -1,6 +1,6 @@
 import TopNav from '@/components/nav/TopNav'
 
-export default function DashboardLayout({
+export default function SuitesLayout({
   children,
 }: Readonly<{
   children: React.ReactNode

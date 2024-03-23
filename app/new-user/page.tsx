@@ -23,9 +23,15 @@ export default async function NewUserIndex() {
         clerkId: clerkUserId,
         email: clerkUser.emailAddresses[0].emailAddress,
         username: clerkUser.emailAddresses[0].emailAddress,
+        suites: {
+          create: {
+            name: 'Foyer',
+            description: 'Enjoy your stay at Innsight',
+          },
+        },
       },
     })
   }
 
-  redirect('/dashboard')
+  redirect('/foyer')
 }

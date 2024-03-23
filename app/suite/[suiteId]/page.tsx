@@ -44,9 +44,8 @@ export default async function SuiteDashboardIndex({
         This will show the button summary of the Suite
       </div> */}
       <div className="grid grid-cols-1 md:grid-cols-2">
-        {/* <div className="md:mr-1">Content?</div> */}
-        {/* <div className="hidden sm:grid md:ml-1"> */}
-        <div className="sm:grid md:ml-1">
+        <div className="md:mr-1 bg-indigo-900">Content?</div>
+        <div className="hidden sm:grid md:ml-1">
           <div className="mb-8">
             <div className="h-8 mb-2">
               <div className="relative">

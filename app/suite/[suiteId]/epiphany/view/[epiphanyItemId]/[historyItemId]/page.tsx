@@ -93,7 +93,11 @@ export default async function EpiphanyViewRoute({
           </button>
         </Link>
       </div>
-      <MoveTo modelItemId={epiphanyItemId} historyItemId={historyItemId} />
+      <MoveTo
+        suiteId={suiteId}
+        modelItemId={epiphanyItemId}
+        historyItemId={historyItemId}
+      />
     </div>
   )
 }

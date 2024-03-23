@@ -87,7 +87,6 @@ export const storeInboxItem = async ({
       },
     })
     .then((inboxItem) => {
-      revalidatePath('/dashboard')
       return {
         success: true,
         inboxItem,
@@ -141,7 +140,6 @@ export const updateInboxItem = async ({
       }),
     ])
     .then((inboxItem) => {
-      revalidatePath('/dashboard')
       return {
         success: true,
         inboxItem: inboxItem[1],

@@ -3,7 +3,6 @@
 import { storeTodoItem } from '@/repositories/todo'
 import { getSuiteForUser } from '@/repositories/suite'
 import { getUserAuth } from '@/utils/auth'
-import { revalidatePath } from 'next/cache'
 import { NextResponse } from 'next/server'
 
 type SuiteTodoCreateArgs = {
@@ -90,8 +89,6 @@ export const POST = async (
       },
     })
   }
-
-  revalidatePath('/dashboard')
 
   return NextResponse.json({
     success: true,

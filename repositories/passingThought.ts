@@ -95,7 +95,6 @@ export const storePassingThoughtItem = async ({
       },
     })
     .then((passingThoughtItem) => {
-      revalidatePath('/dashboard')
       return {
         success: true,
         passingThoughtItem,
@@ -153,7 +152,6 @@ export const updatePassingThoughtItem = async ({
       }),
     ])
     .then((passingThoughtItem) => {
-      revalidatePath('/dashboard')
       return {
         success: true,
         passingThoughtItem: passingThoughtItem[1],

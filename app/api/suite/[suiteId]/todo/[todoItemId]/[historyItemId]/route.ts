@@ -2,7 +2,6 @@
 
 import { getCurrentTodoItemForUser, updateTodoItem } from '@/repositories/todo'
 import { getUserAuth } from '@/utils/auth'
-import { revalidatePath } from 'next/cache'
 import { NextResponse } from 'next/server'
 
 type TodoGetParams = {
@@ -152,8 +151,6 @@ export const PATCH = async (
       },
     })
   }
-
-  revalidatePath('/dashboard')
 
   return NextResponse.json({
     success: true,

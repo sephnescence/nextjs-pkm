@@ -2,7 +2,6 @@
 
 import { getSuiteForUser, updateSuite } from '@/repositories/suite'
 import { getUserAuth } from '@/utils/auth'
-import { revalidatePath } from 'next/cache'
 import { NextResponse } from 'next/server'
 
 type SuiteGetParams = {
@@ -113,8 +112,6 @@ export const PATCH = async (
       },
     })
   }
-
-  revalidatePath('/dashboard')
 
   return NextResponse.json({
     success: true,

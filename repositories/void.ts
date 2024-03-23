@@ -87,7 +87,6 @@ export const storeVoidItem = async ({
       },
     })
     .then((voidItem) => {
-      revalidatePath('/dashboard')
       return {
         success: true,
         voidItem,
@@ -141,7 +140,6 @@ export const updateVoidItem = async ({
       }),
     ])
     .then((voidItem) => {
-      revalidatePath('/dashboard')
       return {
         success: true,
         voidItem: voidItem[1],

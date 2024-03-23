@@ -3,7 +3,6 @@
 import { storeEpiphanyItem } from '@/repositories/epiphany'
 import { getSuiteForUser } from '@/repositories/suite'
 import { getUserAuth } from '@/utils/auth'
-import { revalidatePath } from 'next/cache'
 import { NextResponse } from 'next/server'
 
 type SuiteEpiphanyCreateArgs = {
@@ -90,8 +89,6 @@ export const POST = async (
       },
     })
   }
-
-  revalidatePath('/dashboard')
 
   return NextResponse.json({
     success: true,
