@@ -41,14 +41,25 @@ export const getCurrentPassingThoughtItemForUser = async (
           history_id: true,
         },
       },
+      suite: {
+        select: {
+          id: true,
+          name: true,
+          description: true,
+        },
+      },
     },
   })
 
-  if (!passingThoughtItem || !passingThoughtItem.passing_thought_item) {
+  if (
+    !passingThoughtItem ||
+    !passingThoughtItem.passing_thought_item ||
+    !passingThoughtItem.suite
+  ) {
     return null
   }
 
-  return passingThoughtItem.passing_thought_item
+  return passingThoughtItem
 }
 
 export const storePassingThoughtItem = async ({

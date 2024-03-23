@@ -41,14 +41,21 @@ export const getCurrentVoidItemForUser = async (
           history_id: true,
         },
       },
+      suite: {
+        select: {
+          id: true,
+          name: true,
+          description: true,
+        },
+      },
     },
   })
 
-  if (!voidItem || !voidItem.void_item) {
+  if (!voidItem || !voidItem.void_item || !voidItem.suite) {
     return null
   }
 
-  return voidItem.void_item
+  return voidItem
 }
 
 export const storeVoidItem = async ({

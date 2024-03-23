@@ -40,14 +40,21 @@ export const getCurrentTrashItemForUser = async (
           history_id: true,
         },
       },
+      suite: {
+        select: {
+          id: true,
+          name: true,
+          description: true,
+        },
+      },
     },
   })
 
-  if (!trashItem || !trashItem.trash_item) {
+  if (!trashItem || !trashItem.trash_item || !trashItem.suite) {
     return null
   }
 
-  return trashItem.trash_item
+  return trashItem
 }
 
 export const updateTrashItem = async ({
