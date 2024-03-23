@@ -3,7 +3,6 @@
 import { storeVoidItem } from '@/repositories/void'
 import { getSuiteForUser } from '@/repositories/suite'
 import { getUserAuth } from '@/utils/auth'
-import { revalidatePath } from 'next/cache'
 import { NextResponse } from 'next/server'
 
 type SuiteVoidCreateArgs = {

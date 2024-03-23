@@ -2,7 +2,6 @@
 
 import { getCurrentVoidItemForUser, updateVoidItem } from '@/repositories/void'
 import { getUserAuth } from '@/utils/auth'
-import { revalidatePath } from 'next/cache'
 import { NextResponse } from 'next/server'
 
 type VoidGetParams = {

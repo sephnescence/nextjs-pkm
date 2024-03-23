@@ -1,7 +1,6 @@
 import { SignedIn, UserButton } from '@clerk/nextjs'
 import Link from 'next/link'
 import PkmIcon from '../icons/PkmIcon'
-import TrashIcon from '../icons/TrashIcon'
 import KeyIcon from '../icons/KeyIcon'
 
 const TopNav = () => {

@@ -5,7 +5,6 @@ import {
   updateInboxItem,
 } from '@/repositories/inbox'
 import { getUserAuth } from '@/utils/auth'
-import { revalidatePath } from 'next/cache'
 import { NextResponse } from 'next/server'
 
 type InboxGetParams = {

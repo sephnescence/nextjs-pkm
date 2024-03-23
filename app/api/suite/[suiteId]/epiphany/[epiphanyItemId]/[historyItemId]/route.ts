@@ -5,7 +5,6 @@ import {
   updateEpiphanyItem,
 } from '@/repositories/epiphany'
 import { getUserAuth } from '@/utils/auth'
-import { revalidatePath } from 'next/cache'
 import { NextResponse } from 'next/server'
 
 type EpiphanyGetParams = {
