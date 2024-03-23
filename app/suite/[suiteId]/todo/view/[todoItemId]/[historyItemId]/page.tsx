@@ -93,7 +93,11 @@ export default async function TodoViewRoute({
           </button>
         </Link>
       </div>
-      <MoveTo modelItemId={todoItemId} historyItemId={historyItemId} />
+      <MoveTo
+        suiteId={suiteId}
+        modelItemId={todoItemId}
+        historyItemId={historyItemId}
+      />
     </div>
   )
 }

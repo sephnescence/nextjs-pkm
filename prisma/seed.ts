@@ -21,11 +21,19 @@ await prisma.user.create({
     email: 'test@example.com',
     username: 'test@example.com',
     clerkId: '00000000-0000-0000-0000-000000000000',
+    suites: {
+      create: {
+        id: userId,
+        name: 'Foyer',
+        description: 'Enjoy your stay at Innsight',
+      },
+    },
     pkm_history: {
       create: [
         {
           is_current: true,
           model_type: 'PkmEpiphany',
+          suite_id: userId,
           epiphany_item: {
             create: {
               content: 'Epiphany content',
@@ -38,6 +46,7 @@ await prisma.user.create({
         {
           is_current: true,
           model_type: 'PkmInbox',
+          suite_id: userId,
           inbox_item: {
             create: {
               content: 'Inbox content',
@@ -50,6 +59,7 @@ await prisma.user.create({
         {
           is_current: true,
           model_type: 'PkmPassingThought',
+          suite_id: userId,
           passing_thought_item: {
             create: {
               content: 'Passing thought content',
@@ -63,6 +73,7 @@ await prisma.user.create({
         {
           is_current: true,
           model_type: 'PkmTodo',
+          suite_id: userId,
           todo_item: {
             create: {
               content: 'Todo content',
@@ -75,6 +86,7 @@ await prisma.user.create({
         {
           is_current: true,
           model_type: 'PkmVoid',
+          suite_id: userId,
           void_item: {
             create: {
               content: 'Void content',
@@ -86,6 +98,7 @@ await prisma.user.create({
         },
         {
           model_type: 'PkmTrash',
+          suite_id: userId,
           trash_item: {
             create: {
               content:

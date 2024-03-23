@@ -58,8 +58,6 @@ export const POST = async (request: Request) => {
     })
   }
 
-  revalidatePath('/dashboard')
-
   return NextResponse.json({
     success: true,
     redirect: '/suites',

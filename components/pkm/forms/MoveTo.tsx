@@ -4,10 +4,12 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 export default function MoveTo({
+  suiteId,
   modelItemId,
   historyItemId,
   moveToText = 'Move to',
 }: {
+  suiteId: string
   modelItemId: string
   historyItemId: string
   moveToText?: string
@@ -15,13 +17,18 @@ export default function MoveTo({
   const [submitting, setSubmitting] = useState(() => false)
 
   const router = useRouter()
-  const onTrashClick = async (modelItemId: string, historyItemId: string) => {
+  const onTrashClick = async (
+    suiteId: string,
+    modelItemId: string,
+    historyItemId: string,
+  ) => {
     // Just using the browser confirm for the moment instead of a modal
     if (confirm('Are you sure you want to move this to the trash?')) {
-      return onMoveClick(modelItemId, historyItemId, 'trash')
+      return onMoveClick(suiteId, modelItemId, historyItemId, 'trash')
     }
   }
   const onMoveClick = async (
+    suiteId: string,
     modelItemId: string,
     historyItemId: string,
     moveTo: string,
@@ -31,7 +38,7 @@ export default function MoveTo({
     const historyAction = 'move'
 
     const res = await fetch(
-      `/api/history/${historyAction}/${modelItemId}/${historyItemId}/${moveTo}`,
+      `/api/suite/${suiteId}/history/${historyAction}/${modelItemId}/${historyItemId}/${moveTo}`,
       {
         method: 'POST',
       },
@@ -64,7 +71,7 @@ export default function MoveTo({
                 className={`bg-blue-600 hover:bg-blue-500 ${submitting ? 'bg-gray-400 hover:bg-gray-400' : ''} px-4 py-2 rounded-lg mr-0 md:mr-4 ml-4 md:ml-0 mb-4 md:mb-0`}
                 type="button"
                 onClick={() => {
-                  void onMoveClick(modelItemId, historyItemId, moveTo)
+                  void onMoveClick(suiteId, modelItemId, historyItemId, moveTo)
                 }}
                 disabled={submitting}
               >
@@ -80,7 +87,7 @@ export default function MoveTo({
             className={`bg-red-600 hover:bg-red-500 ${submitting ? 'bg-gray-400 hover:bg-gray-400' : ''} px-4 py-2 rounded-lg mr-0 md:mr-4 ml-4 md:ml-0 mb-4 md:mb-0`}
             type="button"
             onClick={() => {
-              void onTrashClick(modelItemId, historyItemId)
+              void onTrashClick(suiteId, modelItemId, historyItemId)
             }}
             disabled={submitting}
           >

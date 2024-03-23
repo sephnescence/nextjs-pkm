@@ -161,8 +161,6 @@ export const PATCH = async (
     })
   }
 
-  revalidatePath('/dashboard')
-
   return NextResponse.json({
     success: true,
     redirect: `/suite/${suiteId}/passing-thought/view/${newPassingThoughtItem.passingThoughtItem?.model_id}/${newPassingThoughtItem.passingThoughtItem?.history_id}`,

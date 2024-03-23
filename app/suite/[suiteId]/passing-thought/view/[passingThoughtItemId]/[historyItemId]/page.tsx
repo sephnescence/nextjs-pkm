@@ -98,6 +98,7 @@ export default async function PassingThoughtViewRoute({
         </Link>
       </div>
       <MoveTo
+        suiteId={suiteId}
         modelItemId={passingThoughtItemId}
         historyItemId={historyItemId}
       />

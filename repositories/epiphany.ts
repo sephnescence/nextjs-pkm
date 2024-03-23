@@ -87,7 +87,6 @@ export const storeEpiphanyItem = async ({
       },
     })
     .then((epiphanyItem) => {
-      revalidatePath('/dashboard')
       return {
         success: true,
         epiphanyItem,
@@ -141,7 +140,6 @@ export const updateEpiphanyItem = async ({
       }),
     ])
     .then((epiphanyItem) => {
-      revalidatePath('/dashboard')
       return {
         success: true,
         epiphanyItem: epiphanyItem[1],

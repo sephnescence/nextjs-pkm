@@ -136,7 +136,6 @@ export const storeSuite = async ({
       },
     })
     .then((suite) => {
-      revalidatePath('/dashboard')
       return {
         success: true,
         suite,
@@ -168,7 +167,6 @@ export const updateSuite = async ({
       },
     })
     .then((suite) => {
-      revalidatePath('/dashboard')
       return {
         success: true,
         suite,

@@ -156,8 +156,6 @@ export const PATCH = async (
     })
   }
 
-  revalidatePath('/dashboard')
-
   return NextResponse.json({
     success: true,
     redirect: `/suite/${suiteId}/inbox/view/${newInboxItem.inboxItem?.model_id}/${newInboxItem.inboxItem?.history_id}`,

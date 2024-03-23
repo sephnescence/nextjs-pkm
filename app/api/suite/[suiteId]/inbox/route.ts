@@ -91,8 +91,6 @@ export const POST = async (
     })
   }
 
-  revalidatePath('/dashboard')
-
   return NextResponse.json({
     success: true,
     redirect: `/suite/${suiteId}/inbox/view/${newInboxItem.inboxItem?.model_id}/${newInboxItem.inboxItem?.history_id}`,

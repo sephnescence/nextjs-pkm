@@ -97,7 +97,6 @@ export const updateTrashItem = async ({
       }),
     ])
     .then((trashItem) => {
-      revalidatePath('/dashboard')
       return {
         success: true,
         trashItem: trashItem[1],
