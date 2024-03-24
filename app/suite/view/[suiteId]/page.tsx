@@ -43,12 +43,21 @@ export default async function SuiteViewRoute({
         <div className="mb-4">
           <label>
             <div className="mb-4">Description</div>
-            <input
-              type="text"
-              className="min-w-full bg-slate-800 p-4"
-              name="summary"
+            <textarea
+              className="min-w-full min-h-48 bg-slate-800 p-4"
+              name="description"
               defaultValue={suite.description}
               readOnly
+            />
+          </label>
+        </div>
+        <div className="mb-4">
+          <label>
+            <div className="mb-4">Content</div>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: suite.content,
+              }}
             />
           </label>
         </div>

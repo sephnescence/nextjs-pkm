@@ -73,11 +73,10 @@ export default async function TodoViewRoute({
         <div className="mb-4">
           <label>
             <div className="mb-4">Content</div>
-            <textarea
-              className="min-w-full min-h-96 bg-slate-800 p-4"
-              name="content"
-              defaultValue={todoTodoHistoryItem.todo_item.content}
-              readOnly
+            <div
+              dangerouslySetInnerHTML={{
+                __html: todoTodoHistoryItem.todo_item.content,
+              }}
             />
           </label>
         </div>

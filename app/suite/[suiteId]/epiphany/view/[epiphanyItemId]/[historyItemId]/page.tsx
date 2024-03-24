@@ -73,11 +73,10 @@ export default async function EpiphanyViewRoute({
         <div className="mb-4">
           <label>
             <div className="mb-4">Content</div>
-            <textarea
-              className="min-w-full min-h-96 bg-slate-800 p-4"
-              name="content"
-              defaultValue={epiphanyEpiphanyHistoryItem.epiphany_item.content}
-              readOnly
+            <div
+              dangerouslySetInnerHTML={{
+                __html: epiphanyEpiphanyHistoryItem.epiphany_item.content,
+              }}
             />
           </label>
         </div>

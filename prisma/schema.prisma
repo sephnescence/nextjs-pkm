@@ -191,6 +191,7 @@ model Suite {
 
   name String @default("Please give your suite a name")
   description String @default("Please describe the suite")
+  content String @default("<div class=\"bg-blue-500 p-4\">Edit to your heart's content! HTML supported! Tailwind only, please</div>")
 
   // Add an index for non unique foreign keys
   @@index([user_id])
