@@ -23,6 +23,9 @@ export default function RootLayout({
         <head>
           <meta charSet="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
+          {/* This is how I'm able to dynamically write content and have it render in previews.
+          Tailwind optimises the css, only including classes that are used in build time */}
+          {/* eslint-disable-next-line @next/next/no-sync-scripts */}
           <script src="https://cdn.tailwindcss.com"></script>
         </head>
         <body className={`${inter.className} bg-slate-950 text-blue-100`}>
