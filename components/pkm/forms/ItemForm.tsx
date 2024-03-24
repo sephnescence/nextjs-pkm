@@ -109,9 +109,8 @@ export default function ItemForm({
           <div className="mb-4">
             <label>
               <div className="mb-4">Summary</div>
-              <input
-                type="text"
-                className="min-w-full bg-slate-700 p-4"
+              <textarea
+                className="min-w-full min-h-48 bg-slate-700 p-4"
                 name="summary"
                 defaultValue={summary}
                 disabled={!interactive || submitting}

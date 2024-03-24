@@ -1,4 +1,3 @@
-import BoltIcon from '../icons/BoltIcon'
 import PkmItem from './PkmItem'
 
 export default function PassingThought(props: {
@@ -6,12 +5,11 @@ export default function PassingThought(props: {
 }) {
   return (
     <PkmItem>
-      <div className="flex-none">
-        <BoltIcon />
+      <div className="text-lg line-clamp-1">
+        {props.passingThoughtItem.name}
       </div>
-      <div className="flex-initial ml-2">
-        <div className="flex-none">{props.passingThoughtItem.name}</div>
-        <div className="flex-none">{props.passingThoughtItem.summary}</div>
+      <div className="text-sm line-clamp-4">
+        {props.passingThoughtItem.summary}
       </div>
     </PkmItem>
   )
