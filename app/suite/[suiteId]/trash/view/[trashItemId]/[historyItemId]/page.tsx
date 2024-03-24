@@ -62,9 +62,8 @@ export default async function TrashViewRoute({
         <div className="mb-4">
           <label>
             <div className="mb-4">Summary</div>
-            <input
-              type="text"
-              className="min-w-full bg-slate-800 p-4"
+            <textarea
+              className="min-w-full min-h-48 bg-slate-800 p-4"
               name="summary"
               defaultValue={trashTrashHistoryItem.trash_item.summary}
               readOnly

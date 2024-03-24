@@ -12,7 +12,7 @@ const SuiteInformationPacketTabHeader = ({
   const key = `k-${name}`
   return (
     <div
-      className={`innsight-suite-information-packet-tab-header has-[.innsight-tab-group:checked]:bg-indigo-600 peer peer/${name}`}
+      className={`innsight-suite-information-packet-tab-header has-[.innsight-tab-group:checked]:bg-indigo-800 peer peer/${name}`}
     >
       <input
         key={key}
@@ -45,7 +45,7 @@ const SuiteInformationPacketTabContent = ({
 }) => {
   return (
     <div
-      className={`innsight-suite-information-packet-tab-content p-2 hidden ${className}`}
+      className={`innsight-suite-information-packet-tab-content mt-2 hidden ${className}`}
       id={`${tabGroupInputName}--content--${name}`}
     >
       {content}
@@ -70,8 +70,8 @@ const SuiteInformationPacketTabGroup = ({
   suiteInformationPacketTabGroupProps: SuiteInformationPacketTabGroupProps
 }) => {
   return (
-    <div className="md:mx-1 bg-indigo-900 group">
-      <div className="flex items-center justify-center border-b-2 peer">
+    <div className="group">
+      <div className="flex items-center justify-center peer">
         {suiteInformationPacketTabGroupProps.tabs.map((tab) => {
           return (
             <SuiteInformationPacketTabHeader

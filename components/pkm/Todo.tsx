@@ -1,4 +1,3 @@
-import BellAlertIcon from '../icons/BellAlertIcon'
 import PkmItem from './PkmItem'
 
 export default function Todo(props: {
@@ -6,13 +5,8 @@ export default function Todo(props: {
 }) {
   return (
     <PkmItem>
-      <div className="flex-none">
-        <BellAlertIcon />
-      </div>
-      <div className="flex-initial ml-2">
-        <div className="flex-none">{props.todoItem.name}</div>
-        <div className="flex-none">{props.todoItem.summary}</div>
-      </div>
+      <div className="text-lg line-clamp-1">{props.todoItem.name}</div>
+      <div className="text-sm line-clamp-4">{props.todoItem.summary}</div>
     </PkmItem>
   )
 }

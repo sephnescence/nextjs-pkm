@@ -1,4 +1,3 @@
-import LightbulbIcon from '../icons/LightbulbIcon'
 import PkmItem from './PkmItem'
 
 export default function Epiphany(props: {
@@ -6,13 +5,8 @@ export default function Epiphany(props: {
 }) {
   return (
     <PkmItem>
-      <div className="flex-none">
-        <LightbulbIcon />
-      </div>
-      <div className="flex-initial ml-2">
-        <div className="flex-none">{props.epiphanyItem.name}</div>
-        <div className="flex-none">{props.epiphanyItem.summary}</div>
-      </div>
+      <div className="text-lg line-clamp-1">{props.epiphanyItem.name}</div>
+      <div className="text-sm line-clamp-4">{props.epiphanyItem.summary}</div>
     </PkmItem>
   )
 }

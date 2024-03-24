@@ -1,4 +1,3 @@
-import ArchiveBoxXMarkIcon from '../icons/ArchiveBoxXMarkIcon'
 import PkmItem from './PkmItem'
 
 export default function Void(props: {
@@ -6,13 +5,8 @@ export default function Void(props: {
 }) {
   return (
     <PkmItem>
-      <div className="flex-none">
-        <ArchiveBoxXMarkIcon />
-      </div>
-      <div className="flex-initial ml-2">
-        <div className="flex-none">{props.voidItem.name}</div>
-        <div className="flex-none">{props.voidItem.summary}</div>
-      </div>
+      <div className="text-lg line-clamp-1">{props.voidItem.name}</div>
+      <div className="text-sm line-clamp-4">{props.voidItem.summary}</div>
     </PkmItem>
   )
 }

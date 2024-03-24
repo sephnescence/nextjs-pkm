@@ -1,4 +1,3 @@
-import InboxStackIcon from '../icons/InboxStackIcon'
 import PkmItem from './PkmItem'
 
 export default function Inbox(props: {
@@ -6,13 +5,8 @@ export default function Inbox(props: {
 }) {
   return (
     <PkmItem>
-      <div className="flex-none">
-        <InboxStackIcon />
-      </div>
-      <div className="flex-initial ml-2">
-        <div className="flex-none">{props.inboxItem.name}</div>
-        <div className="flex-none">{props.inboxItem.summary}</div>
-      </div>
+      <div className="text-lg line-clamp-1">{props.inboxItem.name}</div>
+      <div className="text-sm line-clamp-4">{props.inboxItem.summary}</div>
     </PkmItem>
   )
 }
