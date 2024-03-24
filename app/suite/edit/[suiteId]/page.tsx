@@ -15,6 +15,7 @@ type SuiteViewResponse = {
   suite: {
     name: string
     description: string
+    content: string
   }
   errors?: {
     fieldErrors?: {
@@ -64,6 +65,7 @@ export default function SuiteEditRoute({
       apiMethod="PATCH"
       defaultName={resJson.suite.name}
       defaultDescription={resJson.suite.description}
+      defaultContent={resJson.suite.content}
     />
   )
 }

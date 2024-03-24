@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import PkmItem from '../PkmItem'
 
 type ItemFormProps = {
   pageTitle: string
@@ -28,7 +29,11 @@ export default function ItemForm({
       fieldErrors: { general: '', content: '', name: '', summary: '' },
     },
   })
-  const [content, setContent] = useState(() => defaultContent || '')
+  const [content, setContent] = useState(
+    () =>
+      defaultContent ||
+      `<div class="bg-blue-950 p-4">\nEnter your content here\n</div>`,
+  )
   const [name, setName] = useState(() => defaultName || '')
   const [summary, setSummary] = useState(() => defaultSummary || '')
   const [interactive, setInteractive] = useState(() => false)
@@ -85,45 +90,69 @@ export default function ItemForm({
         </div>
       )}
       <div className="text-5xl mb-4">{pageTitle}</div>
-      <form className="flex" onSubmit={() => false}>
-        <div className="w-full">
-          <div className="mb-4">
-            <label>
-              <div className="mb-4">Name</div>
-              <input
-                type="text"
-                className="min-w-full bg-slate-700 p-4"
-                name="name"
-                defaultValue={name}
-                disabled={!interactive || submitting}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </label>
-            <br />
-            {actionData?.errors.fieldErrors.name && (
-              <div className="text-red-500">
-                {actionData.errors.fieldErrors?.name}
-              </div>
+      <form className="grid" onSubmit={() => false}>
+        <div className="grid grid-cols-1 md:grid-cols-2 md:gap-2">
+          <div>
+            <div className="mb-4">
+              <label>
+                <div className="mb-4">Name</div>
+                <input
+                  type="text"
+                  className="min-w-full bg-slate-700 p-4"
+                  name="name"
+                  defaultValue={name}
+                  disabled={!interactive || submitting}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Item name"
+                />
+              </label>
+              <br />
+              {actionData?.errors.fieldErrors.name && (
+                <div className="text-red-500">
+                  {actionData.errors.fieldErrors?.name}
+                </div>
+              )}
+            </div>
+            <div className="mb-4">
+              <label>
+                <div className="mb-4">Summary</div>
+                <textarea
+                  className="min-w-full min-h-48 bg-slate-700 p-4"
+                  name="summary"
+                  defaultValue={summary}
+                  disabled={!interactive || submitting}
+                  onChange={(e) => setSummary(e.target.value)}
+                  placeholder={`Item description\n- You have four lines to describe your item\n- Note that line breaks are ignored`}
+                />
+              </label>
+              <br />
+              {actionData?.errors.fieldErrors.summary && (
+                <div className="text-red-500">
+                  {actionData.errors.fieldErrors?.summary}
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="hidden md:block mb-4">
+            <div className="mb-4">Preview</div>
+            {(name || summary) && (
+              <PkmItem>
+                <div className="text-lg line-clamp-1">{name}</div>
+                <div className="text-sm line-clamp-4">{summary}</div>
+              </PkmItem>
+            )}
+            {!(name || summary) && (
+              <PkmItem>
+                <div className="text-lg line-clamp-1">Item name</div>
+                <div className="text-sm line-clamp-4">
+                  Item description - You have four lines to describe your item -
+                  Note that line breaks are ignored
+                </div>
+              </PkmItem>
             )}
           </div>
-          <div className="mb-4">
-            <label>
-              <div className="mb-4">Summary</div>
-              <textarea
-                className="min-w-full min-h-48 bg-slate-700 p-4"
-                name="summary"
-                defaultValue={summary}
-                disabled={!interactive || submitting}
-                onChange={(e) => setSummary(e.target.value)}
-              />
-            </label>
-            <br />
-            {actionData?.errors.fieldErrors.summary && (
-              <div className="text-red-500">
-                {actionData.errors.fieldErrors?.summary}
-              </div>
-            )}
-          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 md:gap-2">
           <div className="mb-4">
             <label>
               <div className="mb-4">Content</div>
@@ -133,6 +162,7 @@ export default function ItemForm({
                 defaultValue={content}
                 disabled={!interactive || submitting}
                 onChange={(e) => setContent(e.target.value)}
+                placeholder={`<div class="bg-blue-950 p-4">\nEnter your content here\n</div>`}
               />
             </label>
             <br />
@@ -142,6 +172,20 @@ export default function ItemForm({
               </div>
             )}
           </div>
+          <div className="hidden md:block">
+            <div className="mb-4">Content preview</div>
+            {content && (
+              <div
+                id="innsight-content-preview"
+                dangerouslySetInnerHTML={{ __html: content }}
+              ></div>
+            )}
+            {!content && (
+              <div className="bg-blue-950 p-4">Enter your content here</div>
+            )}
+          </div>
+        </div>
+        <div className="flex">
           <button
             className={`px-4 py-2 rounded-lg bg-blue-600 ${(!interactive || submitting ? 'bg-gray-400' : '') || 'hover:bg-blue-500'}`}
             type="button"

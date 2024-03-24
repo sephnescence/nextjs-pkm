@@ -43,6 +43,7 @@ export const GET = async (
     suite: {
       name: existingSuite.name,
       description: existingSuite.description,
+      content: existingSuite.content,
     },
   })
 }

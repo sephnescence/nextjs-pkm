@@ -92,6 +92,7 @@ export const getSuitesForUser = async (userId: string) => {
       select: {
         name: true,
         description: true,
+        content: true,
         id: true,
       },
     })
@@ -111,6 +112,7 @@ export const getSuiteForUser = async (suiteId: string, userId: string) => {
     select: {
       name: true,
       description: true,
+      content: true,
       id: true,
     },
   })
