@@ -16,6 +16,9 @@ import Void from '@/components/pkm/Void'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { getSuiteDashboardForUser } from '@/repositories/suite'
+import SuiteInformationPacketTabGroup from '@/components/pkm/Suites/content/SuiteInformationPacketTabGroup'
+import KeyIcon from '@/components/icons/KeyIcon'
+import TrashIcon from '@/components/icons/TrashIcon'
 
 export default async function SuiteDashboardIndex({
   params: { suiteId },
@@ -33,6 +36,61 @@ export default async function SuiteDashboardIndex({
   if (!suite) {
     return redirect('/')
   }
+  const suiteInformationPacketTabGroupProps = {
+    tabGroupInputName: 'suite',
+    tabs: [
+      {
+        tabName: 'content',
+        tabHeader: <KeyIcon />,
+        tabContent: <>Content NYI</>,
+        tabContentClassName:
+          'group-has-[.innsight-tab-group#suite--tab--content:checked]:block',
+      },
+      {
+        tabName: 'epiphany',
+        tabHeader: <LightbulbIcon />,
+        tabContent: <>Epiphany NYI</>,
+        tabContentClassName:
+          'group-has-[.innsight-tab-group#suite--tab--epiphany:checked]:block',
+      },
+      {
+        tabDefaultChecked: true,
+        tabName: 'inbox',
+        tabHeader: <InboxStackIcon />,
+        tabContent: <>Inbox NYI</>,
+        tabContentClassName:
+          'group-has-[.innsight-tab-group#suite--tab--inbox:checked]:block',
+      },
+      {
+        tabName: 'passing-thought',
+        tabHeader: <BoltIcon />,
+        tabContent: <>Passing Thought NYI</>,
+        tabContentClassName:
+          'group-has-[.innsight-tab-group#suite--tab--passing-thought:checked]:block',
+      },
+      {
+        tabName: 'todo',
+        tabHeader: <BellAlertIcon />,
+        tabContent: <>Todo NYI</>,
+        tabContentClassName:
+          'group-has-[.innsight-tab-group#suite--tab--todo:checked]:block',
+      },
+      {
+        tabName: 'void',
+        tabHeader: <ArchiveBoxXMarkIcon />,
+        tabContent: <>Void NYI</>,
+        tabContentClassName:
+          'group-has-[.innsight-tab-group#suite--tab--void:checked]:block',
+      },
+      {
+        tabName: 'trash',
+        tabHeader: <TrashIcon />,
+        tabContent: <>Trash NYI</>,
+        tabContentClassName:
+          'group-has-[.innsight-tab-group#suite--tab--trash:checked]:block',
+      },
+    ],
+  }
 
   return (
     <>
@@ -40,11 +98,12 @@ export default async function SuiteDashboardIndex({
         <Link href={`/suite/view/${suiteId}`}>{suite.name}</Link>
       </p>
       <div className="mt-4 text-xl text-white/60 mb-4">{suite.description}</div>
-      {/* <div className="grid grid-cols-1 mb-4 sm:hidden">
-        This will show the button summary of the Suite
-      </div> */}
       <div className="grid grid-cols-1 md:grid-cols-2">
-        <div className="md:mr-1 bg-indigo-900">Content?</div>
+        <SuiteInformationPacketTabGroup
+          suiteInformationPacketTabGroupProps={
+            suiteInformationPacketTabGroupProps
+          }
+        />
         <div className="hidden sm:grid md:ml-1">
           <div className="mb-8">
             <div className="h-8 mb-2">
