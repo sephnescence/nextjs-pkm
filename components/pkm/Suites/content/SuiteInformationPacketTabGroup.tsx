@@ -1,8 +1,3 @@
-import BoltIcon from '@/components/icons/BoltIcon'
-import InboxStackIcon from '@/components/icons/InboxStackIcon'
-import KeyIcon from '@/components/icons/KeyIcon'
-import LightbulbIcon from '@/components/icons/LightbulbIcon'
-
 const SuiteInformationPacketTabHeader = ({
   tabGroupInputName,
   name,
