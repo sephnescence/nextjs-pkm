@@ -45,7 +45,7 @@ const SuiteInformationPacketTabContent = ({
 }) => {
   return (
     <div
-      className={`innsight-suite-information-packet-tab-content mt-2 hidden ${className}`}
+      className={`innsight-suite-information-packet-tab-content hidden ${className}`}
       id={`${tabGroupInputName}--content--${name}`}
     >
       {content}
@@ -71,7 +71,7 @@ const SuiteInformationPacketTabGroup = ({
 }) => {
   return (
     <div className="group">
-      <div className="flex items-center justify-center peer">
+      <div className="flex items-center justify-center peer mb-2">
         {suiteInformationPacketTabGroupProps.tabs.map((tab) => {
           return (
             <SuiteInformationPacketTabHeader

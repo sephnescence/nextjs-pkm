@@ -45,7 +45,7 @@ export default async function TodoViewRoute({
 
   return (
     <div className="">
-      <div className="text-5xl mb-4">View Todo Item</div>
+      <div className="text-4xl mb-2">View Todo Item</div>
       <div className="w-full mb-4">
         <div className="mb-4">
           <label>

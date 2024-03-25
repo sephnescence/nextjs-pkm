@@ -330,10 +330,10 @@ export default async function SuiteDashboardIndex({
 
   return (
     <>
-      <p className="text-5xl">
+      <p className="text-4xl mb-2">
         <Link href={`/suite/view/${suiteId}`}>{suite.name}</Link>
       </p>
-      <div className="mt-4 text-xl text-white/60 mb-4">{suite.description}</div>
+      <div className="text-xl text-white/60 mb-2">{suite.description}</div>
       <SuiteInformationPacketTabGroup
         suiteInformationPacketTabGroupProps={
           suiteInformationPacketTabGroupProps

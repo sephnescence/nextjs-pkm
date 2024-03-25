@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div className="w-full h-full flex justify-center items-center">
       <div className="text-center">
-        <h1 className="text-5xl mb-4">Innsight</h1>
+        <h1 className="text-4xl mb-2">Innsight</h1>
         <p className="text-2xl text-blue-400 mb-4">
           Enjoy your stay at the inn-themed personal knowledge management
           system!

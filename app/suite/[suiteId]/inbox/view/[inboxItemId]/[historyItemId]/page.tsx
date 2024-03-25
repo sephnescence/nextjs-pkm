@@ -45,7 +45,7 @@ export default async function InboxViewRoute({
 
   return (
     <div className="">
-      <div className="text-5xl mb-4">View Inbox Item</div>
+      <div className="text-4xl mb-2">View Inbox Item</div>
       <div className="w-full mb-4">
         <div className="mb-4">
           <label>
