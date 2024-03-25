@@ -26,7 +26,7 @@ export default async function SuiteViewRoute({
 
   return (
     <div className="">
-      <div className="text-5xl mb-4">View Suite</div>
+      <div className="text-4xl mb-2">View Suite</div>
       <div className="w-full mb-4">
         <div className="mb-4">
           <label>

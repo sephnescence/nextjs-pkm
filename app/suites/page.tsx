@@ -13,8 +13,8 @@ export default async function SuitesIndex() {
 
   return (
     <>
-      <p className="text-5xl">Suites</p>
-      <div className="mt-4 text-xl text-white/60 mb-4">
+      <p className="text-4xl mb-2">Suites</p>
+      <div className="text-xl text-white/60 mb-2">
         Review and remodel your suites
       </div>
       <SuiteDashboard />

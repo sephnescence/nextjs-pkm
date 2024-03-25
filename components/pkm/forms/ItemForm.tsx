@@ -89,13 +89,13 @@ export default function ItemForm({
           {actionData.errors.fieldErrors.general}
         </div>
       )}
-      <div className="text-5xl mb-4">{pageTitle}</div>
+      <div className="text-4xl mb-2">{pageTitle}</div>
       <form className="grid" onSubmit={() => false}>
         <div className="grid grid-cols-1 md:grid-cols-2 md:gap-2">
           <div>
-            <div className="mb-4">
+            <div className="mb-2">
               <label>
-                <div className="mb-4">Name</div>
+                <div className="mb-1">Name</div>
                 <input
                   type="text"
                   className="min-w-full bg-slate-700 p-4"
@@ -113,9 +113,9 @@ export default function ItemForm({
                 </div>
               )}
             </div>
-            <div className="mb-4">
+            <div className="mb-2">
               <label>
-                <div className="mb-4">Summary</div>
+                <div className="mb-1">Summary</div>
                 <textarea
                   className="min-w-full min-h-48 bg-slate-700 p-4"
                   name="summary"
@@ -133,8 +133,8 @@ export default function ItemForm({
               )}
             </div>
           </div>
-          <div className="hidden md:block mb-4">
-            <div className="mb-4">Preview</div>
+          <div className="hidden md:block mb-2">
+            <div className="mb-1">Preview</div>
             {(name || summary) && (
               <PkmItem>
                 <div className="text-lg line-clamp-1">{name}</div>
@@ -153,9 +153,9 @@ export default function ItemForm({
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 md:gap-2">
-          <div className="mb-4">
+          <div className="mb-2">
             <label>
-              <div className="mb-4">Content</div>
+              <div className="mb-1">Content</div>
               <textarea
                 className="min-w-full min-h-96 bg-slate-700 p-4"
                 name="content"
@@ -173,7 +173,7 @@ export default function ItemForm({
             )}
           </div>
           <div className="hidden md:block">
-            <div className="mb-4">Content preview</div>
+            <div className="mb-1">Content preview</div>
             {content && (
               <div
                 id="innsight-content-preview"
