@@ -1,6 +1,7 @@
 import { prisma } from '@/utils/db'
 import { currentUser } from '@clerk/nextjs'
 import { redirect } from 'next/navigation'
+import { randomUUID } from 'node:crypto'
 
 export default async function NewUserIndex() {
   const clerkUser = await currentUser()
@@ -18,15 +19,35 @@ export default async function NewUserIndex() {
   })
 
   if (!existingUser) {
+    const userId = randomUUID()
+
     await prisma.user.create({
       data: {
+        id: userId,
         clerkId: clerkUserId,
         email: clerkUser.emailAddresses[0].emailAddress,
         username: clerkUser.emailAddresses[0].emailAddress,
         suites: {
           create: {
-            name: 'Foyer',
+            id: userId,
+            name: 'Welcome Center',
             description: 'Enjoy your stay at Innsight',
+            storeys: {
+              create: {
+                id: userId,
+                user_id: userId,
+                name: 'Foyer',
+                description: 'Please head to reception',
+                spaces: {
+                  create: {
+                    id: userId,
+                    user_id: userId,
+                    name: 'Reception',
+                    description: 'Check in',
+                  },
+                },
+              },
+            },
           },
         },
       },

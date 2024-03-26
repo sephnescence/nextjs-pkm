@@ -6,6 +6,7 @@ const SuiteCreateRoute = () => {
   return (
     <SuiteForm
       pageTitle="Configure New Suite"
+      cancelUrl="/suites"
       apiEndpoint={`/api/suite`}
       apiMethod="POST"
     />

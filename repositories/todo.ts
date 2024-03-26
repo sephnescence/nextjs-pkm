@@ -1,5 +1,4 @@
 import { prisma } from '@/utils/db'
-import { revalidatePath } from 'next/cache'
 import { randomUUID } from 'node:crypto'
 
 type CreateTodoArgs = {
@@ -7,7 +6,18 @@ type CreateTodoArgs = {
   name: string
   summary: string
   userId: string
-  suiteId?: string
+  suiteId: string | null
+  storeyId: string | null
+  spaceId: string | null
+}
+
+type GetTodoArgs = {
+  historyItemId: string
+  todoItemId: string
+  userId: string
+  suiteId: string | null
+  storeyId: string | null
+  spaceId: string | null
 }
 
 export type UpdateTodoArgs = CreateTodoArgs & {
@@ -17,12 +27,14 @@ export type UpdateTodoArgs = CreateTodoArgs & {
 
 // Get the current todo item for the user
 // Can add another method later if we ever need to grab the non-current one
-export const getCurrentTodoItemForUser = async (
-  suiteId: string,
-  todoItemId: string,
-  historyItemId: string,
-  userId: string,
-) => {
+export const getCurrentTodoItemForUser = async ({
+  suiteId,
+  storeyId,
+  spaceId,
+  todoItemId,
+  historyItemId,
+  userId,
+}: GetTodoArgs) => {
   const todoItem = await prisma.pkmHistory.findFirst({
     where: {
       user_id: userId,
@@ -30,6 +42,8 @@ export const getCurrentTodoItemForUser = async (
       history_id: historyItemId,
       model_id: todoItemId,
       suite_id: suiteId,
+      storey_id: storeyId,
+      space_id: spaceId,
     },
     select: {
       todo_item: {
@@ -48,10 +62,45 @@ export const getCurrentTodoItemForUser = async (
           description: true,
         },
       },
+      storey: {
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          suite: {
+            select: {
+              id: true,
+              name: true,
+              description: true,
+            },
+          },
+        },
+      },
+      space: {
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          storey: {
+            select: {
+              id: true,
+              name: true,
+              description: true,
+              suite: {
+                select: {
+                  id: true,
+                  name: true,
+                  description: true,
+                },
+              },
+            },
+          },
+        },
+      },
     },
   })
 
-  if (!todoItem || !todoItem.todo_item || !todoItem.suite) {
+  if (!todoItem || !todoItem.todo_item) {
     return null
   }
 
@@ -64,6 +113,8 @@ export const storeTodoItem = async ({
   name,
   summary,
   suiteId,
+  storeyId,
+  spaceId,
 }: CreateTodoArgs) => {
   const modelId = randomUUID()
 
@@ -75,6 +126,8 @@ export const storeTodoItem = async ({
         model_type: 'PkmTodo',
         model_id: modelId,
         suite_id: suiteId,
+        storey_id: storeyId,
+        space_id: spaceId,
         todo_item: {
           create: {
             content,
@@ -108,6 +161,8 @@ export const updateTodoItem = async ({
   todoItemId,
   userId,
   suiteId,
+  storeyId,
+  spaceId,
 }: UpdateTodoArgs) => {
   return await prisma
     .$transaction([
@@ -127,6 +182,8 @@ export const updateTodoItem = async ({
           model_type: 'PkmTodo',
           model_id: todoItemId,
           suite_id: suiteId,
+          storey_id: storeyId,
+          space_id: spaceId,
           todo_item: {
             create: {
               content,

@@ -4,6 +4,7 @@ import SuiteTile from './SuiteTile'
 
 type SuiteFormProps = {
   pageTitle: string
+  cancelUrl?: string
   apiEndpoint: string
   apiMethod: string
   defaultName?: string
@@ -13,6 +14,7 @@ type SuiteFormProps = {
 
 const SuiteForm = ({
   pageTitle,
+  cancelUrl,
   apiEndpoint,
   apiMethod,
   defaultName,
@@ -41,7 +43,7 @@ const SuiteForm = ({
     const res = await fetch(
       new Request(apiEndpoint, {
         method: apiMethod,
-        body: JSON.stringify({ name, description }),
+        body: JSON.stringify({ name, description, content }),
       }),
     )
 
@@ -183,7 +185,7 @@ const SuiteForm = ({
           <button
             className="bg-red-600 hover:bg-red-500 px-4 py-2 rounded-lg ml-4"
             type="button"
-            onClick={() => router.push('/suites')}
+            onClick={() => router.push(cancelUrl || '/suites')}
           >
             Cancel
           </button>

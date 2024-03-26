@@ -1,5 +1,4 @@
 import { prisma } from '@/utils/db'
-import { revalidatePath } from 'next/cache'
 
 type CreateSuiteArgs = {
   userId: string
@@ -24,8 +23,18 @@ export const getSuiteDashboardForUser = async (
       name: true,
       description: true,
       id: true,
+      content: true,
+      storeys: {
+        select: {
+          content: true,
+          name: true,
+          description: true,
+          id: true,
+        },
+      },
       pkm_history: {
         where: {
+          suite_id: suiteId,
           is_current: true,
           model_type: {
             not: 'PkmTrash',
@@ -177,7 +186,6 @@ export const updateSuite = async ({
     .catch(() => {
       return {
         success: false,
-        inboxItem: null,
       }
     })
 }

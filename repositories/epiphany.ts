@@ -1,5 +1,4 @@
 import { prisma } from '@/utils/db'
-import { revalidatePath } from 'next/cache'
 import { randomUUID } from 'node:crypto'
 
 type CreateEpiphanyArgs = {
@@ -7,7 +6,18 @@ type CreateEpiphanyArgs = {
   name: string
   summary: string
   userId: string
-  suiteId?: string
+  suiteId: string | null
+  storeyId: string | null
+  spaceId: string | null
+}
+
+type GetEpiphanyArgs = {
+  historyItemId: string
+  epiphanyItemId: string
+  userId: string
+  suiteId: string | null
+  storeyId: string | null
+  spaceId: string | null
 }
 
 export type UpdateEpiphanyArgs = CreateEpiphanyArgs & {
@@ -17,12 +27,14 @@ export type UpdateEpiphanyArgs = CreateEpiphanyArgs & {
 
 // Get the current epiphany item for the user
 // Can add another method later if we ever need to grab the non-current one
-export const getCurrentEpiphanyItemForUser = async (
-  suiteId: string,
-  epiphanyItemId: string,
-  historyItemId: string,
-  userId: string,
-) => {
+export const getCurrentEpiphanyItemForUser = async ({
+  suiteId,
+  storeyId,
+  spaceId,
+  epiphanyItemId,
+  historyItemId,
+  userId,
+}: GetEpiphanyArgs) => {
   const epiphanyItem = await prisma.pkmHistory.findFirst({
     where: {
       user_id: userId,
@@ -30,6 +42,8 @@ export const getCurrentEpiphanyItemForUser = async (
       history_id: historyItemId,
       model_id: epiphanyItemId,
       suite_id: suiteId,
+      storey_id: storeyId,
+      space_id: spaceId,
     },
     select: {
       epiphany_item: {
@@ -48,10 +62,45 @@ export const getCurrentEpiphanyItemForUser = async (
           description: true,
         },
       },
+      storey: {
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          suite: {
+            select: {
+              id: true,
+              name: true,
+              description: true,
+            },
+          },
+        },
+      },
+      space: {
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          storey: {
+            select: {
+              id: true,
+              name: true,
+              description: true,
+              suite: {
+                select: {
+                  id: true,
+                  name: true,
+                  description: true,
+                },
+              },
+            },
+          },
+        },
+      },
     },
   })
 
-  if (!epiphanyItem || !epiphanyItem.epiphany_item || !epiphanyItem.suite) {
+  if (!epiphanyItem || !epiphanyItem.epiphany_item) {
     return null
   }
 
@@ -64,6 +113,8 @@ export const storeEpiphanyItem = async ({
   name,
   summary,
   suiteId,
+  storeyId,
+  spaceId,
 }: CreateEpiphanyArgs) => {
   const modelId = randomUUID()
 
@@ -75,6 +126,8 @@ export const storeEpiphanyItem = async ({
         model_type: 'PkmEpiphany',
         model_id: modelId,
         suite_id: suiteId,
+        storey_id: storeyId,
+        space_id: spaceId,
         epiphany_item: {
           create: {
             content,
@@ -108,6 +161,8 @@ export const updateEpiphanyItem = async ({
   epiphanyItemId,
   userId,
   suiteId,
+  storeyId,
+  spaceId,
 }: UpdateEpiphanyArgs) => {
   return await prisma
     .$transaction([
@@ -127,6 +182,8 @@ export const updateEpiphanyItem = async ({
           model_type: 'PkmEpiphany',
           model_id: epiphanyItemId,
           suite_id: suiteId,
+          storey_id: storeyId,
+          space_id: spaceId,
           epiphany_item: {
             create: {
               content,
