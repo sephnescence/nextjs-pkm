@@ -1,7 +1,7 @@
 import { SignedIn, UserButton } from '@clerk/nextjs'
 import Link from 'next/link'
 import PkmIcon from '../icons/PkmIcon'
-import KeyIcon from '../icons/KeyIcon'
+import BuildingOffice2Icon from '../icons/BuildingOffice2Icon'
 
 const TopNav = () => {
   return (
@@ -14,7 +14,7 @@ const TopNav = () => {
         </div>
         <div className="mr-4 bg-indigo-900 rounded-full">
           <Link href="/suites">
-            <KeyIcon className="w-8 h-8" style={{ scale: '0.5' }} />
+            <BuildingOffice2Icon className="w-8 h-8" style={{ scale: '0.5' }} />
           </Link>
         </div>
         <div className="mr-4">

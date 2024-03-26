@@ -1,5 +1,4 @@
 import { prisma } from '@/utils/db'
-import { revalidatePath } from 'next/cache'
 import { randomUUID } from 'node:crypto'
 
 type CreateInboxArgs = {
@@ -7,7 +6,18 @@ type CreateInboxArgs = {
   name: string
   summary: string
   userId: string
-  suiteId?: string
+  suiteId: string | null
+  storeyId: string | null
+  spaceId: string | null
+}
+
+type GetInboxArgs = {
+  historyItemId: string
+  inboxItemId: string
+  userId: string
+  suiteId: string | null
+  storeyId: string | null
+  spaceId: string | null
 }
 
 export type UpdateInboxArgs = CreateInboxArgs & {
@@ -17,12 +27,14 @@ export type UpdateInboxArgs = CreateInboxArgs & {
 
 // Get the current inbox item for the user
 // Can add another method later if we ever need to grab the non-current one
-export const getCurrentInboxItemForUser = async (
-  suiteId: string,
-  inboxItemId: string,
-  historyItemId: string,
-  userId: string,
-) => {
+export const getCurrentInboxItemForUser = async ({
+  suiteId,
+  storeyId,
+  spaceId,
+  inboxItemId,
+  historyItemId,
+  userId,
+}: GetInboxArgs) => {
   const inboxItem = await prisma.pkmHistory.findFirst({
     where: {
       user_id: userId,
@@ -30,6 +42,8 @@ export const getCurrentInboxItemForUser = async (
       history_id: historyItemId,
       model_id: inboxItemId,
       suite_id: suiteId,
+      storey_id: storeyId,
+      space_id: spaceId,
     },
     select: {
       inbox_item: {
@@ -48,10 +62,45 @@ export const getCurrentInboxItemForUser = async (
           description: true,
         },
       },
+      storey: {
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          suite: {
+            select: {
+              id: true,
+              name: true,
+              description: true,
+            },
+          },
+        },
+      },
+      space: {
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          storey: {
+            select: {
+              id: true,
+              name: true,
+              description: true,
+              suite: {
+                select: {
+                  id: true,
+                  name: true,
+                  description: true,
+                },
+              },
+            },
+          },
+        },
+      },
     },
   })
 
-  if (!inboxItem || !inboxItem.inbox_item || !inboxItem.suite) {
+  if (!inboxItem || !inboxItem.inbox_item) {
     return null
   }
 
@@ -64,6 +113,8 @@ export const storeInboxItem = async ({
   name,
   summary,
   suiteId,
+  storeyId,
+  spaceId,
 }: CreateInboxArgs) => {
   const modelId = randomUUID()
 
@@ -75,6 +126,8 @@ export const storeInboxItem = async ({
         model_type: 'PkmInbox',
         model_id: modelId,
         suite_id: suiteId,
+        storey_id: storeyId,
+        space_id: spaceId,
         inbox_item: {
           create: {
             content,
@@ -108,6 +161,8 @@ export const updateInboxItem = async ({
   inboxItemId,
   userId,
   suiteId,
+  storeyId,
+  spaceId,
 }: UpdateInboxArgs) => {
   return await prisma
     .$transaction([
@@ -127,6 +182,8 @@ export const updateInboxItem = async ({
           model_type: 'PkmInbox',
           model_id: inboxItemId,
           suite_id: suiteId,
+          storey_id: storeyId,
+          space_id: spaceId,
           inbox_item: {
             create: {
               content,

@@ -29,6 +29,8 @@ model User {
   trash_items PkmTrash[]
 
   suites Suite[]
+  storeys Storey[]
+  spaces Space[]
 }
 
 model PkmHistory {
@@ -40,9 +42,14 @@ model PkmHistory {
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id String @db.Uuid
 
-  // We'll treat a null suite id as a message waiting for you at the front desk. I don't know what the term for this is though
   suite Suite? @relation(fields: [suite_id], references: [id], onDelete: Cascade)
   suite_id String? @db.Uuid
+
+  storey Storey? @relation(fields: [storey_id], references: [id], onDelete: Cascade)
+  storey_id String? @db.Uuid
+
+  space Space? @relation(fields: [space_id], references: [id], onDelete: Cascade)
+  space_id String? @db.Uuid
 
   epiphany_item PkmEpiphany?
   inbox_item PkmInbox?
@@ -174,9 +181,6 @@ model PkmTrash {
   @@index([user_id])
 }
 
-// A convention I might try is having the Foyer Suite id be the same id as the user id in the backend, but alias it as UUID Nil on the frontend
-// Can easily run this query to create the Foyer Suite for all users, but Prisma doesn't support data migrations
-// insert into "Suite" (id, name, description, user_id, "updatedAt") select id, 'foyer' as name, 'Auto created foyer' as description, id, current_timestamp as "updatedAt" from "User"
 model Suite {
   id String @id @default(uuid()) @db.Uuid
   createdAt DateTime @default(now())
@@ -185,12 +189,52 @@ model Suite {
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id String @db.Uuid
 
-  parent_suite Suite? @relation("Suiteception", fields: [parent_suite_id], references: [id], onDelete: Cascade)
-  parent_suite_id String? @db.Uuid
-  sub_suites Suite[] @relation("Suiteception")
-
   name String @default("Please give your suite a name")
   description String @default("Please describe the suite")
+  content String @default("<div class=\"bg-blue-500 p-4\">Edit to your heart's content! HTML supported! Tailwind only, please</div>")
+
+  // Add an index for non unique foreign keys
+  @@index([user_id])
+
+  pkm_history PkmHistory[]
+  storeys Storey[]
+}
+
+model Storey {
+  id String @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id String @db.Uuid
+
+  suite Suite @relation(fields: [suite_id], references: [id], onDelete: Cascade)
+  suite_id String @db.Uuid
+
+  name String @default("Please give your storey a name")
+  description String @default("Please describe the storey")
+  content String @default("<div class=\"bg-blue-500 p-4\">Edit to your heart's content! HTML supported! Tailwind only, please</div>")
+
+  // Add an index for non unique foreign keys
+  @@index([user_id])
+
+  pkm_history PkmHistory[]
+  spaces Space[]
+}
+
+model Space {
+  id String @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id String @db.Uuid
+
+  storey Storey @relation(fields: [storey_id], references: [id], onDelete: Cascade)
+  storey_id String @db.Uuid
+
+  name String @default("Please give your space a name")
+  description String @default("Please describe the space")
   content String @default("<div class=\"bg-blue-500 p-4\">Edit to your heart's content! HTML supported! Tailwind only, please</div>")
 
   // Add an index for non unique foreign keys

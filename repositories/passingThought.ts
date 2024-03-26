@@ -1,5 +1,4 @@
 import { prisma } from '@/utils/db'
-import { revalidatePath } from 'next/cache'
 import { randomUUID } from 'node:crypto'
 
 type CreatePassingThoughtArgs = {
@@ -7,7 +6,18 @@ type CreatePassingThoughtArgs = {
   name: string
   summary: string
   userId: string
-  suiteId?: string
+  suiteId: string | null
+  storeyId: string | null
+  spaceId: string | null
+}
+
+type GetPassingThoughtArgs = {
+  historyItemId: string
+  passingThoughtItemId: string
+  userId: string
+  suiteId: string | null
+  storeyId: string | null
+  spaceId: string | null
 }
 
 export type UpdatePassingThoughtArgs = CreatePassingThoughtArgs & {
@@ -17,12 +27,14 @@ export type UpdatePassingThoughtArgs = CreatePassingThoughtArgs & {
 
 // Get the current passingThought item for the user
 // Can add another method later if we ever need to grab the non-current one
-export const getCurrentPassingThoughtItemForUser = async (
-  suiteId: string,
-  passingThoughtItemId: string,
-  historyItemId: string,
-  userId: string,
-) => {
+export const getCurrentPassingThoughtItemForUser = async ({
+  suiteId,
+  storeyId,
+  spaceId,
+  passingThoughtItemId,
+  historyItemId,
+  userId,
+}: GetPassingThoughtArgs) => {
   const passingThoughtItem = await prisma.pkmHistory.findFirst({
     where: {
       user_id: userId,
@@ -30,6 +42,8 @@ export const getCurrentPassingThoughtItemForUser = async (
       history_id: historyItemId,
       model_id: passingThoughtItemId,
       suite_id: suiteId,
+      storey_id: storeyId,
+      space_id: spaceId,
     },
     select: {
       passing_thought_item: {
@@ -39,6 +53,7 @@ export const getCurrentPassingThoughtItemForUser = async (
           summary: true,
           model_id: true,
           history_id: true,
+          void_at: true,
         },
       },
       suite: {
@@ -48,14 +63,45 @@ export const getCurrentPassingThoughtItemForUser = async (
           description: true,
         },
       },
+      storey: {
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          suite: {
+            select: {
+              id: true,
+              name: true,
+              description: true,
+            },
+          },
+        },
+      },
+      space: {
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          storey: {
+            select: {
+              id: true,
+              name: true,
+              description: true,
+              suite: {
+                select: {
+                  id: true,
+                  name: true,
+                  description: true,
+                },
+              },
+            },
+          },
+        },
+      },
     },
   })
 
-  if (
-    !passingThoughtItem ||
-    !passingThoughtItem.passing_thought_item ||
-    !passingThoughtItem.suite
-  ) {
+  if (!passingThoughtItem || !passingThoughtItem.passing_thought_item) {
     return null
   }
 
@@ -68,6 +114,8 @@ export const storePassingThoughtItem = async ({
   name,
   summary,
   suiteId,
+  storeyId,
+  spaceId,
 }: CreatePassingThoughtArgs) => {
   const modelId = randomUUID()
 
@@ -82,6 +130,8 @@ export const storePassingThoughtItem = async ({
         model_type: 'PkmPassingThought',
         model_id: modelId,
         suite_id: suiteId,
+        storey_id: storeyId,
+        space_id: spaceId,
         passing_thought_item: {
           create: {
             content,
@@ -116,6 +166,8 @@ export const updatePassingThoughtItem = async ({
   passingThoughtItemId,
   userId,
   suiteId,
+  storeyId,
+  spaceId,
 }: UpdatePassingThoughtArgs) => {
   const now = new Date()
   const voidAt = new Date(now.setMonth(now.getMonth() + 1))
@@ -138,6 +190,8 @@ export const updatePassingThoughtItem = async ({
           model_type: 'PkmPassingThought',
           model_id: passingThoughtItemId,
           suite_id: suiteId,
+          storey_id: storeyId,
+          space_id: spaceId,
           passing_thought_item: {
             create: {
               content,

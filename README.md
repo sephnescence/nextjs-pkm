@@ -1,3 +1,29 @@
+Example insert select to generate missing storeys or spaces
+
+```sql
+insert into "Suite" (id, user_id, "name", description, "updatedAt")
+select id, user_id, 'Welcome center' as "name", 'Enjoy your stay at Innsight' as description, current_timestamp as "updatedAt" from "Suite"
+on conflict do nothing;
+
+update "Suite" set "name" = 'Welcome center', description = 'Enjoy your stay at Innsight' where id in (select id from "User");
+
+insert into "Storey" (id, user_id, suite_id, "name", description, "updatedAt")
+select id, user_id, user_id as suite_id, 'Foyer' as "name", 'Please head to reception' as description, current_timestamp as "updatedAt" from "Suite"
+on conflict do nothing;
+
+update "Storey" set "name" = 'Foyer', description = 'Please head to reception' where id in (select id from "User");
+
+insert into "Space" (id, user_id, storey_id, "name", description, "updatedAt")
+select id, user_id, user_id as storey_id, 'Reception' as "name", 'Check in' as description, current_timestamp as "updatedAt" from "Suite"
+on conflict do nothing;
+
+update "Space" set "name" = 'Reception', description = 'Check in' where id in (select id from "User");
+
+update "PkmHistory" set suite_id = null, storey_id = user_id, space_id = user_id;
+```
+
+---
+
 [![GitHub Actions Demo](https://github.com/sephnescence/nextjs-pkm/actions/workflows/github-actions-demo.yml/badge.svg)](https://github.com/sephnescence/nextjs-pkm/actions/workflows/github-actions-demo.yml)
 
 # nextjs-pkm

@@ -16,13 +16,16 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { getSuiteDashboardForUser } from '@/repositories/suite'
 import SuiteInformationPacketTabGroup from '@/components/pkm/Suites/content/SuiteInformationPacketTabGroup'
-import KeyIcon from '@/components/icons/KeyIcon'
 import TrashIcon from '@/components/icons/TrashIcon'
+import ListBulletIcon from '@/components/icons/ListBulletIcon'
+import BuildingOfficeIcon from '@/components/icons/BuildingOfficeIcon'
 
 export default async function SuiteDashboardIndex({
   params: { suiteId },
+  searchParams: { tab = 'content' },
 }: {
   params: { suiteId: string }
+  searchParams: { tab: string }
 }) {
   const user = await getUserAuth()
 
@@ -35,17 +38,42 @@ export default async function SuiteDashboardIndex({
   if (!suite) {
     return redirect('/')
   }
+
   const suiteInformationPacketTabGroupProps = {
     tabGroupInputName: 'suite',
     tabs: [
       {
+        tabDefaultChecked: tab === 'content',
         tabName: 'content',
-        tabHeader: <KeyIcon />,
-        tabContent: <>Content NYI</>,
+        tabHeader: <ListBulletIcon />,
+        tabContent: (
+          <div dangerouslySetInnerHTML={{ __html: suite.content }}></div>
+        ),
         tabContentClassName:
           'group-has-[.innsight-tab-group#suite--tab--content:checked]:block',
       },
       {
+        tabDefaultChecked: tab === 'storeys',
+        tabName: 'storeys',
+        tabHeader: <BuildingOfficeIcon />,
+        tabContent: (
+          <div>
+            {suite.storeys.map((storey) => (
+              <div key={storey.id}>
+                <Link
+                  href={`/suite/${suiteId}/storey/${storey.id}?tab=content`}
+                >
+                  Storey: {storey.name}
+                </Link>
+              </div>
+            ))}
+          </div>
+        ),
+        tabContentClassName:
+          'group-has-[.innsight-tab-group#suite--tab--storeys:checked]:block',
+      },
+      {
+        tabDefaultChecked: tab === 'epiphany',
         tabName: 'epiphany',
         tabHeader: <LightbulbIcon />,
         tabContent: (
@@ -53,18 +81,6 @@ export default async function SuiteDashboardIndex({
             <div className="h-8 mb-2">
               <div className="relative">
                 <div className="absolute top-0 left-0 flex">
-                  {/* <div className="bg-indigo-950 h-8 mr-2 py-1 px-3 rounded-lg hover:bg-violet-900">
-                    <Link
-                      className="flex rounded-lg focus:outline-offset-1 focus:outline-lime-600"
-                      href={`/suite/${suiteId}/epiphany`}
-                    >
-                      <LightbulbIcon />
-                      <ListBulletIcon
-                        viewBox="6 -3 12 48"
-                        className="w-2 h-6"
-                      />
-                    </Link>
-                  </div> */}
                   <div className="bg-indigo-950 h-8 mr-2 py-1 px-3 rounded-lg hover:bg-violet-900">
                     <Link
                       className="flex rounded-lg focus:outline-offset-1 focus:outline-lime-600"
@@ -100,7 +116,7 @@ export default async function SuiteDashboardIndex({
           'group-has-[.innsight-tab-group#suite--tab--epiphany:checked]:block',
       },
       {
-        tabDefaultChecked: true,
+        tabDefaultChecked: tab === 'inbox',
         tabName: 'inbox',
         tabHeader: <InboxStackIcon />,
         tabContent: (
@@ -108,18 +124,6 @@ export default async function SuiteDashboardIndex({
             <div className="h-8 mb-2">
               <div className="relative">
                 <div className="absolute top-0 left-0 flex">
-                  {/* <div className="bg-indigo-950 h-8 mr-2 py-1 px-3 rounded-lg hover:bg-violet-900">
-                    <Link
-                      className="flex rounded-lg focus:outline-offset-1 focus:outline-lime-600"
-                      href={`/suite/${suiteId}/inbox`}
-                    >
-                      <InboxStackIcon />
-                      <ListBulletIcon
-                        viewBox="6 -3 12 48"
-                        className="w-2 h-6"
-                      />
-                    </Link>
-                  </div> */}
                   <div className="bg-indigo-950 h-8 mr-2 py-1 px-3 rounded-lg hover:bg-violet-900">
                     <Link
                       className="flex rounded-lg focus:outline-offset-1 focus:outline-lime-600"
@@ -155,6 +159,7 @@ export default async function SuiteDashboardIndex({
           'group-has-[.innsight-tab-group#suite--tab--inbox:checked]:block',
       },
       {
+        tabDefaultChecked: tab === 'passing-thought',
         tabName: 'passing-thought',
         tabHeader: <BoltIcon />,
         tabContent: (
@@ -162,18 +167,6 @@ export default async function SuiteDashboardIndex({
             <div className="h-8 mb-2">
               <div className="relative">
                 <div className="absolute top-0 left-0 flex">
-                  {/* <div className="bg-indigo-950 h-8 mr-2 py-1 px-3 rounded-lg hover:bg-violet-900">
-                    <Link
-                      className="flex rounded-lg focus:outline-offset-1 focus:outline-lime-600"
-                      href={`/suite/${suiteId}/passing-thought`}
-                    >
-                      <BoltIcon />
-                      <ListBulletIcon
-                        viewBox="6 -3 12 48"
-                        className="w-2 h-6"
-                      />
-                    </Link>
-                  </div> */}
                   <div className="bg-indigo-950 h-8 mr-2 py-1 px-3 rounded-lg hover:bg-violet-900">
                     <Link
                       className="flex rounded-lg focus:outline-offset-1 focus:outline-rose-600"
@@ -211,6 +204,7 @@ export default async function SuiteDashboardIndex({
           'group-has-[.innsight-tab-group#suite--tab--passing-thought:checked]:block',
       },
       {
+        tabDefaultChecked: tab === 'todo',
         tabName: 'todo',
         tabHeader: <BellAlertIcon />,
         tabContent: (
@@ -218,18 +212,6 @@ export default async function SuiteDashboardIndex({
             <div className="h-8 mb-2">
               <div className="relative">
                 <div className="absolute top-0 left-0 flex">
-                  {/* <div className="bg-indigo-950 h-8 mr-2 py-1 px-3 rounded-lg hover:bg-violet-900">
-                    <Link
-                      className="flex rounded-lg focus:outline-offset-1 focus:outline-lime-600"
-                      href={`/suite/${suiteId}/todo`}
-                    >
-                      <BellAlertIcon />
-                      <ListBulletIcon
-                        viewBox="6 -3 12 48"
-                        className="w-2 h-6"
-                      />
-                    </Link>
-                  </div> */}
                   <div className="bg-indigo-950 h-8 mr-2 py-1 px-3 rounded-lg hover:bg-violet-900">
                     <Link
                       className="flex rounded-lg focus:outline-offset-1 focus:outline-cyan-600"
@@ -265,6 +247,7 @@ export default async function SuiteDashboardIndex({
           'group-has-[.innsight-tab-group#suite--tab--todo:checked]:block',
       },
       {
+        tabDefaultChecked: tab === 'void',
         tabName: 'void',
         tabHeader: <ArchiveBoxXMarkIcon />,
         tabContent: (
@@ -272,18 +255,6 @@ export default async function SuiteDashboardIndex({
             <div className="h-8 mb-2">
               <div className="relative">
                 <div className="absolute top-0 left-0 flex">
-                  {/* <div className="bg-indigo-950 h-8 mr-2 py-1 px-3 rounded-lg hover:bg-violet-900">
-                    <Link
-                      className="flex rounded-lg focus:outline-offset-1 focus:outline-lime-600"
-                      href={`/suite/${suiteId}/void`}
-                    >
-                      <ArchiveBoxXMarkIcon />
-                      <ListBulletIcon
-                        viewBox="6 -3 12 48"
-                        className="w-2 h-6"
-                      />
-                    </Link>
-                  </div> */}
                   <div className="bg-indigo-950 h-8 mr-2 py-1 px-3 rounded-lg hover:bg-violet-900">
                     <Link
                       className="flex rounded-lg focus:outline-offset-1 focus:outline-orange-600"
@@ -319,6 +290,7 @@ export default async function SuiteDashboardIndex({
           'group-has-[.innsight-tab-group#suite--tab--void:checked]:block',
       },
       {
+        tabDefaultChecked: tab === 'trash',
         tabName: 'trash',
         tabHeader: <TrashIcon />,
         tabContent: <>Trash NYI</>,
@@ -331,7 +303,7 @@ export default async function SuiteDashboardIndex({
   return (
     <>
       <p className="text-4xl mb-2">
-        <Link href={`/suite/view/${suiteId}`}>{suite.name}</Link>
+        <Link href={`/suite/${suiteId}/view`}>{suite.name}</Link>
       </p>
       <div className="text-xl text-white/60 mb-2">{suite.description}</div>
       <SuiteInformationPacketTabGroup

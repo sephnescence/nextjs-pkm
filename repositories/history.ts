@@ -1,11 +1,22 @@
 import { prisma } from '@/utils/db'
 
-export const getCurrentHistoryItemForUser = async (
-  suiteId: string,
-  modelId: string,
-  historyId: string,
-  userId: string,
-) => {
+type GetHistoryItemArgs = {
+  suiteId: string | null
+  storeyId: string | null
+  spaceId: string | null
+  modelId: string
+  historyId: string
+  userId: string
+}
+
+export const getCurrentHistoryItemForUser = async ({
+  suiteId,
+  storeyId,
+  spaceId,
+  modelId,
+  historyId,
+  userId,
+}: GetHistoryItemArgs) => {
   return await prisma.pkmHistory
     .findFirst({
       where: {
@@ -14,6 +25,8 @@ export const getCurrentHistoryItemForUser = async (
         history_id: historyId,
         model_id: modelId,
         suite_id: suiteId,
+        storey_id: storeyId,
+        space_id: spaceId,
       },
       select: {
         model_type: true,

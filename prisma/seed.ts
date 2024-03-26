@@ -24,8 +24,24 @@ await prisma.user.create({
     suites: {
       create: {
         id: userId,
-        name: 'Foyer',
+        name: 'Welcome Center',
         description: 'Enjoy your stay at Innsight',
+        storeys: {
+          create: {
+            id: userId,
+            user_id: userId,
+            name: 'Foyer',
+            description: 'Please head to reception',
+            spaces: {
+              create: {
+                id: userId,
+                user_id: userId,
+                name: 'Reception',
+                description: 'Check in',
+              },
+            },
+          },
+        },
       },
     },
     pkm_history: {
