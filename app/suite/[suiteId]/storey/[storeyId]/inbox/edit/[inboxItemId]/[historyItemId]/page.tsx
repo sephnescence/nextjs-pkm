@@ -73,7 +73,7 @@ export default function InboxEditRoute({
     <>
       <ItemForm
         pageTitle="Edit Inbox Item"
-        cancelUrl={`/suite/${suiteId}/storey/${storeyId}/view`}
+        cancelUrl={`/suite/${suiteId}/storey/${storeyId}/inbox/view/${inboxItemId}/${historyItemId}`}
         apiEndpoint={`/api/suite/${suiteId}/storey/${storeyId}/inbox/${inboxItemId}/${historyItemId}`}
         apiMethod="PATCH"
         defaultContent={resJson.inboxItem.content}

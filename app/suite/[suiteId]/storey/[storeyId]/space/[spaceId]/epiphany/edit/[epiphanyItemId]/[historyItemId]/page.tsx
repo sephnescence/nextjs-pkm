@@ -74,7 +74,7 @@ export default function EpiphanyEditRoute({
     <>
       <ItemForm
         pageTitle="Edit Epiphany Item"
-        cancelUrl={`/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/view`}
+        cancelUrl={`/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/epiphany/view/${epiphanyItemId}/${historyItemId}`}
         apiEndpoint={`/api/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/epiphany/${epiphanyItemId}/${historyItemId}`}
         apiMethod="PATCH"
         defaultContent={resJson.epiphanyItem.content}

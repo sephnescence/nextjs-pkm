@@ -35,6 +35,8 @@ export const getSuiteDashboardForUser = async (
       pkm_history: {
         where: {
           suite_id: suiteId,
+          storey_id: null,
+          space_id: null,
           is_current: true,
           model_type: {
             not: 'PkmTrash',

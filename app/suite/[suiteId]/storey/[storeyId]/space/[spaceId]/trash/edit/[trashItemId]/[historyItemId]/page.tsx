@@ -74,7 +74,7 @@ export default function TrashEditRoute({
     <>
       <ItemForm
         pageTitle="Edit Trash Item"
-        cancelUrl={`/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/view`}
+        cancelUrl={`/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/trash/view/${trashItemId}/${historyItemId}`}
         apiEndpoint={`/api/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/trash/${trashItemId}/${historyItemId}`}
         apiMethod="PATCH"
         defaultContent={resJson.trashItem.content}

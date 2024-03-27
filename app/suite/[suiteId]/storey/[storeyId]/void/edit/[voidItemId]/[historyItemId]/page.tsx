@@ -73,7 +73,7 @@ export default function VoidEditRoute({
     <>
       <ItemForm
         pageTitle="Edit Void Item"
-        cancelUrl={`/suite/${suiteId}/storey/${storeyId}/view`}
+        cancelUrl={`/suite/${suiteId}/storey/${storeyId}/void/view/${voidItemId}/${historyItemId}`}
         apiEndpoint={`/api/suite/${suiteId}/storey/${storeyId}/void/${voidItemId}/${historyItemId}`}
         apiMethod="PATCH"
         defaultContent={resJson.voidItem.content}

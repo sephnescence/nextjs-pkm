@@ -8,7 +8,6 @@ type EpiphanyEditRouteParams = {
   params: {
     suiteId: string
     storeyId: string
-    spaceId: string
     epiphanyItemId: string
     historyItemId: string
   }
@@ -74,7 +73,7 @@ export default function EpiphanyEditRoute({
     <>
       <ItemForm
         pageTitle="Edit Epiphany Item"
-        cancelUrl={`/suite/${suiteId}/storey/${storeyId}/view`}
+        cancelUrl={`/suite/${suiteId}/storey/${storeyId}/epiphany/view/${epiphanyItemId}/${historyItemId}`}
         apiEndpoint={`/api/suite/${suiteId}/storey/${storeyId}/epiphany/${epiphanyItemId}/${historyItemId}`}
         apiMethod="PATCH"
         defaultContent={resJson.epiphanyItem.content}
