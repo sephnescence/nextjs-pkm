@@ -20,7 +20,7 @@ export default async function NewUserIndex() {
   })
 
   if (existingUser) {
-    handleExistingUser(existingUser)
+    await handleExistingUser(existingUser)
     redirect('/reception')
   }
 
