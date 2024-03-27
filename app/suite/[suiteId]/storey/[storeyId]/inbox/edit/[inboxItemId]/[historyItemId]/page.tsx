@@ -4,19 +4,18 @@ import ItemForm from '@/components/pkm/forms/ItemForm'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-type PassingThoughtEditRouteParams = {
+type InboxEditRouteParams = {
   params: {
     suiteId: string
     storeyId: string
-    spaceId: string
-    passingThoughtItemId: string
+    inboxItemId: string
     historyItemId: string
   }
 }
 
-type PassingThoughtViewResponse = {
+type InboxViewResponse = {
   success: boolean
-  passingThoughtItem: {
+  inboxItem: {
     content: string
     name: string
     summary: string
@@ -35,18 +34,16 @@ type PassingThoughtViewResponse = {
   redirect?: string
 }
 
-export default function PassingThoughtEditRoute({
-  params: { suiteId, storeyId, spaceId, passingThoughtItemId, historyItemId },
-}: PassingThoughtEditRouteParams) {
+export default function InboxEditRoute({
+  params: { suiteId, storeyId, inboxItemId, historyItemId },
+}: InboxEditRouteParams) {
   const router = useRouter()
-  const [resJson, setResJon] = useState<PassingThoughtViewResponse | null>(
-    () => null,
-  )
+  const [resJson, setResJon] = useState<InboxViewResponse | null>(() => null)
 
   useEffect(() => {
     fetch(
       new Request(
-        `/api/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/passing-thought/${passingThoughtItemId}/${historyItemId}`,
+        `/api/suite/${suiteId}/storey/${storeyId}/inbox/${inboxItemId}/${historyItemId}`,
         {
           method: 'GET',
         },
@@ -58,14 +55,7 @@ export default function PassingThoughtEditRoute({
         setResJon(resJson)
       })
       .catch(() => {})
-  }, [
-    setResJon,
-    suiteId,
-    storeyId,
-    spaceId,
-    passingThoughtItemId,
-    historyItemId,
-  ])
+  }, [setResJon, suiteId, storeyId, inboxItemId, historyItemId])
 
   if (resJson === null) {
     return <div>Loading...</div>
@@ -82,13 +72,13 @@ export default function PassingThoughtEditRoute({
   return (
     <>
       <ItemForm
-        pageTitle="Edit Passing Thought Item"
-        cancelUrl={`/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/view`}
-        apiEndpoint={`/api/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/passing-thought/${passingThoughtItemId}/${historyItemId}`}
+        pageTitle="Edit Inbox Item"
+        cancelUrl={`/suite/${suiteId}/storey/${storeyId}/view`}
+        apiEndpoint={`/api/suite/${suiteId}/storey/${storeyId}/inbox/${inboxItemId}/${historyItemId}`}
         apiMethod="PATCH"
-        defaultContent={resJson.passingThoughtItem.content}
-        defaultName={resJson.passingThoughtItem.name}
-        defaultSummary={resJson.passingThoughtItem.summary}
+        defaultContent={resJson.inboxItem.content}
+        defaultName={resJson.inboxItem.name}
+        defaultSummary={resJson.inboxItem.summary}
       />
     </>
   )

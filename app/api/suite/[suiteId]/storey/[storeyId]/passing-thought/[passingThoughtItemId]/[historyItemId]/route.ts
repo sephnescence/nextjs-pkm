@@ -9,8 +9,8 @@ import { NextResponse } from 'next/server'
 
 type PassingThoughtGetParams = {
   params: {
+    suiteId: string
     storeyId: string
-    spaceId: string
     historyItemId: string
     passingThoughtItemId: string
   }
@@ -18,8 +18,8 @@ type PassingThoughtGetParams = {
 
 type PassingThoughtPatchParams = {
   params: {
+    suiteId: string
     storeyId: string
-    spaceId: string
     passingThoughtItemId: string
     historyItemId: string
   }
@@ -28,7 +28,7 @@ type PassingThoughtPatchParams = {
 export const GET = async (
   request: Request,
   {
-    params: { storeyId, spaceId, passingThoughtItemId, historyItemId },
+    params: { suiteId, storeyId, passingThoughtItemId, historyItemId },
   }: PassingThoughtGetParams,
 ) => {
   const user = await getUserAuth()
@@ -42,9 +42,9 @@ export const GET = async (
 
   const existingPassingThoughtHistoryItem =
     await getCurrentPassingThoughtItemForUser({
-      suiteId: null,
+      suiteId,
       storeyId,
-      spaceId,
+      spaceId: null,
       passingThoughtItemId,
       historyItemId,
       userId: user.id,
@@ -79,13 +79,6 @@ export const GET = async (
           description: existingPassingThoughtHistoryItem.storey.description,
         }
       : null,
-    space: existingPassingThoughtHistoryItem.space
-      ? {
-          id: existingPassingThoughtHistoryItem.space.id,
-          name: existingPassingThoughtHistoryItem.space.name,
-          description: existingPassingThoughtHistoryItem.space.description,
-        }
-      : null,
     passingThoughtItem: {
       content: existingPassingThoughtHistoryItem.passing_thought_item.content,
       name: existingPassingThoughtHistoryItem.passing_thought_item.name,
@@ -97,7 +90,7 @@ export const GET = async (
 export const PATCH = async (
   request: Request,
   {
-    params: { storeyId, spaceId, passingThoughtItemId, historyItemId },
+    params: { suiteId, storeyId, passingThoughtItemId, historyItemId },
   }: PassingThoughtPatchParams,
 ) => {
   const user = await getUserAuth()
@@ -110,9 +103,9 @@ export const PATCH = async (
   }
 
   const existingPassingThought = await getCurrentPassingThoughtItemForUser({
-    suiteId: null,
+    suiteId,
     storeyId,
-    spaceId,
+    spaceId: null,
     passingThoughtItemId,
     historyItemId,
     userId: user.id,
@@ -168,9 +161,9 @@ export const PATCH = async (
     name: passingThoughtArgs.name,
     summary: passingThoughtArgs.summary,
     historyItemId,
-    suiteId: null,
+    suiteId,
     storeyId,
-    spaceId,
+    spaceId: null,
     passingThoughtItemId,
     userId: user.id,
   })
@@ -188,6 +181,6 @@ export const PATCH = async (
 
   return NextResponse.json({
     success: true,
-    redirect: `/suite/${existingPassingThought.storey.suite.id}/storey/${storeyId}/space/${spaceId}/passing-thought/view/${newPassingThoughtItem.passingThoughtItem.model_id}/${newPassingThoughtItem.passingThoughtItem.history_id}`,
+    redirect: `/suite/${existingPassingThought.storey.suite.id}/storey/${storeyId}/passing-thought/view/${newPassingThoughtItem.passingThoughtItem.model_id}/${newPassingThoughtItem.passingThoughtItem.history_id}`,
   })
 }

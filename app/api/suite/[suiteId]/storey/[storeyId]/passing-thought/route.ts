@@ -1,20 +1,20 @@
 'use server'
 
 import { storePassingThoughtItem } from '@/repositories/passingThought'
-import { getSpaceForUser } from '@/repositories/space'
+import { getStoreyForUser } from '@/repositories/storey'
 import { getUserAuth } from '@/utils/auth'
 import { NextResponse } from 'next/server'
 
-type SpacePassingThoughtCreateArgs = {
+type StoreyPassingThoughtCreateArgs = {
   params: {
+    suiteId: string
     storeyId: string
-    spaceId: string
   }
 }
 
 export const POST = async (
   request: Request,
-  { params: { storeyId, spaceId } }: SpacePassingThoughtCreateArgs,
+  { params: { suiteId, storeyId } }: StoreyPassingThoughtCreateArgs,
 ) => {
   const user = await getUserAuth()
 
@@ -25,9 +25,9 @@ export const POST = async (
     })
   }
 
-  const existingSpace = await getSpaceForUser(storeyId, spaceId, user.id)
+  const existingStorey = await getStoreyForUser(suiteId, storeyId, user.id)
 
-  if (!existingSpace) {
+  if (!existingStorey) {
     return NextResponse.json({
       success: false,
       redirect: '/',
@@ -78,8 +78,8 @@ export const POST = async (
     name: passingThoughtArgs.name,
     summary: passingThoughtArgs.summary,
     storeyId,
-    spaceId,
-    suiteId: null,
+    spaceId: null,
+    suiteId,
   })
 
   if (!newPassingThoughtItem || !newPassingThoughtItem.passingThoughtItem) {
@@ -95,6 +95,6 @@ export const POST = async (
 
   return NextResponse.json({
     success: true,
-    redirect: `/suite/${existingSpace.storey.suite.id}/storey/${storeyId}/space/${spaceId}/passing-thought/view/${newPassingThoughtItem.passingThoughtItem.model_id}/${newPassingThoughtItem.passingThoughtItem.history_id}`,
+    redirect: `/suite/${existingStorey.suite.id}/storey/${storeyId}/passing-thought/view/${newPassingThoughtItem.passingThoughtItem.model_id}/${newPassingThoughtItem.passingThoughtItem.history_id}`,
   })
 }

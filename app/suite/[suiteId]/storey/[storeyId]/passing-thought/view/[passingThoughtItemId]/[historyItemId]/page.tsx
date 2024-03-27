@@ -9,14 +9,13 @@ type PassingThoughtViewRouteParams = {
   params: {
     suiteId: string
     storeyId: string
-    spaceId: string
     passingThoughtItemId: string
     historyItemId: string
   }
 }
 
 export default async function PassingThoughtViewRoute({
-  params: { suiteId, storeyId, spaceId, passingThoughtItemId, historyItemId },
+  params: { suiteId, storeyId, passingThoughtItemId, historyItemId },
 }: PassingThoughtViewRouteParams) {
   const user = await getUserAuth()
 
@@ -32,9 +31,9 @@ export default async function PassingThoughtViewRoute({
 
   const passingThoughtPassingThoughtHistoryItem =
     await getCurrentPassingThoughtItemForUser({
-      suiteId: null, // Space Passing Thought items won't actually have a suiteId, but the url will
+      suiteId,
       storeyId,
-      spaceId,
+      spaceId: null, // Storey Passing Thought items won't have a spaceId
       passingThoughtItemId,
       historyItemId,
       userId: user.id,
@@ -93,7 +92,7 @@ export default async function PassingThoughtViewRoute({
           </label>
         </div>
         <Link
-          href={`/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/passing-thought/edit/${passingThoughtItemId}/${historyItemId}`}
+          href={`/suite/${suiteId}/storey/${storeyId}/passing-thought/edit/${passingThoughtItemId}/${historyItemId}`}
         >
           <button
             className="border-solid border-2 border-blue-600 hover:bg-blue-600 px-4 py-2 rounded-lg mr-4"
@@ -103,9 +102,7 @@ export default async function PassingThoughtViewRoute({
           </button>
         </Link>
 
-        <Link
-          href={`/suite/${suiteId}/storey/${storeyId}/space/${spaceId}?tab=passing-thought`}
-        >
+        <Link href={`/suite/${suiteId}/storey/${storeyId}?tab=passing-thought`}>
           <button
             className="bg-red-600 hover:bg-red-500 px-4 py-2 rounded-lg mr-4"
             type="button"

@@ -25,7 +25,7 @@ export type UpdatePassingThoughtArgs = CreatePassingThoughtArgs & {
   passingThoughtItemId: string
 }
 
-// Get the current passingThought item for the user
+// Get the current passing thought item for the user
 // Can add another method later if we ever need to grab the non-current one
 export const getCurrentPassingThoughtItemForUser = async ({
   suiteId,

@@ -1,23 +1,22 @@
 import MoveTo from '@/components/pkm/forms/MoveTo'
-import { getCurrentPassingThoughtItemForUser } from '@/repositories/passingThought'
+import { getCurrentVoidItemForUser } from '@/repositories/void'
 import { getSuiteDashboardForUser } from '@/repositories/suite'
 import { getUserAuth } from '@/utils/auth'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
-type PassingThoughtViewRouteParams = {
+type VoidViewRouteParams = {
   params: {
     suiteId: string
     storeyId: string
-    spaceId: string
-    passingThoughtItemId: string
+    voidItemId: string
     historyItemId: string
   }
 }
 
-export default async function PassingThoughtViewRoute({
-  params: { suiteId, storeyId, spaceId, passingThoughtItemId, historyItemId },
-}: PassingThoughtViewRouteParams) {
+export default async function VoidViewRoute({
+  params: { suiteId, storeyId, voidItemId, historyItemId },
+}: VoidViewRouteParams) {
   const user = await getUserAuth()
 
   if (!user) {
@@ -30,26 +29,22 @@ export default async function PassingThoughtViewRoute({
     return redirect('/')
   }
 
-  const passingThoughtPassingThoughtHistoryItem =
-    await getCurrentPassingThoughtItemForUser({
-      suiteId: null, // Space Passing Thought items won't actually have a suiteId, but the url will
-      storeyId,
-      spaceId,
-      passingThoughtItemId,
-      historyItemId,
-      userId: user.id,
-    })
+  const voidVoidHistoryItem = await getCurrentVoidItemForUser({
+    suiteId,
+    storeyId,
+    spaceId: null, // Storey Void items won't have a spaceId
+    voidItemId,
+    historyItemId,
+    userId: user.id,
+  })
 
-  if (
-    !passingThoughtPassingThoughtHistoryItem ||
-    !passingThoughtPassingThoughtHistoryItem.passing_thought_item
-  ) {
+  if (!voidVoidHistoryItem || !voidVoidHistoryItem.void_item) {
     return redirect('/')
   }
 
   return (
     <div className="">
-      <div className="text-4xl mb-2">View Passing Thought Item</div>
+      <div className="text-4xl mb-2">View Void Item</div>
       <div className="w-full mb-4">
         <div className="mb-4">
           <label>
@@ -58,10 +53,7 @@ export default async function PassingThoughtViewRoute({
               type="text"
               className="min-w-full bg-slate-800 p-4"
               name="name"
-              defaultValue={
-                passingThoughtPassingThoughtHistoryItem.passing_thought_item
-                  .name
-              }
+              defaultValue={voidVoidHistoryItem.void_item.name}
               readOnly
             />
           </label>
@@ -72,10 +64,7 @@ export default async function PassingThoughtViewRoute({
             <textarea
               className="min-w-full min-h-48 bg-slate-800 p-4"
               name="summary"
-              defaultValue={
-                passingThoughtPassingThoughtHistoryItem.passing_thought_item
-                  .summary
-              }
+              defaultValue={voidVoidHistoryItem.void_item.summary}
               readOnly
             />
           </label>
@@ -85,15 +74,13 @@ export default async function PassingThoughtViewRoute({
             <div className="mb-4">Content</div>
             <div
               dangerouslySetInnerHTML={{
-                __html:
-                  passingThoughtPassingThoughtHistoryItem.passing_thought_item
-                    .content,
+                __html: voidVoidHistoryItem.void_item.content,
               }}
             />
           </label>
         </div>
         <Link
-          href={`/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/passing-thought/edit/${passingThoughtItemId}/${historyItemId}`}
+          href={`/suite/${suiteId}/storey/${storeyId}/void/edit/${voidItemId}/${historyItemId}`}
         >
           <button
             className="border-solid border-2 border-blue-600 hover:bg-blue-600 px-4 py-2 rounded-lg mr-4"
@@ -102,10 +89,7 @@ export default async function PassingThoughtViewRoute({
             Edit
           </button>
         </Link>
-
-        <Link
-          href={`/suite/${suiteId}/storey/${storeyId}/space/${spaceId}?tab=passing-thought`}
-        >
+        <Link href={`/suite/${suiteId}/storey/${storeyId}?tab=void`}>
           <button
             className="bg-red-600 hover:bg-red-500 px-4 py-2 rounded-lg mr-4"
             type="button"
@@ -116,7 +100,7 @@ export default async function PassingThoughtViewRoute({
       </div>
       <MoveTo
         suiteId={suiteId}
-        modelItemId={passingThoughtItemId}
+        modelItemId={voidItemId}
         historyItemId={historyItemId}
       />
     </div>
