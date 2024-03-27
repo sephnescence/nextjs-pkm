@@ -8,7 +8,7 @@ const TopNav = () => {
     <SignedIn>
       <div className="mx-4 my-4 absolute top-0 right-0 flex">
         <div className="mr-4">
-          <Link href="/foyer">
+          <Link href="/reception">
             <PkmIcon className="w-8 h-8" />
           </Link>
         </div>

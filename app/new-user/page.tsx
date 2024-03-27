@@ -1,5 +1,6 @@
 import { prisma } from '@/utils/db'
 import { currentUser } from '@clerk/nextjs'
+import { User } from '@prisma/client'
 import { redirect } from 'next/navigation'
 import { randomUUID } from 'node:crypto'
 
@@ -17,6 +18,11 @@ export default async function NewUserIndex() {
       clerkId: clerkUserId,
     },
   })
+
+  if (existingUser) {
+    await handleExistingUser(existingUser)
+    redirect('/reception')
+  }
 
   if (!existingUser) {
     const userId = randomUUID()
@@ -54,5 +60,36 @@ export default async function NewUserIndex() {
     })
   }
 
-  redirect('/foyer')
+  redirect('/reception')
+}
+
+const handleExistingUser = async (existingUser: User) => {
+  await prisma.suite.upsert({
+    where: {
+      id: existingUser.id,
+    },
+    update: {},
+    create: {
+      id: existingUser.id,
+      user_id: existingUser.id,
+      name: 'Welcome Center',
+      description: 'Enjoy your stay at Innsight',
+      storeys: {
+        create: {
+          id: existingUser.id,
+          user_id: existingUser.id,
+          name: 'Foyer',
+          description: 'Please head to reception',
+          spaces: {
+            create: {
+              id: existingUser.id,
+              user_id: existingUser.id,
+              name: 'Reception',
+              description: 'Check in',
+            },
+          },
+        },
+      },
+    },
+  })
 }
