@@ -45,6 +45,7 @@ export const getSpaceDashboardForUser = async (
       },
       pkm_history: {
         where: {
+          suite_id: null,
           storey_id: storeyId,
           space_id: spaceId,
           is_current: true,

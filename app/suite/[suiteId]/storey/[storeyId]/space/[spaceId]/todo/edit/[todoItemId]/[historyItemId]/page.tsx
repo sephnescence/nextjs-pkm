@@ -74,7 +74,7 @@ export default function TodoEditRoute({
     <>
       <ItemForm
         pageTitle="Edit Todo Item"
-        cancelUrl={`/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/view`}
+        cancelUrl={`/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/todo/view/${todoItemId}/${historyItemId}`}
         apiEndpoint={`/api/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/todo/${todoItemId}/${historyItemId}`}
         apiMethod="PATCH"
         defaultContent={resJson.todoItem.content}

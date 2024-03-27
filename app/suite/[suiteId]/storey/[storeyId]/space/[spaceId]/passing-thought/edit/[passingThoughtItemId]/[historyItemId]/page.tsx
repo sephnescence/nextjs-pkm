@@ -83,7 +83,7 @@ export default function PassingThoughtEditRoute({
     <>
       <ItemForm
         pageTitle="Edit Passing Thought Item"
-        cancelUrl={`/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/view`}
+        cancelUrl={`/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/passing-thought/view/${passingThoughtItemId}/${historyItemId}`}
         apiEndpoint={`/api/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/passing-thought/${passingThoughtItemId}/${historyItemId}`}
         apiMethod="PATCH"
         defaultContent={resJson.passingThoughtItem.content}

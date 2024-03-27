@@ -45,6 +45,7 @@ export const getStoreyDashboardForUser = async (
         where: {
           suite_id: suiteId,
           storey_id: storeyId,
+          space_id: null,
           is_current: true,
           model_type: {
             not: 'PkmTrash',
