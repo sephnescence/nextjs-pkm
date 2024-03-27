@@ -1,20 +1,20 @@
 'use server'
 
-import { storePassingThoughtItem } from '@/repositories/passingThought'
-import { getSpaceForUser } from '@/repositories/space'
+import { storeInboxItem } from '@/repositories/inbox'
+import { getStoreyForUser } from '@/repositories/storey'
 import { getUserAuth } from '@/utils/auth'
 import { NextResponse } from 'next/server'
 
-type SpacePassingThoughtCreateArgs = {
+type StoreyInboxCreateArgs = {
   params: {
+    suiteId: string
     storeyId: string
-    spaceId: string
   }
 }
 
 export const POST = async (
   request: Request,
-  { params: { storeyId, spaceId } }: SpacePassingThoughtCreateArgs,
+  { params: { suiteId, storeyId } }: StoreyInboxCreateArgs,
 ) => {
   const user = await getUserAuth()
 
@@ -25,18 +25,18 @@ export const POST = async (
     })
   }
 
-  const existingSpace = await getSpaceForUser(storeyId, spaceId, user.id)
+  const existingStorey = await getStoreyForUser(suiteId, storeyId, user.id)
 
-  if (!existingSpace) {
+  if (!existingStorey) {
     return NextResponse.json({
       success: false,
       redirect: '/',
     })
   }
 
-  const passingThoughtArgs = (await request.json()) || ''
+  const inboxArgs = (await request.json()) || ''
 
-  if (!passingThoughtArgs.name) {
+  if (!inboxArgs.name) {
     return NextResponse.json({
       success: false,
       errors: {
@@ -48,7 +48,7 @@ export const POST = async (
     })
   }
 
-  if (!passingThoughtArgs.summary) {
+  if (!inboxArgs.summary) {
     return NextResponse.json({
       success: false,
       errors: {
@@ -60,7 +60,7 @@ export const POST = async (
     })
   }
 
-  if (!passingThoughtArgs.content) {
+  if (!inboxArgs.content) {
     return NextResponse.json({
       success: false,
       errors: {
@@ -72,17 +72,17 @@ export const POST = async (
     })
   }
 
-  const newPassingThoughtItem = await storePassingThoughtItem({
+  const newInboxItem = await storeInboxItem({
     userId: user.id,
-    content: passingThoughtArgs.content,
-    name: passingThoughtArgs.name,
-    summary: passingThoughtArgs.summary,
+    content: inboxArgs.content,
+    name: inboxArgs.name,
+    summary: inboxArgs.summary,
     storeyId,
-    spaceId,
-    suiteId: null,
+    spaceId: null,
+    suiteId,
   })
 
-  if (!newPassingThoughtItem || !newPassingThoughtItem.passingThoughtItem) {
+  if (!newInboxItem || !newInboxItem.inboxItem) {
     return NextResponse.json({
       success: false,
       errors: {
@@ -95,6 +95,6 @@ export const POST = async (
 
   return NextResponse.json({
     success: true,
-    redirect: `/suite/${existingSpace.storey.suite.id}/storey/${storeyId}/space/${spaceId}/passing-thought/view/${newPassingThoughtItem.passingThoughtItem.model_id}/${newPassingThoughtItem.passingThoughtItem.history_id}`,
+    redirect: `/suite/${existingStorey.suite.id}/storey/${storeyId}/inbox/view/${newInboxItem.inboxItem.model_id}/${newInboxItem.inboxItem.history_id}`,
   })
 }

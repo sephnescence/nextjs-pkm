@@ -4,19 +4,18 @@ import ItemForm from '@/components/pkm/forms/ItemForm'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-type PassingThoughtEditRouteParams = {
+type TrashEditRouteParams = {
   params: {
     suiteId: string
     storeyId: string
-    spaceId: string
-    passingThoughtItemId: string
+    trashItemId: string
     historyItemId: string
   }
 }
 
-type PassingThoughtViewResponse = {
+type TrashViewResponse = {
   success: boolean
-  passingThoughtItem: {
+  trashItem: {
     content: string
     name: string
     summary: string
@@ -35,18 +34,16 @@ type PassingThoughtViewResponse = {
   redirect?: string
 }
 
-export default function PassingThoughtEditRoute({
-  params: { suiteId, storeyId, spaceId, passingThoughtItemId, historyItemId },
-}: PassingThoughtEditRouteParams) {
+export default function TrashEditRoute({
+  params: { suiteId, storeyId, trashItemId, historyItemId },
+}: TrashEditRouteParams) {
   const router = useRouter()
-  const [resJson, setResJon] = useState<PassingThoughtViewResponse | null>(
-    () => null,
-  )
+  const [resJson, setResJon] = useState<TrashViewResponse | null>(() => null)
 
   useEffect(() => {
     fetch(
       new Request(
-        `/api/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/passing-thought/${passingThoughtItemId}/${historyItemId}`,
+        `/api/suite/${suiteId}/storey/${storeyId}/trash/${trashItemId}/${historyItemId}`,
         {
           method: 'GET',
         },
@@ -58,14 +55,7 @@ export default function PassingThoughtEditRoute({
         setResJon(resJson)
       })
       .catch(() => {})
-  }, [
-    setResJon,
-    suiteId,
-    storeyId,
-    spaceId,
-    passingThoughtItemId,
-    historyItemId,
-  ])
+  }, [setResJon, suiteId, storeyId, trashItemId, historyItemId])
 
   if (resJson === null) {
     return <div>Loading...</div>
@@ -82,13 +72,13 @@ export default function PassingThoughtEditRoute({
   return (
     <>
       <ItemForm
-        pageTitle="Edit Passing Thought Item"
-        cancelUrl={`/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/view`}
-        apiEndpoint={`/api/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/passing-thought/${passingThoughtItemId}/${historyItemId}`}
+        pageTitle="Edit Trash Item"
+        cancelUrl={`/suite/${suiteId}/storey/${storeyId}/view`}
+        apiEndpoint={`/api/suite/${suiteId}/storey/${storeyId}/trash/${trashItemId}/${historyItemId}`}
         apiMethod="PATCH"
-        defaultContent={resJson.passingThoughtItem.content}
-        defaultName={resJson.passingThoughtItem.name}
-        defaultSummary={resJson.passingThoughtItem.summary}
+        defaultContent={resJson.trashItem.content}
+        defaultName={resJson.trashItem.name}
+        defaultSummary={resJson.trashItem.summary}
       />
     </>
   )

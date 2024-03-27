@@ -4,19 +4,19 @@ import ItemForm from '@/components/pkm/forms/ItemForm'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-type PassingThoughtEditRouteParams = {
+type EpiphanyEditRouteParams = {
   params: {
     suiteId: string
     storeyId: string
     spaceId: string
-    passingThoughtItemId: string
+    epiphanyItemId: string
     historyItemId: string
   }
 }
 
-type PassingThoughtViewResponse = {
+type EpiphanyViewResponse = {
   success: boolean
-  passingThoughtItem: {
+  epiphanyItem: {
     content: string
     name: string
     summary: string
@@ -35,18 +35,16 @@ type PassingThoughtViewResponse = {
   redirect?: string
 }
 
-export default function PassingThoughtEditRoute({
-  params: { suiteId, storeyId, spaceId, passingThoughtItemId, historyItemId },
-}: PassingThoughtEditRouteParams) {
+export default function EpiphanyEditRoute({
+  params: { suiteId, storeyId, epiphanyItemId, historyItemId },
+}: EpiphanyEditRouteParams) {
   const router = useRouter()
-  const [resJson, setResJon] = useState<PassingThoughtViewResponse | null>(
-    () => null,
-  )
+  const [resJson, setResJon] = useState<EpiphanyViewResponse | null>(() => null)
 
   useEffect(() => {
     fetch(
       new Request(
-        `/api/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/passing-thought/${passingThoughtItemId}/${historyItemId}`,
+        `/api/suite/${suiteId}/storey/${storeyId}/epiphany/${epiphanyItemId}/${historyItemId}`,
         {
           method: 'GET',
         },
@@ -58,14 +56,7 @@ export default function PassingThoughtEditRoute({
         setResJon(resJson)
       })
       .catch(() => {})
-  }, [
-    setResJon,
-    suiteId,
-    storeyId,
-    spaceId,
-    passingThoughtItemId,
-    historyItemId,
-  ])
+  }, [setResJon, suiteId, storeyId, epiphanyItemId, historyItemId])
 
   if (resJson === null) {
     return <div>Loading...</div>
@@ -82,13 +73,13 @@ export default function PassingThoughtEditRoute({
   return (
     <>
       <ItemForm
-        pageTitle="Edit Passing Thought Item"
-        cancelUrl={`/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/view`}
-        apiEndpoint={`/api/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/passing-thought/${passingThoughtItemId}/${historyItemId}`}
+        pageTitle="Edit Epiphany Item"
+        cancelUrl={`/suite/${suiteId}/storey/${storeyId}/view`}
+        apiEndpoint={`/api/suite/${suiteId}/storey/${storeyId}/epiphany/${epiphanyItemId}/${historyItemId}`}
         apiMethod="PATCH"
-        defaultContent={resJson.passingThoughtItem.content}
-        defaultName={resJson.passingThoughtItem.name}
-        defaultSummary={resJson.passingThoughtItem.summary}
+        defaultContent={resJson.epiphanyItem.content}
+        defaultName={resJson.epiphanyItem.name}
+        defaultSummary={resJson.epiphanyItem.summary}
       />
     </>
   )

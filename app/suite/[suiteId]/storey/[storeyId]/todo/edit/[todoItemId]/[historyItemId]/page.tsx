@@ -4,19 +4,18 @@ import ItemForm from '@/components/pkm/forms/ItemForm'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-type PassingThoughtEditRouteParams = {
+type TodoEditRouteParams = {
   params: {
     suiteId: string
     storeyId: string
-    spaceId: string
-    passingThoughtItemId: string
+    todoItemId: string
     historyItemId: string
   }
 }
 
-type PassingThoughtViewResponse = {
+type TodoViewResponse = {
   success: boolean
-  passingThoughtItem: {
+  todoItem: {
     content: string
     name: string
     summary: string
@@ -35,18 +34,16 @@ type PassingThoughtViewResponse = {
   redirect?: string
 }
 
-export default function PassingThoughtEditRoute({
-  params: { suiteId, storeyId, spaceId, passingThoughtItemId, historyItemId },
-}: PassingThoughtEditRouteParams) {
+export default function TodoEditRoute({
+  params: { suiteId, storeyId, todoItemId, historyItemId },
+}: TodoEditRouteParams) {
   const router = useRouter()
-  const [resJson, setResJon] = useState<PassingThoughtViewResponse | null>(
-    () => null,
-  )
+  const [resJson, setResJon] = useState<TodoViewResponse | null>(() => null)
 
   useEffect(() => {
     fetch(
       new Request(
-        `/api/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/passing-thought/${passingThoughtItemId}/${historyItemId}`,
+        `/api/suite/${suiteId}/storey/${storeyId}/todo/${todoItemId}/${historyItemId}`,
         {
           method: 'GET',
         },
@@ -58,14 +55,7 @@ export default function PassingThoughtEditRoute({
         setResJon(resJson)
       })
       .catch(() => {})
-  }, [
-    setResJon,
-    suiteId,
-    storeyId,
-    spaceId,
-    passingThoughtItemId,
-    historyItemId,
-  ])
+  }, [setResJon, suiteId, storeyId, todoItemId, historyItemId])
 
   if (resJson === null) {
     return <div>Loading...</div>
@@ -82,13 +72,13 @@ export default function PassingThoughtEditRoute({
   return (
     <>
       <ItemForm
-        pageTitle="Edit Passing Thought Item"
-        cancelUrl={`/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/view`}
-        apiEndpoint={`/api/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/passing-thought/${passingThoughtItemId}/${historyItemId}`}
+        pageTitle="Edit Todo Item"
+        cancelUrl={`/suite/${suiteId}/storey/${storeyId}/view`}
+        apiEndpoint={`/api/suite/${suiteId}/storey/${storeyId}/todo/${todoItemId}/${historyItemId}`}
         apiMethod="PATCH"
-        defaultContent={resJson.passingThoughtItem.content}
-        defaultName={resJson.passingThoughtItem.name}
-        defaultSummary={resJson.passingThoughtItem.summary}
+        defaultContent={resJson.todoItem.content}
+        defaultName={resJson.todoItem.name}
+        defaultSummary={resJson.todoItem.summary}
       />
     </>
   )

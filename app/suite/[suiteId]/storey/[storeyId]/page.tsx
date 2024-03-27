@@ -70,7 +70,7 @@ export default async function SuiteDashboardIndex({
           </div>
         ),
         tabContentClassName:
-          'group-has-[.innsight-tab-group#storey--tab--storeys:checked]:block',
+          'group-has-[.innsight-tab-group#storey--tab--spaces:checked]:block',
       },
       {
         tabDefaultChecked: tab === 'epiphany',
@@ -84,7 +84,7 @@ export default async function SuiteDashboardIndex({
                   <div className="bg-indigo-950 h-8 mr-2 py-1 px-3 rounded-lg hover:bg-violet-900">
                     <Link
                       className="flex rounded-lg focus:outline-offset-1 focus:outline-lime-600"
-                      href={`/suite/${suiteId}/epiphany/create`}
+                      href={`/suite/${suiteId}/storey/${storeyId}/epiphany/create`}
                     >
                       <LightbulbIcon />
                       <PlusIcon viewBox="6 -3 12 48" className="w-2 h-6" />
@@ -102,7 +102,7 @@ export default async function SuiteDashboardIndex({
                   return (
                     <div key={item.model_id}>
                       <Link
-                        href={`/suite/${suiteId}/epiphany/view/${item.model_id}/${item.history_id}`}
+                        href={`/suite/${suiteId}/storey/${storeyId}/epiphany/view/${item.model_id}/${item.history_id}`}
                       >
                         <Epiphany epiphanyItem={item.epiphany_item!} />
                       </Link>
@@ -127,7 +127,7 @@ export default async function SuiteDashboardIndex({
                   <div className="bg-indigo-950 h-8 mr-2 py-1 px-3 rounded-lg hover:bg-violet-900">
                     <Link
                       className="flex rounded-lg focus:outline-offset-1 focus:outline-lime-600"
-                      href={`/suite/${suiteId}/inbox/create`}
+                      href={`/suite/${suiteId}/storey/${storeyId}/inbox/create`}
                     >
                       <InboxStackIcon />
                       <PlusIcon viewBox="6 -3 12 48" className="w-2 h-6" />
@@ -145,7 +145,7 @@ export default async function SuiteDashboardIndex({
                   return (
                     <div key={item.model_id}>
                       <Link
-                        href={`/suite/${suiteId}/inbox/view/${item.model_id}/${item.history_id}`}
+                        href={`/suite/${suiteId}/storey/${storeyId}/inbox/view/${item.model_id}/${item.history_id}`}
                       >
                         <Inbox inboxItem={item.inbox_item!} />
                       </Link>
@@ -170,7 +170,7 @@ export default async function SuiteDashboardIndex({
                   <div className="bg-indigo-950 h-8 mr-2 py-1 px-3 rounded-lg hover:bg-violet-900">
                     <Link
                       className="flex rounded-lg focus:outline-offset-1 focus:outline-rose-600"
-                      href={`/suite/${suiteId}/passing-thought/create`}
+                      href={`/suite/${suiteId}/storey/${storeyId}/passing-thought/create`}
                     >
                       <BoltIcon />
                       <PlusIcon viewBox="6 -3 12 48" className="w-2 h-6" />
@@ -188,7 +188,7 @@ export default async function SuiteDashboardIndex({
                   return (
                     <div key={item.model_id}>
                       <Link
-                        href={`/suite/${suiteId}/passing-thought/view/${item.model_id}/${item.history_id}`}
+                        href={`/suite/${suiteId}/storey/${storeyId}/passing-thought/view/${item.model_id}/${item.history_id}`}
                       >
                         <PassingThought
                           passingThoughtItem={item.passing_thought_item!}
@@ -215,7 +215,7 @@ export default async function SuiteDashboardIndex({
                   <div className="bg-indigo-950 h-8 mr-2 py-1 px-3 rounded-lg hover:bg-violet-900">
                     <Link
                       className="flex rounded-lg focus:outline-offset-1 focus:outline-cyan-600"
-                      href={`/suite/${suiteId}/todo/create`}
+                      href={`/suite/${suiteId}/storey/${storeyId}/todo/create`}
                     >
                       <BellAlertIcon />
                       <PlusIcon viewBox="6 -3 12 48" className="w-2 h-6" />
@@ -233,7 +233,7 @@ export default async function SuiteDashboardIndex({
                   return (
                     <div key={item.model_id}>
                       <Link
-                        href={`/suite/${suiteId}/todo/view/${item.model_id}/${item.history_id}`}
+                        href={`/suite/${suiteId}/storey/${storeyId}/todo/view/${item.model_id}/${item.history_id}`}
                       >
                         <Todo todoItem={item.todo_item!} />
                       </Link>
@@ -258,7 +258,7 @@ export default async function SuiteDashboardIndex({
                   <div className="bg-indigo-950 h-8 mr-2 py-1 px-3 rounded-lg hover:bg-violet-900">
                     <Link
                       className="flex rounded-lg focus:outline-offset-1 focus:outline-orange-600"
-                      href={`/suite/${suiteId}/void/create`}
+                      href={`/suite/${suiteId}/storey/${storeyId}/void/create`}
                     >
                       <ArchiveBoxXMarkIcon />
                       <PlusIcon viewBox="6 -3 12 48" className="w-2 h-6" />
@@ -276,7 +276,7 @@ export default async function SuiteDashboardIndex({
                   return (
                     <div key={item.model_id}>
                       <Link
-                        href={`/suite/${suiteId}/void/view/${item.model_id}/${item.history_id}`}
+                        href={`/suite/${suiteId}/storey/${storeyId}/void/view/${item.model_id}/${item.history_id}`}
                       >
                         <Void voidItem={item.void_item!} />
                       </Link>
@@ -303,7 +303,9 @@ export default async function SuiteDashboardIndex({
   return (
     <>
       <p className="text-4xl mb-2">
-        <Link href={`/suite/${suiteId}/view`}>{storey.name}</Link>
+        <Link href={`/suite/${suiteId}/storey/${storeyId}/view`}>
+          {storey.name}
+        </Link>
       </p>
       <div className="text-xl text-white/60 mb-2">{storey.description}</div>
       <SuiteInformationPacketTabGroup

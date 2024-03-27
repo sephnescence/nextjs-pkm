@@ -1,20 +1,20 @@
 'use server'
 
-import { storePassingThoughtItem } from '@/repositories/passingThought'
-import { getSpaceForUser } from '@/repositories/space'
+import { storeEpiphanyItem } from '@/repositories/epiphany'
+import { getStoreyForUser } from '@/repositories/storey'
 import { getUserAuth } from '@/utils/auth'
 import { NextResponse } from 'next/server'
 
-type SpacePassingThoughtCreateArgs = {
+type StoreyEpiphanyCreateArgs = {
   params: {
+    suiteId: string
     storeyId: string
-    spaceId: string
   }
 }
 
 export const POST = async (
   request: Request,
-  { params: { storeyId, spaceId } }: SpacePassingThoughtCreateArgs,
+  { params: { suiteId, storeyId } }: StoreyEpiphanyCreateArgs,
 ) => {
   const user = await getUserAuth()
 
@@ -25,18 +25,18 @@ export const POST = async (
     })
   }
 
-  const existingSpace = await getSpaceForUser(storeyId, spaceId, user.id)
+  const existingStorey = await getStoreyForUser(suiteId, storeyId, user.id)
 
-  if (!existingSpace) {
+  if (!existingStorey) {
     return NextResponse.json({
       success: false,
       redirect: '/',
     })
   }
 
-  const passingThoughtArgs = (await request.json()) || ''
+  const epiphanyArgs = (await request.json()) || ''
 
-  if (!passingThoughtArgs.name) {
+  if (!epiphanyArgs.name) {
     return NextResponse.json({
       success: false,
       errors: {
@@ -48,7 +48,7 @@ export const POST = async (
     })
   }
 
-  if (!passingThoughtArgs.summary) {
+  if (!epiphanyArgs.summary) {
     return NextResponse.json({
       success: false,
       errors: {
@@ -60,7 +60,7 @@ export const POST = async (
     })
   }
 
-  if (!passingThoughtArgs.content) {
+  if (!epiphanyArgs.content) {
     return NextResponse.json({
       success: false,
       errors: {
@@ -72,17 +72,17 @@ export const POST = async (
     })
   }
 
-  const newPassingThoughtItem = await storePassingThoughtItem({
+  const newEpiphanyItem = await storeEpiphanyItem({
     userId: user.id,
-    content: passingThoughtArgs.content,
-    name: passingThoughtArgs.name,
-    summary: passingThoughtArgs.summary,
+    content: epiphanyArgs.content,
+    name: epiphanyArgs.name,
+    summary: epiphanyArgs.summary,
     storeyId,
-    spaceId,
-    suiteId: null,
+    spaceId: null,
+    suiteId,
   })
 
-  if (!newPassingThoughtItem || !newPassingThoughtItem.passingThoughtItem) {
+  if (!newEpiphanyItem || !newEpiphanyItem.epiphanyItem) {
     return NextResponse.json({
       success: false,
       errors: {
@@ -95,6 +95,6 @@ export const POST = async (
 
   return NextResponse.json({
     success: true,
-    redirect: `/suite/${existingSpace.storey.suite.id}/storey/${storeyId}/space/${spaceId}/passing-thought/view/${newPassingThoughtItem.passingThoughtItem.model_id}/${newPassingThoughtItem.passingThoughtItem.history_id}`,
+    redirect: `/suite/${existingStorey.suite.id}/storey/${storeyId}/epiphany/view/${newEpiphanyItem.epiphanyItem.model_id}/${newEpiphanyItem.epiphanyItem.history_id}`,
   })
 }

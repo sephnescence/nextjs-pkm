@@ -8,7 +8,6 @@ type PassingThoughtEditRouteParams = {
   params: {
     suiteId: string
     storeyId: string
-    spaceId: string
     passingThoughtItemId: string
     historyItemId: string
   }
@@ -36,7 +35,7 @@ type PassingThoughtViewResponse = {
 }
 
 export default function PassingThoughtEditRoute({
-  params: { suiteId, storeyId, spaceId, passingThoughtItemId, historyItemId },
+  params: { suiteId, storeyId, passingThoughtItemId, historyItemId },
 }: PassingThoughtEditRouteParams) {
   const router = useRouter()
   const [resJson, setResJon] = useState<PassingThoughtViewResponse | null>(
@@ -46,7 +45,7 @@ export default function PassingThoughtEditRoute({
   useEffect(() => {
     fetch(
       new Request(
-        `/api/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/passing-thought/${passingThoughtItemId}/${historyItemId}`,
+        `/api/suite/${suiteId}/storey/${storeyId}/passing-thought/${passingThoughtItemId}/${historyItemId}`,
         {
           method: 'GET',
         },
@@ -58,14 +57,7 @@ export default function PassingThoughtEditRoute({
         setResJon(resJson)
       })
       .catch(() => {})
-  }, [
-    setResJon,
-    suiteId,
-    storeyId,
-    spaceId,
-    passingThoughtItemId,
-    historyItemId,
-  ])
+  }, [setResJon, suiteId, storeyId, passingThoughtItemId, historyItemId])
 
   if (resJson === null) {
     return <div>Loading...</div>
@@ -83,8 +75,8 @@ export default function PassingThoughtEditRoute({
     <>
       <ItemForm
         pageTitle="Edit Passing Thought Item"
-        cancelUrl={`/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/view`}
-        apiEndpoint={`/api/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/passing-thought/${passingThoughtItemId}/${historyItemId}`}
+        cancelUrl={`/suite/${suiteId}/storey/${storeyId}/view`}
+        apiEndpoint={`/api/suite/${suiteId}/storey/${storeyId}/passing-thought/${passingThoughtItemId}/${historyItemId}`}
         apiMethod="PATCH"
         defaultContent={resJson.passingThoughtItem.content}
         defaultName={resJson.passingThoughtItem.name}
