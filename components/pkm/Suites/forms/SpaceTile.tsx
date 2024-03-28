@@ -7,19 +7,26 @@ import InboxStackIcon from '@/components/icons/InboxStackIcon'
 import LightbulbIcon from '@/components/icons/LightbulbIcon'
 import Link from 'next/link'
 import SuiteItemSummary from './SuiteItemSummary'
-import BuildingOfficeIcon from '@/components/icons/BuildingOfficeIcon'
 
-type SuiteTileProps = {
-  id: string
+type SpaceTileProps = {
+  suiteId: string
+  storeyId: string
+  spaceId: string
   name: string
   description: string
 }
 
-const SuiteTile = ({ id, name, description }: SuiteTileProps) => {
-  const href = `/suite/${id}/dashboard`
+const SpaceTile = ({
+  suiteId,
+  storeyId,
+  spaceId,
+  name,
+  description,
+}: SpaceTileProps) => {
+  const href = `/suite/${suiteId}/storey/${storeyId}/space/${spaceId}/dashboard`
   return (
     <div
-      key={id}
+      key={`${suiteId}-${storeyId}`}
       className="bg-indigo-900 rounded-xl p-4 m-1 hover:ring-1 hover:ring-indigo-500 min-h-48"
     >
       <Link href={href}>
@@ -28,12 +35,7 @@ const SuiteTile = ({ id, name, description }: SuiteTileProps) => {
           <div className="text-sm line-clamp-4">{description}</div>
         </div>
       </Link>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
-        <SuiteItemSummary
-          href={`${href}?tab=storeys`}
-          icon={<BuildingOfficeIcon />}
-          iconText="NYI"
-        />
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         <SuiteItemSummary
           href={`${href}?tab=epiphany`}
           icon={<InboxStackIcon />}
@@ -64,4 +66,4 @@ const SuiteTile = ({ id, name, description }: SuiteTileProps) => {
   )
 }
 
-export default SuiteTile
+export default SpaceTile

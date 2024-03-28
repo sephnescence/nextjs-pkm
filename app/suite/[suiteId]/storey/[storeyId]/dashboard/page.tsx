@@ -19,6 +19,7 @@ import KeyIcon from '@/components/icons/KeyIcon'
 import TrashIcon from '@/components/icons/TrashIcon'
 import { getStoreyDashboardForUser } from '@/repositories/storey'
 import ListBulletIcon from '@/components/icons/ListBulletIcon'
+import SpaceTile from '@/components/pkm/Suites/forms/SpaceTile'
 
 export default async function SuiteDashboardIndex({
   params: { suiteId, storeyId },
@@ -57,17 +58,36 @@ export default async function SuiteDashboardIndex({
         tabName: 'spaces',
         tabHeader: <KeyIcon />,
         tabContent: (
-          <div>
-            {storey.spaces.map((space) => (
-              <div key={space.id}>
-                <Link
-                  href={`/suite/${suiteId}/storey/${storeyId}/space/${space.id}/dashboard?tab=content`}
-                >
-                  Space: {space.name}
-                </Link>
+          <>
+            <div className="h-8 mb-2 ml-1">
+              <div className="relative">
+                <div className="absolute top-0 left-0 flex">
+                  <div className="bg-indigo-900 h-8 mr-2 py-1 px-3 rounded-lg hover:ring-1 hover:ring-indigo-500">
+                    <Link
+                      className="flex rounded-lg focus:outline-offset-1 focus:outline-lime-600"
+                      href={`/suite/${suiteId}/storey/${storeyId}/space/config/new`}
+                    >
+                      <KeyIcon />
+                      <PlusIcon viewBox="6 -3 12 48" className="w-2 h-6" />
+                    </Link>
+                  </div>
+                </div>
               </div>
-            ))}
-          </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2">
+              {storey.spaces.map((space) => (
+                <div key={space.id}>
+                  <SpaceTile
+                    suiteId={storey.suite.id}
+                    storeyId={storey.id}
+                    spaceId={space.id}
+                    name={space.name}
+                    description={space.description}
+                  />
+                </div>
+              ))}
+            </div>
+          </>
         ),
         tabContentClassName:
           'group-has-[.innsight-tab-group#storey--tab--spaces:checked]:block',

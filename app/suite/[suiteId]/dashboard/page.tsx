@@ -19,6 +19,7 @@ import SuiteInformationPacketTabGroup from '@/components/pkm/Suites/content/Suit
 import TrashIcon from '@/components/icons/TrashIcon'
 import ListBulletIcon from '@/components/icons/ListBulletIcon'
 import BuildingOfficeIcon from '@/components/icons/BuildingOfficeIcon'
+import StoreyTile from '@/components/pkm/Suites/forms/StoreyTile'
 
 export default async function SuiteDashboardIndex({
   params: { suiteId },
@@ -57,17 +58,35 @@ export default async function SuiteDashboardIndex({
         tabName: 'storeys',
         tabHeader: <BuildingOfficeIcon />,
         tabContent: (
-          <div>
-            {suite.storeys.map((storey) => (
-              <div key={storey.id}>
-                <Link
-                  href={`/suite/${suiteId}/storey/${storey.id}/dashboard?tab=content`}
-                >
-                  Storey: {storey.name}
-                </Link>
+          <>
+            <div className="h-8 mb-2 ml-1">
+              <div className="relative">
+                <div className="absolute top-0 left-0 flex">
+                  <div className="bg-indigo-900 h-8 mr-2 py-1 px-3 rounded-lg hover:ring-1 hover:ring-indigo-500">
+                    <Link
+                      className="flex rounded-lg focus:outline-offset-1 focus:outline-lime-600"
+                      href={`/suite/${suiteId}/storey/config/new`}
+                    >
+                      <BuildingOfficeIcon />
+                      <PlusIcon viewBox="6 -3 12 48" className="w-2 h-6" />
+                    </Link>
+                  </div>
+                </div>
               </div>
-            ))}
-          </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2">
+              {suite.storeys.map((storey) => (
+                <div key={storey.id}>
+                  <StoreyTile
+                    suiteId={suite.id}
+                    storeyId={storey.id}
+                    name={storey.name}
+                    description={storey.description}
+                  />
+                </div>
+              ))}
+            </div>
+          </>
         ),
         tabContentClassName:
           'group-has-[.innsight-tab-group#suite--tab--storeys:checked]:block',
