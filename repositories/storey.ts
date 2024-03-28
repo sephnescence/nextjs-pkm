@@ -5,6 +5,7 @@ type CreateStoreyArgs = {
   suiteId: string
   name: string
   description: string
+  content: string
 }
 
 export type UpdateStoreyArgs = CreateStoreyArgs & {
@@ -169,6 +170,7 @@ export const storeStorey = async ({
   suiteId,
   name,
   description,
+  content,
 }: CreateStoreyArgs) => {
   return await prisma.storey
     .create({
@@ -177,6 +179,7 @@ export const storeStorey = async ({
         suite_id: suiteId,
         name,
         description,
+        content,
       },
     })
     .then((storey) => {
@@ -199,6 +202,7 @@ export const updateStorey = async ({
   userId,
   suiteId,
   storeyId,
+  content,
 }: UpdateStoreyArgs) => {
   return await prisma.storey
     .update({
@@ -210,6 +214,7 @@ export const updateStorey = async ({
       data: {
         name,
         description,
+        content,
       },
     })
     .then((storey) => {

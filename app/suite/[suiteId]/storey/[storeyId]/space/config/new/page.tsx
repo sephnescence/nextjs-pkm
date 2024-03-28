@@ -11,7 +11,7 @@ const SpaceCreateRoute = ({
     <SuiteForm
       pageTitle="Configure New Space"
       cancelUrl={`/suite/${suiteId}/storey/${storeyId}/dashboard`}
-      apiEndpoint={`/api/suite/${suiteId}/storey/${storeyId}/space`}
+      apiEndpoint={`/api/suite/${suiteId}/storey/${storeyId}`}
       apiMethod="POST"
     />
   )

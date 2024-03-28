@@ -7,19 +7,25 @@ import InboxStackIcon from '@/components/icons/InboxStackIcon'
 import LightbulbIcon from '@/components/icons/LightbulbIcon'
 import Link from 'next/link'
 import SuiteItemSummary from './SuiteItemSummary'
-import BuildingOfficeIcon from '@/components/icons/BuildingOfficeIcon'
+import KeyIcon from '@/components/icons/KeyIcon'
 
-type SuiteTileProps = {
-  id: string
+type StoreyTileProps = {
+  suiteId: string
+  storeyId: string
   name: string
   description: string
 }
 
-const SuiteTile = ({ id, name, description }: SuiteTileProps) => {
-  const href = `/suite/${id}/dashboard`
+const StoreyTile = ({
+  suiteId,
+  storeyId,
+  name,
+  description,
+}: StoreyTileProps) => {
+  const href = `/suite/${suiteId}/storey/${storeyId}/dashboard`
   return (
     <div
-      key={id}
+      key={`${suiteId}-${storeyId}`}
       className="bg-indigo-900 rounded-xl p-4 m-1 hover:ring-1 hover:ring-indigo-500 min-h-48"
     >
       <Link href={href}>
@@ -30,8 +36,8 @@ const SuiteTile = ({ id, name, description }: SuiteTileProps) => {
       </Link>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
         <SuiteItemSummary
-          href={`${href}?tab=storeys`}
-          icon={<BuildingOfficeIcon />}
+          href={`${href}?tab=spaces`}
+          icon={<KeyIcon />}
           iconText="NYI"
         />
         <SuiteItemSummary
@@ -64,4 +70,4 @@ const SuiteTile = ({ id, name, description }: SuiteTileProps) => {
   )
 }
 
-export default SuiteTile
+export default StoreyTile

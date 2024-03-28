@@ -132,12 +132,25 @@ export const PATCH = async (
     })
   }
 
+  if (!storeyArgs.content) {
+    return NextResponse.json({
+      success: false,
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          content: 'Content is required',
+        },
+      },
+    })
+  }
+
   const updatedStorey = await updateStorey({
     name: storeyArgs.name,
     description: storeyArgs.description,
     suiteId,
     storeyId,
     userId: user.id,
+    content: storeyArgs.content,
   })
 
   if (!updatedStorey) {
@@ -153,7 +166,7 @@ export const PATCH = async (
 
   return NextResponse.json({
     success: true,
-    redirect: `/suites/${suiteId}/dashboard`,
+    redirect: `/suite/${suiteId}/storey/${storeyId}/dashboard`,
   })
 }
 
@@ -248,6 +261,6 @@ export const POST = async (
 
   return NextResponse.json({
     success: true,
-    redirect: `/suite/${suiteId}/storey/${storeyId}/space/${newSpace.space.id}`,
+    redirect: `/suite/${suiteId}/storey/${storeyId}/space/${newSpace.space.id}/dashboard`,
   })
 }

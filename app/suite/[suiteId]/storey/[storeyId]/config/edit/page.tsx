@@ -70,9 +70,9 @@ export default function StoreyEditRoute({
       cancelUrl={`/suite/${suiteId}/storey/${storeyId}/dashboard`}
       apiEndpoint={`/api/suite/${suiteId}/storey/${storeyId}`}
       apiMethod="PATCH"
-      defaultName={resJson.suite.name}
-      defaultDescription={resJson.suite.description}
-      defaultContent={resJson.suite.content}
+      defaultName={resJson.storey.name}
+      defaultDescription={resJson.storey.description}
+      defaultContent={resJson.storey.content}
     />
   )
 }

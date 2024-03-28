@@ -8,11 +8,14 @@ const StoreyCreateRoute = ({
   params: { suiteId: string }
 }) => {
   return (
-    <SuiteForm
-      pageTitle="Configure New Storey"
-      apiEndpoint={`/api/suite/${suiteId}`}
-      apiMethod="POST"
-    />
+    <>
+      <SuiteForm
+        pageTitle="Configure New Storey"
+        cancelUrl={`/suite/${suiteId}/dashboard?tab=storeys`}
+        apiEndpoint={`/api/suite/${suiteId}`}
+        apiMethod="POST"
+      />
+    </>
   )
 }
 

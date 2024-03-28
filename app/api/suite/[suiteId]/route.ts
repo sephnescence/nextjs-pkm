@@ -99,11 +99,24 @@ export const PATCH = async (
     })
   }
 
+  if (!suiteArgs.content) {
+    return NextResponse.json({
+      success: false,
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          content: 'Content is required',
+        },
+      },
+    })
+  }
+
   const updatedSuite = await updateSuite({
     name: suiteArgs.name,
     description: suiteArgs.description,
     suiteId,
     userId: user.id,
+    content: suiteArgs.content,
   })
 
   if (!updatedSuite) {
@@ -124,7 +137,16 @@ export const PATCH = async (
 }
 
 // Create a Storey
-export const POST = async (request: Request) => {
+export const POST = async (
+  request: Request,
+  {
+    params: { suiteId },
+  }: {
+    params: {
+      suiteId: string
+    }
+  },
+) => {
   const user = await getUserAuth()
 
   if (!user) {
@@ -134,14 +156,14 @@ export const POST = async (request: Request) => {
     })
   }
 
-  const storeyArgs = (await request.json()) || ''
-
-  if (!storeyArgs.suiteId) {
+  if (!suiteId) {
     return NextResponse.json({
       success: true,
       redirect: '/',
     })
   }
+
+  const storeyArgs = (await request.json()) || ''
 
   if (!storeyArgs.name) {
     return NextResponse.json({
@@ -167,11 +189,24 @@ export const POST = async (request: Request) => {
     })
   }
 
+  if (!storeyArgs.content) {
+    return NextResponse.json({
+      success: false,
+      errors: {
+        fieldErrors: {
+          general: 'There were validation errors',
+          content: 'Content is required',
+        },
+      },
+    })
+  }
+
   const newStorey = await storeStorey({
     userId: user.id,
-    suiteId: storeyArgs.suiteId,
+    suiteId,
     name: storeyArgs.name,
     description: storeyArgs.description,
+    content: storeyArgs.content,
   })
 
   if (!newStorey || !newStorey.storey || !newStorey.success) {
@@ -187,6 +222,6 @@ export const POST = async (request: Request) => {
 
   return NextResponse.json({
     success: true,
-    redirect: `/suite/${storeyArgs.suiteId}/storey/${newStorey.storey.id}`,
+    redirect: `/suite/${suiteId}/storey/${newStorey.storey.id}`,
   })
 }
