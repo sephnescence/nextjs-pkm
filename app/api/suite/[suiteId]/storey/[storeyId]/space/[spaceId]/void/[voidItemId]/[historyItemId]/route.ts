@@ -175,6 +175,6 @@ export const PATCH = async (
 
   return NextResponse.json({
     success: true,
-    redirect: `/suite/${existingVoid.storey.suite.id}/storey/${storeyId}/space/${spaceId}/void/view/${newVoidItem.voidItem.model_id}/${newVoidItem.voidItem.history_id}`,
+    redirect: `/suite/${existingVoid.storey.suite.id}/storey/${storeyId}/space/${spaceId}/dashboard/void/view/${newVoidItem.voidItem.model_id}/${newVoidItem.voidItem.history_id}`,
   })
 }

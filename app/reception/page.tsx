@@ -8,7 +8,9 @@ const FoyerRoute = async () => {
     return redirect('/')
   }
 
-  return redirect(`/suite/${user.id}/storey/${user.id}/space/${user.id}`)
+  return redirect(
+    `/suite/${user.id}/storey/${user.id}/space/${user.id}/dashboard`,
+  )
 }
 
 export default FoyerRoute

@@ -153,7 +153,7 @@ export const PATCH = async (
 
   return NextResponse.json({
     success: true,
-    redirect: `/suites/${suiteId}`,
+    redirect: `/suites/${suiteId}/dashboard`,
   })
 }
 

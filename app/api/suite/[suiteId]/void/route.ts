@@ -94,6 +94,6 @@ export const POST = async (
 
   return NextResponse.json({
     success: true,
-    redirect: `/suite/${existingSuite.id}/void/view/${newVoidItem.voidItem.model_id}/${newVoidItem.voidItem.history_id}`,
+    redirect: `/suite/${existingSuite.id}/dashboard/void/view/${newVoidItem.voidItem.model_id}/${newVoidItem.voidItem.history_id}`,
   })
 }

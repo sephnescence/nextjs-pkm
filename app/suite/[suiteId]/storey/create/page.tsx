@@ -10,7 +10,7 @@ const StoreyCreateRoute = ({
   return (
     <SuiteForm
       pageTitle="Configure New Storey"
-      apiEndpoint={`/api/suite/${suiteId}/view`}
+      apiEndpoint={`/api/suite/${suiteId}`}
       apiMethod="POST"
     />
   )
