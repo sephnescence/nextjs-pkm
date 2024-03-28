@@ -1,4 +1,4 @@
-import Breadcrumbs from '@/components/nav/Breadcrumbs'
+import StoreyBreadcrumbs from '@/components/nav/StoreyBreadcrumbs'
 import { getStoreyDashboardForUser } from '@/repositories/storey'
 import { getUserAuth } from '@/utils/auth'
 import { redirect } from 'next/navigation'
@@ -27,7 +27,7 @@ const SuiteLayout = async ({
 
   return (
     <>
-      <Breadcrumbs
+      <StoreyBreadcrumbs
         suiteId={storey.suite.id}
         suiteName={storey.suite.name}
         storeyId={storey.id}

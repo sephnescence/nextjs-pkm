@@ -1,6 +1,6 @@
 'use server'
 
-import Breadcrumbs from '@/components/nav/Breadcrumbs'
+import SpaceBreadcrumbs from '@/components/nav/SpaceBreadcrumbs'
 import { getSpaceDashboardForUser } from '@/repositories/space'
 import { getUserAuth } from '@/utils/auth'
 import { redirect } from 'next/navigation'
@@ -30,7 +30,7 @@ const SpaceLayout = async ({
 
   return (
     <>
-      <Breadcrumbs
+      <SpaceBreadcrumbs
         suiteId={suiteId}
         suiteName={space.storey.suite.name}
         storeyId={storeyId}
