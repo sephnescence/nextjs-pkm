@@ -161,6 +161,6 @@ export const PATCH = async (
 
   return NextResponse.json({
     success: true,
-    redirect: `/suite/${existingInbox.suite.id}/inbox/view/${newInboxItem.inboxItem.model_id}/${newInboxItem.inboxItem.history_id}`,
+    redirect: `/suite/${existingInbox.suite.id}/dashboard/inbox/view/${newInboxItem.inboxItem.model_id}/${newInboxItem.inboxItem.history_id}`,
   })
 }

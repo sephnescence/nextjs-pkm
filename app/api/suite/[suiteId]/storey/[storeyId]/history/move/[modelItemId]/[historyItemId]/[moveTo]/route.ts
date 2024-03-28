@@ -263,7 +263,7 @@ const _historyActionMove = async ({
       })
 
       if (response.success === true && response.epiphanyItem) {
-        redirectUrl = `/suite/${suiteId}/epiphany/view/${response.epiphanyItem.model_id}/${response.epiphanyItem.history_id}`
+        redirectUrl = `/suite/${suiteId}/dashboard/epiphany/view/${response.epiphanyItem.model_id}/${response.epiphanyItem.history_id}`
       }
     } else if (moveTo === 'inbox') {
       const response = await updateInboxItem({
@@ -279,7 +279,7 @@ const _historyActionMove = async ({
       })
 
       if (response.success === true && response.inboxItem) {
-        redirectUrl = `/suite/${suiteId}/inbox/view/${response.inboxItem.model_id}/${response.inboxItem.history_id}`
+        redirectUrl = `/suite/${suiteId}/dashboard/inbox/view/${response.inboxItem.model_id}/${response.inboxItem.history_id}`
       }
     } else if (moveTo === 'passing-thought') {
       const response = await updatePassingThoughtItem({
@@ -295,7 +295,7 @@ const _historyActionMove = async ({
       })
 
       if (response.success === true && response.passingThoughtItem) {
-        redirectUrl = `/suite/${suiteId}/passing-thought/view/${response.passingThoughtItem.model_id}/${response.passingThoughtItem.history_id}`
+        redirectUrl = `/suite/${suiteId}/dashboard/passing-thought/view/${response.passingThoughtItem.model_id}/${response.passingThoughtItem.history_id}`
       }
     } else if (moveTo === 'todo') {
       const response = await updateTodoItem({
@@ -311,7 +311,7 @@ const _historyActionMove = async ({
       })
 
       if (response.success === true && response.todoItem) {
-        redirectUrl = `/suite/${suiteId}/todo/view/${response.todoItem.model_id}/${response.todoItem.history_id}`
+        redirectUrl = `/suite/${suiteId}/dashboard/todo/view/${response.todoItem.model_id}/${response.todoItem.history_id}`
       }
     } else if (moveTo === 'trash') {
       const response = await updateTrashItem({
@@ -326,7 +326,7 @@ const _historyActionMove = async ({
         spaceId,
       })
       if (response.success === true && response.trashItem) {
-        redirectUrl = `/suite/${suiteId}/trash/view/${response.trashItem.model_id}/${response.trashItem.history_id}`
+        redirectUrl = `/suite/${suiteId}/dashboard/trash/view/${response.trashItem.model_id}/${response.trashItem.history_id}`
       }
     } else if (moveTo === 'void') {
       const response = await updateVoidItem({
@@ -342,7 +342,7 @@ const _historyActionMove = async ({
       })
 
       if (response.success === true && response.voidItem) {
-        redirectUrl = `/suite/${suiteId}/void/view/${response.voidItem.model_id}/${response.voidItem.history_id}`
+        redirectUrl = `/suite/${suiteId}/dashboard/void/view/${response.voidItem.model_id}/${response.voidItem.history_id}`
       }
     }
 
